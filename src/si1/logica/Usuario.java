@@ -1,9 +1,10 @@
 package si1.logica;
+
 /**
  * Classe que representa um usuario do sistema.
  * 
  * @author ANTONIOR
- *
+ * 
  */
 public class Usuario {
 
@@ -14,9 +15,9 @@ public class Usuario {
 	private String email;
 
 	public Usuario(String login, String senha, String nome, String endereco,
-			String email) {
-		super();
-		this.login = login;
+			String email) throws Exception {
+
+		setLogin(login);
 		this.senha = senha;
 		this.nome = nome;
 		this.endereco = endereco;
@@ -27,8 +28,25 @@ public class Usuario {
 		return login;
 	}
 
-	public void setLogin(String login) {
+	public void setLogin(String login) throws Exception {
+		if (login == null || login.equals("")
+				|| contemCharInvalidosLogin(login)) {
+			throw new Exception("Login nulo ou invalido.");
+		}
 		this.login = login;
+	}
+
+	private boolean contemCharInvalidosLogin(String string) {
+
+		String[] palavra = string.split("");
+
+		for (String c : palavra) {
+			if ("'!@#$%¨¨¨&*()+¹²³£¢¬§=[{ª~^]}º;:>,</|".contains(c)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public String getSenha() {
