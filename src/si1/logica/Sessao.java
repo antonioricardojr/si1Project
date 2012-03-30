@@ -1,4 +1,5 @@
 package si1.logica;
+
 /**
  * Classe que representa um sessao do sistema.
  * 
@@ -7,28 +8,34 @@ package si1.logica;
  */
 public class Sessao {
 
-	private Usuario usuario;
+	private String login;
 	private String id;
 
-	public Sessao(Usuario usuario, String id) {
-		super();
-		this.usuario = usuario;
-		this.id = id;
+	public Sessao(String login, String id) throws Exception {
+
+		setLogin(login);
+		setId(id);
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setLogin(String login)throws Exception {
+		if(login == null || login.equals("")){
+			throw new Exception("Login nulo ou invalido.");
+		}
+		this.login = login;
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(String id) throws Exception {
+		if (id == null || id.equals("")) {
+			throw new Exception("ID nulo ou invalido");
+		}
 		this.id = id;
 	}
 
