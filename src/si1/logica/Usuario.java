@@ -108,64 +108,55 @@ public class Usuario {
 
 		String substring1 = "";
 		String substring2 = "";
-		
-		for(int i = 1 ; i < caracteres.length ; i++){
-			if(!caracteres[i].equals("@")){
+
+		for (int i = 1; i < caracteres.length; i++) {
+			if (!caracteres[i].equals("@")) {
 				substring1 += caracteres[i];
-			}else{
-				substring2 = email.substring(i-1);
+			} else {
+
+				try {
+					substring2 = email.substring(i + 1);
+				} catch (Exception e) {
+					throw new Exception("E-mail nulo ou invalido.");
+
+				}
 				break;
 			}
 		}
-		
-		
-		if(substring1.equals(null) || substring1.equals("")){
+
+		String[] arraySubs2 = substring2.split("");
+
+		for (int i = 1; i < arraySubs2.length; i++) {
+			if (arraySubs2[i].equals("@")) {
+				throw new Exception("E-mail nulo ou invalido.");
+			}
+			if (arraySubs2[i].equals(".")) {
+				try {
+					if ("qweasdzxcrtyfghvbnuiojklnmp"
+							.contains(caracteres[i - 1])
+							&& "qweasdzxcrtyfghvbnuiojklnmp"
+									.contains(caracteres[i + 1])) {
+
+					} else {
+						throw new Exception("E-mail nulo ou invalido.");
+					}
+				} catch (Exception e) {
+					throw new Exception("E-mail nulo ou invalido.");
+
+				}
+			}
+
+		}
+
+		if (substring1.equals(null) || substring1.equals("")) {
 			throw new Exception("Email nulo ou invalido.");
 		}
-		
-		
-		
-		
-		
-		
-//		boolean flag = false;
-//
-//		for (int i = 1; i < caracteres.length; i++) {
-//			if (caracteres[i] != "@") {
-//				if (!flag) {
-//					
-//					substring1 += caracteres[i];
-//				} else {
-//					
-//					substring2 += caracteres[i];
-//				}
-//			} else {
-//				flag = true;
-//
-//			}
-//		}
-//		
-//		
-//		
-//		
-//
-//		for (int i = 1; i < caracteres.length; i++) {
-//			if (caracteres[i].equals(".")) {
-//				if ("qweasdzxcrtyfghvbnuiojklnmp".contains(caracteres[i - 1])
-//						&& "qweasdzxcrtyfghvbnuiojklnmp"
-//								.contains(caracteres[i + 1])) {
-//
-//				} else {
-//					throw new Exception("E-mail nulo ou invalido.");
-//				}
-//			}
-//
-//		}
-//
-//		if (substring1 == null || substring1.equals("")) {
-//			throw new Exception("E-mail nulo ou invalido.");
-//		}
-//
+
+		if (substring2 == null || substring2.equals("")
+				|| substring2.contains("@")) {
+			throw new Exception("Email nulo ou invalido.");
+		}
+
 		this.email = email;
 
 	}

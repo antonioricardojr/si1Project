@@ -26,7 +26,7 @@ public class UsuarioTest {
 	}
 
 	@Test
-	public void testLogin() {
+	public void testLogin() throws Exception {
 
 		try {
 			u1 = new Usuario(null, "123456", "Mark Zuckerberg",
@@ -62,12 +62,15 @@ public class UsuarioTest {
 		} catch (Exception e) {
 			Assert.assertEquals("Login nulo ou invalido.", e.getMessage());
 		}
+		
+		u2 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
+		Assert.assertEquals("mark", u2.getLogin());
 
 		
 	}
 
 	@Test
-	public void testSenha() {
+	public void testSenha() throws Exception {
 		try {
 			u1 = new Usuario("mark", null, "Mark Zuckerberg",
 					"Palo Alto, California", "mark@facebook.com");
@@ -81,12 +84,16 @@ public class UsuarioTest {
 		} catch (Exception e) {
 			Assert.assertEquals("senha nula ou invalida.", e.getMessage());
 		}
+		
+		
+		u2 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
+		Assert.assertEquals("123456", u2.getSenha());
 
 		
 	}
 
 	@Test
-	public void testNome() {
+	public void testNome() throws Exception {
 		try {
 			u1 = new Usuario("mark", "123456", null, "Palo Alto, California",
 					"mark@facebook.com");
@@ -123,13 +130,8 @@ public class UsuarioTest {
 
 		}
 
-		try {
-			u3 = new Usuario("mark", "123456", "Mark Zuckerberg",
-					"Palo Alto, California", "mark@facebook.com");
-		} catch (Exception e) {
-
-		}
-		Assert.assertEquals("Mark Zuckerberg", u3.getNome());
+		u2 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
+		Assert.assertEquals("Mark Zuckerberg", u2.getNome());
 
 	}
 	
@@ -163,7 +165,7 @@ public class UsuarioTest {
 	
 	
 	@Test
-	public void testEmail(){
+	public void testEmail() throws Exception{
 		try{
 			u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", null);
 		}catch(Exception e){
@@ -194,6 +196,11 @@ public class UsuarioTest {
 			Assert.assertEquals("E-mail nulo ou invalido.", e.getMessage());
 		}
 		
+		u2 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
+		Assert.assertEquals("mark@facebook.com.br", u2.getEmail());
+		
+		u3 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com");
+		Assert.assertEquals("mark@facebook.com", u3.getEmail());
 		
 		
 	}
