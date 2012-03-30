@@ -18,10 +18,10 @@ public class Usuario {
 			String email) throws Exception {
 
 		setLogin(login);
-		this.senha = senha;
-		this.nome = nome;
-		this.endereco = endereco;
-		this.email = email;
+		setSenha(senha);
+		setNome(nome);
+		setEndereco(endereco);
+		setEmail(email);
 	}
 
 	public String getLogin() {
@@ -38,10 +38,11 @@ public class Usuario {
 
 	private boolean contemCharInvalidosLogin(String string) {
 
-		String[] palavra = string.split("");
+		String[] palavra = string.trim().split("");
 
-		for (String c : palavra) {
-			if ("'!@#$%¨¨¨&*()+¹²³£¢¬§=[{ª~^]}º;:>,</|".contains(c)) {
+		for (int i = 1; i < palavra.length; i++) {
+			if ("'!@#$%¨¨¨&*()+¹²³£¢¬§=[{ª~^]}º;:>,</|´/`áéíóúàèìòùÁÉÍÓÚÀÈÌÒÙãõÃÕâêîôûÂÊÎÔÛ "
+					.contains(palavra[i])) {
 				return true;
 			}
 		}
@@ -53,7 +54,10 @@ public class Usuario {
 		return senha;
 	}
 
-	public void setSenha(String senha) {
+	public void setSenha(String senha) throws Exception {
+		if (senha == null || senha == "") {
+			throw new Exception("senha nula ou invalida.");
+		}
 		this.senha = senha;
 	}
 
@@ -61,15 +65,34 @@ public class Usuario {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(String nome) throws Exception {
+		if (nome == null || nome.equals("") || contemCharInvalidosNome(nome)) {
+			throw new Exception("Nome nulo ou invalido.");
+		}
 		this.nome = nome;
+	}
+
+	private boolean contemCharInvalidosNome(String nome) {
+		String[] palavra = nome.trim().split("");
+
+		for (int i = 1; i < palavra.length; i++) {
+			if ("'!@#$%¨¨¨&*()+¹²³£¢¬§=[{ª~^]}º;:>,</|´/`".contains(palavra[i])) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public String getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(String endereco) {
+	public void setEndereco(String endereco) throws Exception {
+		if (endereco == null || endereco.equals("")) {
+			throw new Exception("Endereco nulo ou invalido.");
+		}
+
 		this.endereco = endereco;
 	}
 
@@ -77,8 +100,81 @@ public class Usuario {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(String email) throws Exception {
+		if (email == null || email.equals("")) {
+			throw new Exception("E-mail nulo ou invalido.");
+		}
+		String[] caracteres = email.split("");
+
+		String substring1 = "";
+		String substring2 = "";
+		
+		for(int i = 1 ; i < caracteres.length ; i++){
+			if(!caracteres[i].equals("@")){
+				substring1 += caracteres[i];
+			}else{
+				substring2 = email.substring(i-1);
+				break;
+			}
+		}
+		
+		
+		if(substring1.equals(null) || substring1.equals("")){
+			throw new Exception("Email nulo ou invalido.");
+		}
+		
+		
+		
+		
+		
+		
+//		boolean flag = false;
+//
+//		for (int i = 1; i < caracteres.length; i++) {
+//			if (caracteres[i] != "@") {
+//				if (!flag) {
+//					
+//					substring1 += caracteres[i];
+//				} else {
+//					
+//					substring2 += caracteres[i];
+//				}
+//			} else {
+//				flag = true;
+//
+//			}
+//		}
+//		
+//		
+//		
+//		
+//
+//		for (int i = 1; i < caracteres.length; i++) {
+//			if (caracteres[i].equals(".")) {
+//				if ("qweasdzxcrtyfghvbnuiojklnmp".contains(caracteres[i - 1])
+//						&& "qweasdzxcrtyfghvbnuiojklnmp"
+//								.contains(caracteres[i + 1])) {
+//
+//				} else {
+//					throw new Exception("E-mail nulo ou invalido.");
+//				}
+//			}
+//
+//		}
+//
+//		if (substring1 == null || substring1.equals("")) {
+//			throw new Exception("E-mail nulo ou invalido.");
+//		}
+//
 		this.email = email;
+
 	}
 
+	public static void main(String[] args) {
+		String a = "login";
+		String[] s = a.split("");
+		for (int i = 0; i < s.length; i++) {
+			System.out.println(i + s[i]);
+		}
+	}
 }
