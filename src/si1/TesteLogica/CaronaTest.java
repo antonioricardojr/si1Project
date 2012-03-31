@@ -28,6 +28,8 @@ public class CaronaTest {
 		}catch(Exception e){
 			
 		}
+		
+		assertEquals("Campina Grande", c1.getOrigem());
 	}
 
 }
