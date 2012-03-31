@@ -28,11 +28,6 @@ public class Carona {
 		this.setVagas(vagas);
 	}
 
-	/**
-	 * Retorna o id da carona
-	 * 
-	 * @return String do id da carona
-	 */
 	public String getId() {
 		return id;
 	}
@@ -41,10 +36,12 @@ public class Carona {
 		this.id = id;
 	}
 
+	
 	public String getOrigem() {
 		return origem;
 	}
 
+	
 	public void setOrigem(String origem) throws Exception {
 		if(origem == null || origem.equals("")){
 			throw new Exception("Origem nula ou invalida");
@@ -53,10 +50,12 @@ public class Carona {
 		}
 	}
 
+	
 	public String getDestino() {
 		return destino;
 	}
 
+	
 	public void setDestino(String destino) throws Exception {
 		if(destino == null || destino.equals("")){
 			throw new Exception("Data nula ou invalida.");
@@ -65,10 +64,12 @@ public class Carona {
 		}
 	}
 
+	
 	public String getData() {
 		return data;
 	}
-
+	
+	
 	public void setData(String data) throws Exception {
 		if (data == null || data.equals("")) {
 			throw new Exception("Data nula ou invalida.");
@@ -77,6 +78,7 @@ public class Carona {
 		}
 	}
 
+	
 	public String getHora() throws Exception {
 		return this.hora;
 	}
