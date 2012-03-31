@@ -19,6 +19,7 @@ public class Sistema {
 	public Sistema() {
 		usuarios = new ArrayList<Usuario>();
 		sessoes = new ArrayList<Sessao>();
+		caronas = new ArrayList<Carona>();
 	}
 
 	public List<Usuario> getUsuarios() {
@@ -130,4 +131,85 @@ public class Sistema {
 		return caronas;
 	}
 
+	public String cadastrarCarona(String idSessao, String origem,
+			String destino, String data, String hora, int vagas)
+			throws Exception {
+
+		Carona novaCarona = new Carona(idSessao, origem, destino, data, hora,
+				vagas);
+		caronas.add(novaCarona);
+
+		return novaCarona.getId();
+	}
+
+	public String getAtributoCarona(String idCarona, String atributo)
+			throws Exception {
+		for (Carona c : caronas) {
+			if (c.getId().equals(idCarona)) {
+				if (atributo.equals("origem")) {
+					return c.getOrigem();
+				}
+				if (atributo.equals("destino")) {
+					return c.getDestino();
+				}
+				if (atributo.equals("data")) {
+					return c.getData();
+				}
+				if (atributo.equals("hora")) {
+					return c.getHora();
+				}
+				if (atributo.equals("vagas")) {
+					return "" + c.getVagas();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public static void main(String[] args) throws Exception {
+		Sistema sis = new Sistema();
+
+		sis.criarUsuario("mark", "123456", "Mark Zuckerberg",
+				"Palo Alto, California", "mark@facebook.com");
+		System.out.println(sis.buscaUsuario("mark").getNome());
+
+		String sessaoMark = sis.abrirSessao("mark", "123456");
+		System.out.println("sessao mark: " + sessaoMark);
+
+		sis.cadastrarCarona(sessaoMark, "Campina Grande", "Joao Pessoa",
+				"06/04/2012", "04h50", 2);
+
+		System.out.println(sis
+				.localizarCarona(sessaoMark, "Campina Grande", "Joao Pessoa")
+				.get(0).getOrigem());
+
+	}
+
+	public String getTrajeto(String idCarona) throws Exception {
+
+		Carona c = localizaCarona(idCarona);
+
+		String trajeto = c.getOrigem() + " - " + c.getDestino();
+
+		return trajeto;
+	}
+
+	public String getCarona(String idCarona) throws Exception {
+		Carona c = localizaCarona(idCarona);
+		
+		String carona = c.getOrigem() + " para " +c.getDestino()+ ", no dia " +c.getData() + ", as " + c.getHora();
+		
+		return carona;
+	}
+
+	private Carona localizaCarona(String idCarona) throws Exception {
+		for (Carona c : caronas) {
+			if (c.getId().equals(idCarona)) {
+				return c;
+			}
+		}
+
+		throw new Exception("Carona nao encontrada");
+	}
 }
