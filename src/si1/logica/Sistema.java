@@ -14,24 +14,30 @@ public class Sistema {
 
 	private List<Usuario> usuarios;
 	private List<Sessao> sessoes;
+	private List<Carona> caronas;
 
 	public Sistema() {
 		usuarios = new ArrayList<Usuario>();
 		sessoes = new ArrayList<Sessao>();
+		caronas = new ArrayList<Carona>();
 	}
 
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
-	
-
-	public Usuario criarUsuario(String login, String senha, String nome,
+	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
 
-		Usuario novoUsuario = new Usuario(login, senha, nome, endereco, email);
-		usuarios.add(novoUsuario);
-		return novoUsuario;
+		try {
+			Usuario novoUsuario = new Usuario(login, senha, nome, endereco,
+					email);
+
+			usuarios.add(novoUsuario);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
 	}
 
 	public String abrirSessao(String login, String senha) throws Exception {
@@ -63,8 +69,12 @@ public class Sistema {
 		return sessoes;
 	}
 
-	public String getAtributoUsuario(String login, String atributo) throws Exception {
+	public String getAtributoUsuario(String login, String atributo)
+			throws Exception {
 
+		if (atributo == null || atributo.equals("")) {
+			throw new Exception("atributo inexistente");
+		}
 		Usuario u = buscaUsuario(login);
 
 		if (u == null) {
@@ -90,4 +100,116 @@ public class Sistema {
 		return null;
 	}
 
+	public List<Carona> localizarCarona(String idSessao, String origem,
+			String destino) {
+
+		List<Carona> caronasLocalizadas = new ArrayList<Carona>();
+
+		if (verificaSessao(idSessao)) {
+			for (Carona c : caronas) {
+				if (c.getOrigem().equals(origem)
+						&& c.getDestino().equals(destino)) {
+					caronasLocalizadas.add(c);
+				}
+			}
+		}
+
+		return caronasLocalizadas;
+	}
+
+	private boolean verificaSessao(String idSessao) {
+		for (Sessao s : sessoes) {
+			if (s.getId().equals(idSessao)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public List<Carona> getCaronas() {
+		return caronas;
+	}
+
+	public String cadastrarCarona(String idSessao, String origem,
+			String destino, String data, String hora, int vagas)
+			throws Exception {
+
+		Carona novaCarona = new Carona(idSessao, origem, destino, data, hora,
+				vagas);
+		caronas.add(novaCarona);
+
+		return novaCarona.getId();
+	}
+
+	public String getAtributoCarona(String idCarona, String atributo)
+			throws Exception {
+		for (Carona c : caronas) {
+			if (c.getId().equals(idCarona)) {
+				if (atributo.equals("origem")) {
+					return c.getOrigem();
+				}
+				if (atributo.equals("destino")) {
+					return c.getDestino();
+				}
+				if (atributo.equals("data")) {
+					return c.getData();
+				}
+				if (atributo.equals("hora")) {
+					return c.getHora();
+				}
+				if (atributo.equals("vagas")) {
+					return "" + c.getVagas();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public static void main(String[] args) throws Exception {
+		Sistema sis = new Sistema();
+
+		sis.criarUsuario("mark", "123456", "Mark Zuckerberg",
+				"Palo Alto, California", "mark@facebook.com");
+		System.out.println(sis.buscaUsuario("mark").getNome());
+
+		String sessaoMark = sis.abrirSessao("mark", "123456");
+		System.out.println("sessao mark: " + sessaoMark);
+
+		sis.cadastrarCarona(sessaoMark, "Campina Grande", "Joao Pessoa",
+				"06/04/2012", "04h50", 2);
+
+		System.out.println(sis
+				.localizarCarona(sessaoMark, "Campina Grande", "Joao Pessoa")
+				.get(0).getOrigem());
+
+	}
+
+	public String getTrajeto(String idCarona) throws Exception {
+
+		Carona c = localizaCarona(idCarona);
+
+		String trajeto = c.getOrigem() + " - " + c.getDestino();
+
+		return trajeto;
+	}
+
+	public String getCarona(String idCarona) throws Exception {
+		Carona c = localizaCarona(idCarona);
+		
+		String carona = c.getOrigem() + " para " +c.getDestino()+ ", no dia " +c.getData() + ", as " + c.getHora();
+		
+		return carona;
+	}
+
+	private Carona localizaCarona(String idCarona) throws Exception {
+		for (Carona c : caronas) {
+			if (c.getId().equals(idCarona)) {
+				return c;
+			}
+		}
+
+		throw new Exception("Carona nao encontrada");
+	}
 }

@@ -9,7 +9,7 @@ package si1.logica;
 
 public class Carona {
 
-	private String idDaSessao;
+	private String idSessao;
 	private String id;
 	private String origem;
 	private String destino;
@@ -17,24 +17,25 @@ public class Carona {
 	private String hora;
 	private int vagas;
 
-	public Carona(String idDaSessao, String origem, String destino,
-			String data, String hora, int vagas) throws Exception {
-		super();
-		this.setIdDaSessao(idDaSessao);
+	public Carona(String idSessao, String origem, String destino, String data,
+			String hora, int vagas) throws Exception {
+		
+		this.setIdSessao(idSessao);
 		this.setOrigem(origem);
 		this.setDestino(destino);
 		this.setData(data);
 		this.setHora(hora);
 		this.setVagas(vagas);
+		
+		GeradorDeID gerador = new GeradorDeID();
+		id = gerador.geraId();
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
+	
 
 	
 	public String getOrigem() {
@@ -43,10 +44,10 @@ public class Carona {
 
 	
 	public void setOrigem(String origem) throws Exception {
-		if(origem == null || origem.equals("")){
+		if (origem == null || origem.equals("")) {
 			throw new Exception("Origem nula ou invalida");
-		}else{
-			this.origem = origem;			
+		} else {
+			this.origem = origem;
 		}
 	}
 
@@ -57,10 +58,10 @@ public class Carona {
 
 	
 	public void setDestino(String destino) throws Exception {
-		if(destino == null || destino.equals("")){
+		if (destino == null || destino.equals("")) {
 			throw new Exception("Data nula ou invalida.");
-		}else{
-		    this.destino = destino;
+		} else {
+			this.destino = destino;
 		}
 	}
 
@@ -84,9 +85,9 @@ public class Carona {
 	}
 
 	public void setHora(String hora) throws Exception {
-		if(hora == null || hora.equals("")){
+		if (hora == null || hora.equals("")) {
 			throw new Exception("Hora nula ou invalida.");
-		}else{
+		} else {
 			this.hora = hora;
 		}
 	}
@@ -96,18 +97,18 @@ public class Carona {
 	}
 
 	public void setVagas(int vagas) throws Exception {
-		if(vagas <= 0){
+		if (vagas <= 0) {
 			throw new Exception("Numero de vagas nula ou invalida.");
 		}
 		this.vagas = vagas;
 	}
 
-	public String getIdDaSessao() {
-		return idDaSessao;
+	public String getIdSessao() {
+		return idSessao;
 	}
 
-	public void setIdDaSessao(String idDaSessao) {
-		this.idDaSessao = idDaSessao;
+	public void setIdSessao(String idSessao) {
+		this.idSessao = idSessao;
 	}
 
 }
