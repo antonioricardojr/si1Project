@@ -24,14 +24,18 @@ public class Sistema {
 		return usuarios;
 	}
 
-	
-
-	public Usuario criarUsuario(String login, String senha, String nome,
+	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
 
-		Usuario novoUsuario = new Usuario(login, senha, nome, endereco, email);
-		usuarios.add(novoUsuario);
-		return novoUsuario;
+		try{
+			Usuario novoUsuario = new Usuario(login, senha, nome, endereco,
+					email);
+			
+			usuarios.add(novoUsuario);
+		}catch(Exception e){
+			throw new Exception(e.getMessage());
+		}
+			
 	}
 
 	public String abrirSessao(String login, String senha) throws Exception {
@@ -63,8 +67,13 @@ public class Sistema {
 		return sessoes;
 	}
 
-	public String getAtributoUsuario(String login, String atributo) throws Exception {
+	public String getAtributoUsuario(String login, String atributo)
+			throws Exception {
 
+		
+		if(atributo == null || atributo.equals("")){
+			throw new Exception("atributo inexistente");
+		}
 		Usuario u = buscaUsuario(login);
 
 		if (u == null) {

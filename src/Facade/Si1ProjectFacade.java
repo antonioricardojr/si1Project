@@ -1,6 +1,5 @@
 package Facade;
 
-
 import si1.logica.Sistema;
 
 /**
@@ -19,6 +18,7 @@ public class Si1ProjectFacade {
 
 	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
+		
 		S1.criarUsuario(login, senha, nome, endereco, email);
 
 	}
@@ -31,10 +31,6 @@ public class Si1ProjectFacade {
 	public String getAtributoUsuario(String login, String atributo)
 			throws Exception {
 		return S1.getAtributoUsuario(login, atributo);
-	}
-
-	public static void main(String[] args) {
-		System.out.println("oiola");
 	}
 
 }

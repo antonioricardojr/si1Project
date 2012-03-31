@@ -31,7 +31,7 @@ public class Usuario {
 	public void setLogin(String login) throws Exception {
 		if (login == null || login.equals("")
 				|| contemCharInvalidosLogin(login)) {
-			throw new Exception("Login nulo ou invalido.");
+			throw new Exception("Login inválido");
 		}
 		this.login = login;
 	}
@@ -56,7 +56,7 @@ public class Usuario {
 
 	public void setSenha(String senha) throws Exception {
 		if (senha == null || senha == "") {
-			throw new Exception("senha nula ou invalida.");
+			throw new Exception("Senha inválida");
 		}
 		this.senha = senha;
 	}
@@ -67,7 +67,7 @@ public class Usuario {
 
 	public void setNome(String nome) throws Exception {
 		if (nome == null || nome.equals("") || contemCharInvalidosNome(nome)) {
-			throw new Exception("Nome nulo ou invalido.");
+			throw new Exception("Nome inválido");
 		}
 		this.nome = nome;
 	}
@@ -90,7 +90,7 @@ public class Usuario {
 
 	public void setEndereco(String endereco) throws Exception {
 		if (endereco == null || endereco.equals("")) {
-			throw new Exception("Endereco nulo ou invalido.");
+			throw new Exception("Endereço inválido");
 		}
 
 		this.endereco = endereco;
@@ -102,7 +102,7 @@ public class Usuario {
 
 	public void setEmail(String email) throws Exception {
 		if (email == null || email.equals("")) {
-			throw new Exception("E-mail nulo ou invalido.");
+			throw new Exception("Email inválido");
 		}
 		String[] caracteres = email.split("");
 
@@ -117,7 +117,7 @@ public class Usuario {
 				try {
 					substring2 = email.substring(i + 1);
 				} catch (Exception e) {
-					throw new Exception("E-mail nulo ou invalido.");
+					throw new Exception("Email inválido");
 
 				}
 				break;
@@ -128,7 +128,7 @@ public class Usuario {
 
 		for (int i = 1; i < arraySubs2.length; i++) {
 			if (arraySubs2[i].equals("@")) {
-				throw new Exception("E-mail nulo ou invalido.");
+				throw new Exception("Email inválido");
 			}
 			if (arraySubs2[i].equals(".")) {
 				try {
@@ -138,10 +138,10 @@ public class Usuario {
 									.contains(caracteres[i + 1])) {
 
 					} else {
-						throw new Exception("E-mail nulo ou invalido.");
+						throw new Exception("Email inválido.");
 					}
 				} catch (Exception e) {
-					throw new Exception("E-mail nulo ou invalido.");
+					throw new Exception("Email inválido");
 
 				}
 			}
@@ -149,17 +149,19 @@ public class Usuario {
 		}
 
 		if (substring1.equals(null) || substring1.equals("")) {
-			throw new Exception("Email nulo ou invalido.");
+			throw new Exception("Email inválido");
 		}
 
 		if (substring2 == null || substring2.equals("")
 				|| substring2.contains("@")) {
-			throw new Exception("Email nulo ou invalido.");
+			throw new Exception("Email inválido");
 		}
 
 		this.email = email;
 
 	}
 
-
+public static void main(String[] args) throws Exception {
+	Usuario u  = new Usuario(null, "asdas", "asdas","asdas","asdas@as.com");
+}
 }
