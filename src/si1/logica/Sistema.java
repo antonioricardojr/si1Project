@@ -14,6 +14,7 @@ public class Sistema {
 
 	private List<Usuario> usuarios;
 	private List<Sessao> sessoes;
+	private List<Carona> caronas;
 
 	public Sistema() {
 		usuarios = new ArrayList<Usuario>();
@@ -27,15 +28,15 @@ public class Sistema {
 	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
 
-		try{
+		try {
 			Usuario novoUsuario = new Usuario(login, senha, nome, endereco,
 					email);
-			
+
 			usuarios.add(novoUsuario);
-		}catch(Exception e){
+		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
-			
+
 	}
 
 	public String abrirSessao(String login, String senha) throws Exception {
@@ -70,8 +71,7 @@ public class Sistema {
 	public String getAtributoUsuario(String login, String atributo)
 			throws Exception {
 
-		
-		if(atributo == null || atributo.equals("")){
+		if (atributo == null || atributo.equals("")) {
 			throw new Exception("atributo inexistente");
 		}
 		Usuario u = buscaUsuario(login);
@@ -97,6 +97,37 @@ public class Sistema {
 			}
 		}
 		return null;
+	}
+
+	public List<Carona> localizarCarona(String idSessao, String origem,
+			String destino) {
+
+		List<Carona> caronasLocalizadas = new ArrayList<Carona>();
+
+		if (verificaSessao(idSessao)) {
+			for (Carona c : caronas) {
+				if (c.getOrigem().equals(origem)
+						&& c.getDestino().equals(destino)) {
+					caronasLocalizadas.add(c);
+				}
+			}
+		}
+
+		return caronasLocalizadas;
+	}
+
+	private boolean verificaSessao(String idSessao) {
+		for (Sessao s : sessoes) {
+			if (s.getId().equals(idSessao)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public List<Carona> getCaronas() {
+		return caronas;
 	}
 
 }

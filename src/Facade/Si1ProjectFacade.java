@@ -1,5 +1,8 @@
 package Facade;
 
+import java.util.List;
+
+import si1.logica.Carona;
 import si1.logica.Sistema;
 
 /**
@@ -18,8 +21,12 @@ public class Si1ProjectFacade {
 
 	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
-		
-		S1.criarUsuario(login, senha, nome, endereco, email);
+		try {
+			S1.criarUsuario(login, senha, nome, endereco, email);
+
+		} catch (Exception e) {
+
+		}
 
 	}
 
@@ -31,6 +38,12 @@ public class Si1ProjectFacade {
 	public String getAtributoUsuario(String login, String atributo)
 			throws Exception {
 		return S1.getAtributoUsuario(login, atributo);
+	}
+
+	public List<Carona> localizarCaronas(String idSessao, String origem,
+			String destino) {
+
+		return S1.localizarCarona(idSessao, origem, destino);
 	}
 
 }
