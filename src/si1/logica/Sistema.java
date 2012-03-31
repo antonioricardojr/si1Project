@@ -16,16 +16,15 @@ public class Sistema {
 	private List<Sessao> sessoes;
 
 	public Sistema() {
-		setUsuarios(new ArrayList<Usuario>());
+		usuarios = new ArrayList<Usuario>();
+		sessoes = new ArrayList<Sessao>();
 	}
 
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
+	
 
 	public Usuario criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
@@ -62,10 +61,6 @@ public class Sistema {
 
 	public List<Sessao> getSessoes() {
 		return sessoes;
-	}
-
-	public void setSessoes(List<Sessao> sessoes) {
-		this.sessoes = sessoes;
 	}
 
 	public String getAtributoUsuario(String login, String atributo) throws Exception {

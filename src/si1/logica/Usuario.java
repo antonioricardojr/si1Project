@@ -161,11 +161,5 @@ public class Usuario {
 
 	}
 
-	public static void main(String[] args) {
-		String a = "login";
-		String[] s = a.split("");
-		for (int i = 0; i < s.length; i++) {
-			System.out.println(i + s[i]);
-		}
-	}
+
 }

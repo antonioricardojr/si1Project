@@ -13,8 +13,11 @@ public class Sessao {
 
 	public Sessao(String login) throws Exception {
 
-		setLogin(login);		
-		setId(new GeradorDeID().geraId());
+		setLogin(login);
+		
+		GeradorDeID gerador = new GeradorDeID();
+		
+		setId(gerador.geraId());
 		
 	}
 
