@@ -11,10 +11,11 @@ public class Sessao {
 	private String login;
 	private String id;
 
-	public Sessao(String login, String id) throws Exception {
+	public Sessao(String login) throws Exception {
 
-		setLogin(login);
-		setId(id);
+		setLogin(login);		
+		setId(new GeradorDeID().geraId());
+		
 	}
 
 	public String getLogin() {
@@ -38,5 +39,10 @@ public class Sessao {
 		}
 		this.id = id;
 	}
+
+
+	
+	
+	
 
 }
