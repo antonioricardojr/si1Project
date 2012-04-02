@@ -100,20 +100,22 @@ public class Sistema {
 		return null;
 	}
 
-	public List<Carona> localizarCarona(String idSessao, String origem,
+	public String localizarCarona(String idSessao, String origem,
 			String destino) {
 
-		List<Carona> caronasLocalizadas = new ArrayList<Carona>();
+		String caronasLocalizadas = "{";
 
 		if (verificaSessao(idSessao)) {
 			for (Carona c : caronas) {
 				if (c.getOrigem().equals(origem)
 						&& c.getDestino().equals(destino)) {
-					caronasLocalizadas.add(c);
+					caronasLocalizadas += c.getId() + ", ";
 				}
 			}
 		}
 
+		caronasLocalizadas = caronasLocalizadas.substring(0, caronasLocalizadas.length() - 3) + "}";
+		
 		return caronasLocalizadas;
 	}
 
@@ -179,10 +181,6 @@ public class Sistema {
 
 		sis.cadastrarCarona(sessaoMark, "Campina Grande", "Joao Pessoa",
 				"06/04/2012", "04h50", 2);
-
-		System.out.println(sis
-				.localizarCarona(sessaoMark, "Campina Grande", "Joao Pessoa")
-				.get(0).getOrigem());
 
 	}
 

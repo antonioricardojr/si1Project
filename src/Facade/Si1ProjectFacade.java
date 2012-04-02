@@ -40,7 +40,7 @@ public class Si1ProjectFacade {
 		return S1.getAtributoUsuario(login, atributo);
 	}
 
-	public List<Carona> localizarCaronas(String idSessao, String origem,
+	public String localizarCaronas(String idSessao, String origem,
 			String destino) {
 
 		return S1.localizarCarona(idSessao, origem, destino);
