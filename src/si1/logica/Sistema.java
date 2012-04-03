@@ -29,29 +29,26 @@ public class Sistema {
 
 	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
-		
-			if(login == null || login.equals("")){
-				throw new Exception("Login inválido");
-			}
-			
-			if(nome == null || nome.equals("")){
-				throw new Exception("Nome inválido");
-			}
 
-		
-			Usuario novoUsuario = new Usuario(login, senha, nome, endereco,
-					email);
+		if (login == null || login.equals("")) {
+			throw new Exception("Login inválido");
+		}
 
-			usuarios.add(novoUsuario);
-		
-			
+		if (nome == null || nome.equals("")) {
+			throw new Exception("Nome inválido");
+		}
+
+		Usuario novoUsuario = new Usuario(login, senha, nome, endereco, email);
+
+		usuarios.add(novoUsuario);
+
 	}
 
 	public String abrirSessao(String login, String senha) throws Exception {
-		if(login == null || login.equals("")){
+		if (login == null || login.equals("")) {
 			throw new Exception("Login inválido");
 		}
-		
+
 		Sessao novaSessao = null;
 
 		for (Usuario u : usuarios) {
@@ -60,7 +57,7 @@ public class Sistema {
 					novaSessao = new Sessao(login);
 					sessoes.add(novaSessao);
 					return novaSessao.getId();
-				}else{
+				} else {
 					throw new Exception("Login inválido");
 				}
 			}
@@ -89,12 +86,11 @@ public class Sistema {
 		if (atributo == null || atributo.equals("")) {
 			throw new Exception("Atributo inválido");
 		}
-		
-		if(login == null || login.equals("")){
+
+		if (login == null || login.equals("")) {
 			throw new Exception("Login inválido");
 		}
-		
-		
+
 		Usuario u = buscaUsuario(login);
 
 		if (u == null) {
@@ -123,10 +119,11 @@ public class Sistema {
 	public List<Integer> localizarCarona(String idSessao, String origem,
 			String destino) throws Exception {
 
-		if(origem == null || origem.equals("") || contemCharInvalidos(origem)){
+		if (origem == null || origem.equals("") || contemCharInvalidos(origem)) {
 			throw new Exception("Origem inválida");
 		}
-		if(destino == null || destino.equals("") || contemCharInvalidos(destino)){
+		if (destino == null || destino.equals("")
+				|| contemCharInvalidos(destino)) {
 			throw new Exception("Destino inválido");
 		}
 		List<Integer> caronasLocalizadas = new LinkedList<Integer>();
@@ -142,12 +139,13 @@ public class Sistema {
 
 		return caronasLocalizadas;
 	}
-	
+
 	private static boolean contemCharInvalidos(String nome) {
 		String[] palavra = nome.trim().split("");
 
 		for (int i = 1; i < palavra.length; i++) {
-			if ("'!@#$%¨¨¨&*()+¹²³¢¬§=[{ª]}º;:>,</|/0123456789*-.".contains(palavra[i])) {
+			if ("'!@#$%¨¨¨&*()+¹²³¢¬§=[{ª]}º;:>,</|/0123456789*-."
+					.contains(palavra[i])) {
 				return true;
 			}
 		}
@@ -172,8 +170,6 @@ public class Sistema {
 	public String cadastrarCarona(String idSessao, String origem,
 			String destino, String data, String hora, int vagas)
 			throws Exception {
-		
-
 
 		Carona novaCarona = new Carona(idSessao, origem, destino, data, hora,
 				vagas);
@@ -184,14 +180,15 @@ public class Sistema {
 
 	public String getAtributoCarona(String idCarona, String atributo)
 			throws Exception {
-		
-		if(idCarona == null || idCarona.equals("")){
+
+		if (idCarona == null || idCarona.equals("")) {
 			throw new Exception("Identificador do carona é inválido");
 		}
-		
-		if(atributo == null || atributo.equals("")){
+
+		if (atributo == null || atributo.equals("")) {
 			throw new Exception("Atributo inválido");
 		}
+
 		for (Carona c : caronas) {
 			if (c.getId().equals(idCarona)) {
 				if (atributo.equals("origem")) {
@@ -208,44 +205,45 @@ public class Sistema {
 				}
 				if (atributo.equals("vagas")) {
 					return "" + c.getVagas();
-				}else{
+				} else {
 					throw new Exception("Atributo inexistente");
 				}
+			} else {
+				throw new Exception("Item inexistente");
 			}
 		}
 
 		return null;
+
 	}
 
 	public String getTrajeto(String idCarona) throws Exception {
 
-		
-		
-		if(idCarona == null){
-			throw new Exception("Trajeto InvÃ¡lida");
-			
+		if (idCarona == null) {
+			throw new Exception("Trajeto Inválida");
+
 		}
-		
-		
+
 		String trajeto = null;
-		
-		try{
-		Carona c = localizaCarona(idCarona);
-		
-		trajeto = c.getOrigem() + " - " + c.getDestino();
-		
-		
-		}catch(Exception e){
+
+		try {
+			Carona c = localizaCarona(idCarona);
+
+			trajeto = c.getOrigem() + " - " + c.getDestino();
+
+		} catch (Exception e) {
 			throw new Exception("Trajeto Inexistente");
 		}
-		
 
-		
 		return trajeto;
-		
+
 	}
 
 	public String getCarona(String idCarona) throws Exception {
+
+		if (idCarona == null) {
+			throw new Exception("Carona Inválida");
+		}
 		Carona c = localizaCarona(idCarona);
 
 		String carona = c.getOrigem() + " para " + c.getDestino() + ", no dia "
@@ -257,7 +255,7 @@ public class Sistema {
 	private Carona localizaCarona(String idCarona) throws Exception {
 
 		if (idCarona == null || idCarona == "") {
-			throw new Exception("Carona InvÃ¡lida");
+			throw new Exception("Carona Inválida");
 		}
 
 		for (Carona c : caronas) {
