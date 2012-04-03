@@ -208,12 +208,9 @@ public class Sistema {
 				} else {
 					throw new Exception("Atributo inexistente");
 				}
-			} else {
-				throw new Exception("Item inexistente");
-			}
+			} 
 		}
-
-		return null;
+		throw new Exception("Item inexistente");
 
 	}
 

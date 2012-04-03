@@ -1,8 +1,6 @@
 package si1.logica;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Classe que representa uma carona no sistema.
