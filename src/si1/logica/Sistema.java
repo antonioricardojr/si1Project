@@ -72,12 +72,12 @@ public class Sistema {
 			throws Exception {
 
 		if (atributo == null || atributo.equals("")) {
-			throw new Exception("atributo inexistente");
+			throw new Exception("Atributo inválido");
 		}
 		Usuario u = buscaUsuario(login);
 
 		if (u == null) {
-			throw new Exception("Login nao encontrado.");
+			throw new Exception("Usuário inexistente");
 		}
 
 		if (atributo.equals("nome")) {
@@ -87,7 +87,7 @@ public class Sistema {
 			return u.getEndereco();
 		}
 
-		return null;
+		throw new Exception("Atributo inexistente");
 	}
 
 	private Usuario buscaUsuario(String login) {
