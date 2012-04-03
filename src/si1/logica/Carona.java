@@ -43,10 +43,8 @@ public class Carona {
 		return origem;
 	}
 
-	
-	//verificar os caracteres inv·lidos
 	public void setOrigem(String origem) throws Exception {
-		if (origem == null || origem.equals("")) {
+		if (origem == null || origem.equals("") || contemCharInvalidos(origem)) {
 			throw new Exception("Origem inv√°lida");
 		} else {
 			this.origem = origem;
@@ -57,23 +55,19 @@ public class Carona {
 		return destino;
 	}
 
-	
-	//verificar este mÈtodo
 	public void setDestino(String destino) throws Exception {
-		if (destino == null || destino.equals("")) {
+		if (destino == null || destino.equals("") || contemCharInvalidos(destino)) {
 			throw new Exception("Destino inv√°lido");
 		} else {
 			this.destino = destino;
 		}
 	}
 
-	
-	
 	private static boolean contemCharInvalidos(String nome) {
 		String[] palavra = nome.trim().split("");
 
 		for (int i = 1; i < palavra.length; i++) {
-			if ("'!@#$%®®®&*()+π≤≥£¢¨ß=[{™~^]}∫;:>,</|¥/`0123456789*-".contains(palavra[i])) {
+			if ("'!@#$%®®®&*()+π≤≥¢¨ß=[{™]}∫;:>,</|/0123456789*-".contains(palavra[i])) {
 				return true;
 			}
 		}
@@ -109,7 +103,7 @@ public class Carona {
 			ano = Integer.parseInt(data.substring(6));
 
 		} catch (Exception e) {
-			throw new Exception("Data inv√°lida");
+			throw new Exception("Data nula ou invalida.");
 		}
 
 		// Verifica ano >= que atual
@@ -225,9 +219,7 @@ public class Carona {
 	}
 
 	public void setVagas(int vagas) throws Exception {
-		
-		//verificar erro no easyAccept
-		if (vagas <= 0 || ((Integer) vagas) == null) {
+		if (vagas <= 0 || ((Integer) vagas == null)) {
 			throw new Exception("Vaga inv√°lida");
 		}
 		this.vagas = vagas;
@@ -244,7 +236,7 @@ public class Carona {
 			String[] caracteres = idSessao.split("");
 			for (int i = 1; i < caracteres.length; i++) {
 				if (temInvalidoNosNumeros(caracteres[i])) {
-					throw new Exception("Sess√£o inexistente");
+					throw new Exception("Sess√£o inv√°lida");
 				}
 			}
 		}
@@ -260,6 +252,6 @@ public class Carona {
 	}
 
 	public static void main(String[] args){
-		System.out.println(contemCharInvalidos("bucata oiE"));
+		System.out.println(contemCharInvalidos("bucat„ oiE"));
 	}
 }
