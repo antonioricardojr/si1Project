@@ -19,7 +19,7 @@ public class Si1ProjectTestClient {
 		files.add("US/US02.txt");
 		files.add("US/US03.txt");
 		
-		// Instantiate the Monopoly Game façade
+		
 		Si1ProjectFacade si1ProjectFacade = new Si1ProjectFacade();
 		// Instantiate EasyAccept façade
 		EasyAcceptFacade eaFacade = new EasyAcceptFacade(si1ProjectFacade,
