@@ -124,7 +124,7 @@ public class Sistema {
 			String destino) throws Exception {
 
 		if(origem == null || origem.equals("") || contemCharInvalidos(origem)){
-			throw new Exception("Origem inv√°lida");
+			throw new Exception("Origem inv·lida");
 		}
 		if(destino == null || destino.equals("") || contemCharInvalidos(destino)){
 			throw new Exception("Destino inv·lido");
@@ -172,6 +172,8 @@ public class Sistema {
 	public String cadastrarCarona(String idSessao, String origem,
 			String destino, String data, String hora, int vagas)
 			throws Exception {
+		
+
 
 		Carona novaCarona = new Carona(idSessao, origem, destino, data, hora,
 				vagas);
@@ -184,7 +186,11 @@ public class Sistema {
 			throws Exception {
 		
 		if(idCarona == null || idCarona.equals("")){
-			throw new Exception("Identificador do carona √© inv√°lido");
+			throw new Exception("Identificador do carona È inv·lido");
+		}
+		
+		if(atributo == null || atributo.equals("")){
+			throw new Exception("Atributo inv·lido");
 		}
 		for (Carona c : caronas) {
 			if (c.getId().equals(idCarona)) {
@@ -203,7 +209,7 @@ public class Sistema {
 				if (atributo.equals("vagas")) {
 					return "" + c.getVagas();
 				}else{
-					throw new Exception("Item inexistente");
+					throw new Exception("Atributo inexistente");
 				}
 			}
 		}
