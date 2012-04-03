@@ -29,6 +29,7 @@ public class Usuario {
 	}
 
 	public void setLogin(String login) throws Exception {
+		
 		if (login == null || login.equals("")
 				|| contemCharInvalidosLogin(login)) {
 			throw new Exception("Login inválido");

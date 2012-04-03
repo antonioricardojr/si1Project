@@ -30,15 +30,13 @@ public class Sistema {
 	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
 
-		try {
+		
 			Usuario novoUsuario = new Usuario(login, senha, nome, endereco,
 					email);
 
 			usuarios.add(novoUsuario);
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
-
+		
+			
 	}
 
 	public String abrirSessao(String login, String senha) throws Exception {

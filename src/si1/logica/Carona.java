@@ -43,8 +43,10 @@ public class Carona {
 		return origem;
 	}
 
+	
+	//verificar os caracteres inv·lidos
 	public void setOrigem(String origem) throws Exception {
-		if (origem == null || origem.equals("") || contemCharInvalidos(origem)) {
+		if (origem == null || origem.equals("")) {
 			throw new Exception("Origem inv√°lida");
 		} else {
 			this.origem = origem;
