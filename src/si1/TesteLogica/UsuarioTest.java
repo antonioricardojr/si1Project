@@ -32,35 +32,35 @@ public class UsuarioTest {
 			u1 = new Usuario(null, "123456", "Mark Zuckerberg",
 					"Palo Alto, California", "mark@facebook.com");
 		} catch (Exception e) {
-			Assert.assertEquals("Login nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Login inválido", e.getMessage());
 		}
 
 		try {
 			u1 = new Usuario("", "123456", "Mark Zuckerberg",
 					"Palo Alto, California", "mark@facebook.com");
 		} catch (Exception e) {
-			Assert.assertEquals("Login nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Login inválido", e.getMessage());
 		}
 
 		try {
 			u1 = new Usuario("!", "123456", "Mark Zuckerberg",
 					"Palo Alto, California", "mark@facebook.com");
 		} catch (Exception e) {
-			Assert.assertEquals("Login nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Login inválido", e.getMessage());
 		}
 
 		try {
 			u1 = new Usuario("mark*", "123456", "Mark Zuckerberg",
 					"Palo Alto, California", "mark@facebook.com");
 		} catch (Exception e) {
-			Assert.assertEquals("Login nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Login inválido", e.getMessage());
 		}
 
 		try {
 			u1 = new Usuario("ma&rk", "123456", "Mark Zuckerberg",
 					"Palo Alto, California", "mark@facebook.com");
 		} catch (Exception e) {
-			Assert.assertEquals("Login nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Login inválido", e.getMessage());
 		}
 		
 		u2 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
@@ -75,14 +75,14 @@ public class UsuarioTest {
 			u1 = new Usuario("mark", null, "Mark Zuckerberg",
 					"Palo Alto, California", "mark@facebook.com");
 		} catch (Exception e) {
-			Assert.assertEquals("senha nula ou invalida.", e.getMessage());
+			Assert.assertEquals("Senha inválida", e.getMessage());
 		}
 
 		try {
 			u2 = new Usuario("mark", "", "Mark Zuckerberg",
 					"Palo Alto, California", "mark@facebook.com");
 		} catch (Exception e) {
-			Assert.assertEquals("senha nula ou invalida.", e.getMessage());
+			Assert.assertEquals("Senha inválida", e.getMessage());
 		}
 		
 		
@@ -99,7 +99,7 @@ public class UsuarioTest {
 					"mark@facebook.com");
 
 		} catch (Exception e) {
-			Assert.assertEquals("Nome nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Nome inválido", e.getMessage());
 
 		}
 
@@ -108,7 +108,7 @@ public class UsuarioTest {
 					"mark@facebook.com");
 
 		} catch (Exception e) {
-			Assert.assertEquals("Nome nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Nome inválido", e.getMessage());
 
 		}
 
@@ -117,7 +117,7 @@ public class UsuarioTest {
 					"mark@facebook.com");
 
 		} catch (Exception e) {
-			Assert.assertEquals("Nome nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Nome inválido", e.getMessage());
 
 		}
 
@@ -126,7 +126,7 @@ public class UsuarioTest {
 					"Palo Alto, California", "mark@facebook.com");
 
 		} catch (Exception e) {
-			Assert.assertEquals("Nome nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Nome inválido", e.getMessage());
 
 		}
 
@@ -143,14 +143,14 @@ public class UsuarioTest {
 			u1 = new Usuario("mark", "123456", "Mark Zuckerberg",
 					null, "mark@facebook.com");
 		}catch(Exception e){
-			Assert.assertEquals("Endereco nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Endereço inválido", e.getMessage());
 		}
 		
 		try{
 			u1 = new Usuario("mark", "123456", "Mark Zuckerberg",
 					"", "mark@facebook.com");
 		}catch(Exception e){
-			Assert.assertEquals("Endereco nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Endereço inválido", e.getMessage());
 		}
 		
 		try {
@@ -169,31 +169,31 @@ public class UsuarioTest {
 		try{
 			u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", null);
 		}catch(Exception e){
-			Assert.assertEquals("E-mail nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Email inválido", e.getMessage());
 		}
 		
 		try{
 			u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "");
 		}catch(Exception e){
-			Assert.assertEquals("E-mail nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Email inválido", e.getMessage());
 		}
 		
 		try{
 			u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@@facebook.com");
 		}catch(Exception e){
-			Assert.assertEquals("E-mail nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Email inválido", e.getMessage());
 		}
 		
 		try{
 			u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@.facebook.com");
 		}catch(Exception e){
-			Assert.assertEquals("E-mail nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Email inválido", e.getMessage());
 		}
 		
 		try{
 			u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook...com");
 		}catch(Exception e){
-			Assert.assertEquals("E-mail nulo ou invalido.", e.getMessage());
+			Assert.assertEquals("Email inválido", e.getMessage());
 		}
 		
 		u2 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");

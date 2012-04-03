@@ -1,6 +1,7 @@
 package si1.logica;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -100,21 +101,20 @@ public class Sistema {
 		return null;
 	}
 
-	public String localizarCarona(String idSessao, String origem,
+	public List<Integer> localizarCarona(String idSessao, String origem,
 			String destino) {
 
-		String caronasLocalizadas = "{";
+		List<Integer> caronasLocalizadas = new LinkedList<Integer>();
 
 		if (verificaSessao(idSessao)) {
 			for (Carona c : caronas) {
 				if (c.getOrigem().equals(origem)
 						&& c.getDestino().equals(destino)) {
-					caronasLocalizadas += c.getId() + ", ";
+					//add em caronasLocalizadas
 				}
 			}
 		}
 
-		caronasLocalizadas = caronasLocalizadas.substring(0, caronasLocalizadas.length() - 3) + "}";
 		
 		return caronasLocalizadas;
 	}
