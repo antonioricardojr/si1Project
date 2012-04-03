@@ -110,12 +110,11 @@ public class Sistema {
 			for (Carona c : caronas) {
 				if (c.getOrigem().equals(origem)
 						&& c.getDestino().equals(destino)) {
-					//add em caronasLocalizadas
+					// add em caronasLocalizadas
 				}
 			}
 		}
 
-		
 		return caronasLocalizadas;
 	}
 
@@ -169,6 +168,58 @@ public class Sistema {
 		return null;
 	}
 
+	public String getTrajeto(String idCarona) throws Exception {
+
+		
+		
+		if(idCarona == null){
+			throw new Exception("Trajeto Inválida");
+			
+		}
+		
+		
+		String trajeto = null;
+		
+		try{
+		Carona c = localizaCarona(idCarona);
+		
+		trajeto = c.getOrigem() + " - " + c.getDestino();
+		
+		
+		}catch(Exception e){
+			throw new Exception("Trajeto Inexistente");
+		}
+		
+
+		
+		return trajeto;
+		
+	}
+
+	public String getCarona(String idCarona) throws Exception {
+		Carona c = localizaCarona(idCarona);
+
+		String carona = c.getOrigem() + " para " + c.getDestino() + ", no dia "
+				+ c.getData() + ", as " + c.getHora();
+
+		return carona;
+	}
+
+	private Carona localizaCarona(String idCarona) throws Exception {
+
+		if (idCarona == null || idCarona == "") {
+			throw new Exception("Carona Inválida");
+		}
+
+		for (Carona c : caronas) {
+			if (c.getId().equals(idCarona)) {
+				return c;
+			}
+		}
+
+		throw new Exception("Carona Inexistente");
+	}
+
 	public static void main(String[] args) throws Exception {
 		Sistema sis = new Sistema();
 
@@ -184,30 +235,4 @@ public class Sistema {
 
 	}
 
-	public String getTrajeto(String idCarona) throws Exception {
-
-		Carona c = localizaCarona(idCarona);
-
-		String trajeto = c.getOrigem() + " - " + c.getDestino();
-
-		return trajeto;
-	}
-
-	public String getCarona(String idCarona) throws Exception {
-		Carona c = localizaCarona(idCarona);
-		
-		String carona = c.getOrigem() + " para " +c.getDestino()+ ", no dia " +c.getData() + ", as " + c.getHora();
-		
-		return carona;
-	}
-
-	private Carona localizaCarona(String idCarona) throws Exception {
-		for (Carona c : caronas) {
-			if (c.getId().equals(idCarona)) {
-				return c;
-			}
-		}
-
-		throw new Exception("Carona nao encontrada");
-	}
 }

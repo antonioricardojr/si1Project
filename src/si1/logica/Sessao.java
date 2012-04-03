@@ -27,7 +27,7 @@ public class Sessao {
 
 	public void setLogin(String login)throws Exception {
 		if(login == null || login.equals("")){
-			throw new Exception("Login nulo ou invalido.");
+			throw new Exception("Login inválido");
 		}
 		this.login = login;
 	}

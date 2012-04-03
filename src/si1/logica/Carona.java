@@ -45,7 +45,7 @@ public class Carona {
 
 	public void setOrigem(String origem) throws Exception {
 		if (origem == null || origem.equals("") || contemCharInvalidos(origem)) {
-			throw new Exception("Origem nula ou invalida");
+			throw new Exception("Origem inválida");
 		} else {
 			this.origem = origem;
 		}
@@ -55,14 +55,18 @@ public class Carona {
 		return destino;
 	}
 
+	
+	//verificar este m�todo
 	public void setDestino(String destino) throws Exception {
-		if (destino == null || destino.equals("") || contemCharInvalidos(destino)) {
-			throw new Exception("Destino nulo ou invalido.");
+		if (destino == null || destino.equals("")) {
+			throw new Exception("Destino inválido");
 		} else {
 			this.destino = destino;
 		}
 	}
 
+	
+	
 	private static boolean contemCharInvalidos(String nome) {
 		String[] palavra = nome.trim().split("");
 
@@ -81,7 +85,7 @@ public class Carona {
 
 	public void setData(String data) throws Exception {
 		if (data == null || data.equals("") || !validaData(data)) {
-			throw new Exception("Data nula ou invalida.");
+			throw new Exception("Data inválida");
 		} else {
 			this.data = data;
 		}
@@ -103,7 +107,7 @@ public class Carona {
 			ano = Integer.parseInt(data.substring(6));
 
 		} catch (Exception e) {
-			throw new Exception("Data nula ou invalida.");
+			throw new Exception("Data inválida");
 		}
 
 		// Verifica ano >= que atual
@@ -186,7 +190,7 @@ public class Carona {
 
 	public void setHora(String hora) throws Exception {
 		if (hora == null || hora.equals("") || !validaHora(hora)) {
-			throw new Exception("Hora nula ou invalida.");
+			throw new Exception("Hora inválida");
 		} else {
 			this.hora = hora;
 		}
@@ -219,8 +223,10 @@ public class Carona {
 	}
 
 	public void setVagas(int vagas) throws Exception {
-		if (vagas <= 0) {
-			throw new Exception("Numero de vagas nula ou invalida.");
+		
+		//verificar erro no easyAccept
+		if (vagas <= 0 || ((Integer) vagas) == null) {
+			throw new Exception("Vaga inválida");
 		}
 		this.vagas = vagas;
 	}
@@ -231,12 +237,12 @@ public class Carona {
 
 	public void setIdSessao(String idSessao) throws Exception {
 		if (idSessao == null || idSessao.equals("")) {
-			throw new Exception("Id de sessao nulo ou invalido.");
+			throw new Exception("Sessão inválida");
 		} else {
 			String[] caracteres = idSessao.split("");
 			for (int i = 1; i < caracteres.length; i++) {
 				if (temInvalidoNosNumeros(caracteres[i])) {
-					throw new Exception("Id de sessao invalido ou nulo.");
+					throw new Exception("Sessão inexistente");
 				}
 			}
 		}
