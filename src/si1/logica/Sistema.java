@@ -121,8 +121,14 @@ public class Sistema {
 	}
 
 	public List<Integer> localizarCarona(String idSessao, String origem,
-			String destino) {
+			String destino) throws Exception {
 
+		if(origem == null || origem.equals("") || contemCharInvalidos(origem)){
+			throw new Exception("Origem inv√°lida");
+		}
+		if(destino == null || destino.equals("") || contemCharInvalidos(destino)){
+			throw new Exception("Destino inv·lido");
+		}
 		List<Integer> caronasLocalizadas = new LinkedList<Integer>();
 
 		if (verificaSessao(idSessao)) {
@@ -135,6 +141,18 @@ public class Sistema {
 		}
 
 		return caronasLocalizadas;
+	}
+	
+	private static boolean contemCharInvalidos(String nome) {
+		String[] palavra = nome.trim().split("");
+
+		for (int i = 1; i < palavra.length; i++) {
+			if ("'!@#$%®®®&*()+π≤≥¢¨ß=[{™]}∫;:>,</|/0123456789*-.".contains(palavra[i])) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean verificaSessao(String idSessao) {
@@ -164,6 +182,10 @@ public class Sistema {
 
 	public String getAtributoCarona(String idCarona, String atributo)
 			throws Exception {
+		
+		if(idCarona == null || idCarona.equals("")){
+			throw new Exception("Identificador do carona √© inv√°lido");
+		}
 		for (Carona c : caronas) {
 			if (c.getId().equals(idCarona)) {
 				if (atributo.equals("origem")) {
@@ -180,6 +202,8 @@ public class Sistema {
 				}
 				if (atributo.equals("vagas")) {
 					return "" + c.getVagas();
+				}else{
+					throw new Exception("Item inexistente");
 				}
 			}
 		}

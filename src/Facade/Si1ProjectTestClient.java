@@ -17,6 +17,7 @@ public class Si1ProjectTestClient {
 		// Put the us1.txt file into the "test scripts" list
 		files.add("US/US01.txt");
 		files.add("US/US02.txt");
+		files.add("US/US03.txt");
 		
 		// Instantiate the Monopoly Game façade
 		Si1ProjectFacade si1ProjectFacade = new Si1ProjectFacade();

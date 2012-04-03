@@ -37,7 +37,7 @@ public class Si1ProjectFacade {
 	}
 
 	public List<Integer> localizarCarona(String idSessao, String origem,
-			String destino) {
+			String destino) throws Exception {
 
 		return S1.localizarCarona(idSessao, origem, destino);
 	}
