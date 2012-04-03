@@ -21,12 +21,8 @@ public class Si1ProjectFacade {
 
 	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
-		try {
-			S1.criarUsuario(login, senha, nome, endereco, email);
 
-		} catch (Exception e) {
-
-		}
+		S1.criarUsuario(login, senha, nome, endereco, email);
 
 	}
 

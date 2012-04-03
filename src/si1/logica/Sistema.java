@@ -29,6 +29,14 @@ public class Sistema {
 
 	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
+		
+			if(login == null || login.equals("")){
+				throw new Exception("Login inválido");
+			}
+			
+			if(nome == null || nome.equals("")){
+				throw new Exception("Nome inválido");
+			}
 
 		
 			Usuario novoUsuario = new Usuario(login, senha, nome, endereco,
@@ -40,6 +48,10 @@ public class Sistema {
 	}
 
 	public String abrirSessao(String login, String senha) throws Exception {
+		if(login == null || login.equals("")){
+			throw new Exception("Login inválido");
+		}
+		
 		Sessao novaSessao = null;
 
 		for (Usuario u : usuarios) {
@@ -47,10 +59,13 @@ public class Sistema {
 				if (verificaSenha(senha)) {
 					novaSessao = new Sessao(login);
 					sessoes.add(novaSessao);
+					return novaSessao.getId();
+				}else{
+					throw new Exception("Login inválido");
 				}
 			}
 		}
-		return novaSessao.getId();
+		throw new Exception("Usuário inexistente");
 	}
 
 	private boolean verificaSenha(String senha) {
@@ -74,6 +89,12 @@ public class Sistema {
 		if (atributo == null || atributo.equals("")) {
 			throw new Exception("Atributo inválido");
 		}
+		
+		if(login == null || login.equals("")){
+			throw new Exception("Login inválido");
+		}
+		
+		
 		Usuario u = buscaUsuario(login);
 
 		if (u == null) {
