@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import si1.logica.Carona;
+import si1.logica.Sistema;
+import si1.logica.Usuario;
 
 public class CaronaTest {
 
@@ -15,9 +17,13 @@ public class CaronaTest {
 	Carona c3;
 	Carona c4;
 	Carona c5;
-
+	Usuario usuario;
 	@Before
 	public void setUp() throws Exception {
+		Sistema sis = new Sistema();
+		
+		usuario = sis.criarUsuario("Mark", "123456", "Mark Zuckerberg",
+				"Palo Alto, California", "mark@facebook.com");
 	}
 
 	@After
@@ -26,31 +32,32 @@ public class CaronaTest {
 
 	@Test
 	public void testOrigem() throws Exception {
+		
 		try {
 			c1 = new Carona("091029", "Campina Grande", "Joao Pessoa",
-					"20/09/2012", "19:00", 3);
+					"20/09/2012", "19:00", 3,usuario);
 		} catch (Exception e) {
 
 		}
 		assertEquals("Campina Grande", c1.getOrigem());
 
 		try {
-			c2 = new Carona("123456", null, "Natal", "20/07/2012", "14:00", 2);
+			c2 = new Carona("123456", null, "Natal", "20/07/2012", "14:00", 2,usuario);
 		} catch (Exception e) {
-			assertEquals("Origem nula ou invalida", e.getMessage());
+			assertEquals("Origem inválida", e.getMessage());
 
 		}
 
 		try {
-			c3 = new Carona("1020301", "", "Fortaleza", "04/08/2012", "09:00", 1);
+			c3 = new Carona("1020301", "", "Fortaleza", "04/08/2012", "09:00", 1,usuario);
 		} catch (Exception e) {
-			assertEquals("Origem nula ou invalida", e.getMessage());
+			assertEquals("Origem inválida", e.getMessage());
 		}
 		
 		try {
-			c4 = new Carona("1020301", "", "Fort@l&z@", "04/08/2012", "09:00", 1);
+			c4 = new Carona("1020301", "", "Fort@l&z@", "04/08/2012", "09:00", 1,usuario);
 		} catch (Exception e) {
-			assertEquals("Origem nula ou invalida", e.getMessage());
+			assertEquals("Origem inválida", e.getMessage());
 		}
 		
 		
@@ -62,28 +69,28 @@ public class CaronaTest {
 
 		try {
 			c1 = new Carona("7894561", "Campina Grande", "Fortaleza",
-					"04/08/2012", "09:00", 1);
+					"04/08/2012", "09:00", 1,usuario);
 		} catch (Exception e) {
 		}
 		assertEquals("09:00", c1.getHora());
 
 		try {
 			c2 = new Carona("7894561", "Campina Grande", "Fortaleza",
-					"04/08/2012", "seis", 1);
+					"04/08/2012", "seis", 1,usuario);
 		} catch (Exception e) {
-			assertEquals("Hora nula ou invalida.", e.getMessage());
+			assertEquals("Hora inválida", e.getMessage());
 		}
 		
 		try{
-			c3 = new Carona("7894561", "Campina Grande", "Fortaleza", "04/08/2012", "09000", 1);	
+			c3 = new Carona("7894561", "Campina Grande", "Fortaleza", "04/08/2012", "09000", 1,usuario);	
 		}catch(Exception e){
-			assertEquals("Hora nula ou invalida.", e.getMessage());
+			assertEquals("Hora inválida", e.getMessage());
 		}
 		
 		try{
-			c4 = new Carona("7894561", "Campina Grande", "Fortaleza", "04/08/2012", "009:0", 1);	
+			c4 = new Carona("7894561", "Campina Grande", "Fortaleza", "04/08/2012", "009:0", 1,usuario);	
 		}catch(Exception e){
-			assertEquals("Hora nula ou invalida.", e.getMessage());
+			assertEquals("Hora inválida", e.getMessage());
 		}
 	}
 
@@ -91,7 +98,7 @@ public class CaronaTest {
 	public void testIdSessao(){
 		try {
 			c1 = new Carona("091029", "Campina Grande", "Joao Pessoa",
-					"10/08/2012", "19:00", 3);
+					"10/08/2012", "19:00", 3,usuario);
 		} catch (Exception e) {
 
 		}
@@ -99,16 +106,16 @@ public class CaronaTest {
 		
 		try{
 			c2 = new Carona("091029A", "Campina Grande", "Joao Pessoa",
-					"10/08/2012", "19:00", 3);
+					"10/08/2012", "19:00", 3,usuario);
 		}catch(Exception e){
-			assertEquals("Id de sessao invalido ou nulo.", e.getMessage());
+			assertEquals("Sessão inexistente", e.getMessage());
 		}
 		
 		try{
 			c3 = new Carona("teste", "Campina Grande", "Joao Pessoa",
-					"10/08/2012", "19:00", 3);
+					"10/08/2012", "19:00", 3,usuario);
 		}catch(Exception e){
-			assertEquals("Id de sessao invalido ou nulo.", e.getMessage());
+			assertEquals("Sessão inexistente", e.getMessage());
 		}
 	}
 
@@ -116,7 +123,7 @@ public class CaronaTest {
 	public void testData(){
 		try {
 			c1 = new Carona("091029", "Campina Grande", "Joao Pessoa",
-					"02/08/2012", "19:00", 3);
+					"02/08/2012", "19:00", 3,usuario);
 		} catch (Exception e) {
 
 		}
@@ -124,30 +131,30 @@ public class CaronaTest {
 		
 		try {
 			c2 = new Carona("091029", "Campina Grande", "Joao Pessoa",
-					"30/02/2013", "19:00", 3);
+					"30/02/2013", "19:00", 3,usuario);
 		}catch (Exception e){
-			assertEquals("Data nula ou invalida.", e.getMessage());
+			assertEquals("Data inválida", e.getMessage());
 		}
 		
 		try {
 			c3 = new Carona("091029", "Campina Grande", "Joao Pessoa",
-					"29/02/2013", "19:00", 3);
+					"29/02/2013", "19:00", 3,usuario);
 		}catch (Exception e){
-			assertEquals("Data nula ou invalida.", e.getMessage());
+			assertEquals("Data inválida", e.getMessage());
 		}
 		
 		try {
 			c4 = new Carona("091029", "Campina Grande", "Joao Pessoa",
-					"32/02/2013", "19:00", 3);
+					"32/02/2013", "19:00", 3,usuario);
 		}catch (Exception e){
-			assertEquals("Data nula ou invalida.", e.getMessage());
+			assertEquals("Data inválida", e.getMessage());
 		}
 		
 		try {
 			c5 = new Carona("091029", "Campina Grande", "Joao Pessoa",
-					"32/02/2010", "19:00", 3);
+					"32/02/2010", "19:00", 3,usuario);
 		}catch (Exception e){
-			assertEquals("Data nula ou invalida.", e.getMessage());
+			assertEquals("Data inválida", e.getMessage());
 		}
 	}
 	
@@ -155,16 +162,16 @@ public class CaronaTest {
 	public void testVagas(){
 		try {
 			c1 = new Carona("091029", "Campina Grande", "Joao Pessoa",
-					"01/02/2013", "19:00", 3);
+					"01/02/2013", "19:00", 3,usuario);
 		}catch (Exception e){
 		}
 		assertEquals(3, c1.getVagas());
 		
 		try {
 			c2 = new Carona("091029", "Campina Grande", "Joao Pessoa",
-					"01/02/2013", "19:00", -1);
+					"01/02/2013", "19:00", -1,usuario);
 		}catch (Exception e){
-			assertEquals("Numero de vagas nula ou invalida.", e.getMessage());
+			assertEquals("Vaga inválida", e.getMessage());
 		}
 	}
 

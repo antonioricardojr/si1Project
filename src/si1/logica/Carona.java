@@ -1,6 +1,9 @@
 package si1.logica;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Classe que representa uma carona no sistema.
@@ -18,9 +21,15 @@ public class Carona {
 	private String data;
 	private String hora;
 	private int vagas;
+	private HashMap<String,String> pontosSugeridos;
+	private List<Solicitacao> solicitacoes;
+	private List<Usuario> caroneiros;
+	private Usuario criador;
+	
+
 
 	public Carona(String idSessao, String origem, String destino, String data,
-			String hora, int vagas) throws Exception {
+			String hora, int vagas, Usuario criador) throws Exception {
 
 		this.setIdSessao(idSessao);
 		this.setOrigem(origem);
@@ -28,9 +37,45 @@ public class Carona {
 		this.setData(data);
 		this.setHora(hora);
 		this.setVagas(vagas);
-
+		this.setCriador(criador);
+		this.pontosSugeridos = new HashMap<String,String>();
+		this.solicitacoes = new ArrayList<Solicitacao>();
+		this.caroneiros = new ArrayList<Usuario>();
+		
 		GeradorDeID gerador = new GeradorDeID();
 		id = gerador.geraId();
+	}
+
+	public HashMap<String, String> getPontosSugeridos() {
+		return pontosSugeridos;
+	}
+
+	public void setPontosSugeridos(HashMap<String, String> pontosSugeridos) {
+		this.pontosSugeridos = pontosSugeridos;
+	}
+
+	public List<Usuario> getCaroneiros() {
+		return caroneiros;
+	}
+
+	public void setCaroneiros(List<Usuario> caroneiros) {
+		this.caroneiros = caroneiros;
+	}
+	
+	public void addCaroneiro(Usuario caroneiro){
+		this.caroneiros.add(caroneiro);
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
+		this.solicitacoes = solicitacoes;
+	}
+
+	private void setCriador(Usuario criador) {
+		this.criador = criador;
 	}
 
 	public String getId() {
@@ -41,6 +86,18 @@ public class Carona {
 		return origem;
 	}
 
+	public List<Solicitacao> getSolicitacoes(){
+		return solicitacoes;
+	}
+	
+	public Usuario getCriador() {
+		return criador;
+	}
+	
+	public void addSolicitacao(Solicitacao solicitacao){
+		solicitacoes.add(solicitacao);
+	}
+	
 	public void setOrigem(String origem) throws Exception {
 		if (origem == null || origem.equals("") || contemCharInvalidos(origem)) {
 			throw new Exception("Origem inválida");
@@ -53,6 +110,18 @@ public class Carona {
 		return destino;
 	}
 
+	public HashMap<String,String> getPontos(){
+		return pontosSugeridos;
+	}
+	
+	public void setPontos(String id,String pontos){
+		
+		if(pontos != null && !pontos.equals("")){
+			pontosSugeridos.put(id,pontos);
+		}
+		
+	}
+	
 	public void setDestino(String destino) throws Exception {
 		if (destino == null || destino.equals("") || contemCharInvalidos(destino)) {
 			throw new Exception("Destino inválido");
@@ -254,7 +323,23 @@ public class Carona {
 		}
 	}
 
+	public void removeSolicitacao(Solicitacao solicitacao) {
+		
+		solicitacoes.remove(solicitacao);
+		
+	}
+	
+	public void removeSugestao(String idSugestao) {
+		pontosSugeridos.remove(idSugestao);
+		
+	}
+	
 	public static void main(String[] args){
 		System.out.println(contemCharInvalidos("bucatã oiE"));
 	}
+
+
+
+
+
 }

@@ -1,6 +1,8 @@
 package si1.logica;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class Sistema {
 		return usuarios;
 	}
 
-	public void criarUsuario(String login, String senha, String nome,
+	public Usuario criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
 
 		if (login == null || login.equals("")) {
@@ -41,7 +43,8 @@ public class Sistema {
 		Usuario novoUsuario = new Usuario(login, senha, nome, endereco, email);
 
 		usuarios.add(novoUsuario);
-
+		
+		return novoUsuario;
 	}
 
 	public String abrirSessao(String login, String senha) throws Exception {
@@ -65,6 +68,23 @@ public class Sistema {
 		throw new Exception("Usuário inexistente");
 	}
 
+	public String encerrarSessao(String login) throws Exception {
+		
+		if (login == null || login.equals("")) {
+			throw new Exception("Login inválido");
+		}
+
+		for (Sessao s : sessoes) {
+			if (s.getLogin().equals(login)) {
+				sessoes.remove(s);
+				return login;
+			}
+		}
+			
+		throw new Exception("Usuário inexistente");
+		
+	}
+	
 	private boolean verificaSenha(String senha) {
 
 		for (Usuario u : usuarios) {
@@ -170,9 +190,10 @@ public class Sistema {
 	public String cadastrarCarona(String idSessao, String origem,
 			String destino, String data, String hora, int vagas)
 			throws Exception {
-
+		Sessao sessao = getSessao(idSessao);
+		Usuario usuario = buscaUsuario(sessao.getLogin());
 		Carona novaCarona = new Carona(idSessao, origem, destino, data, hora,
-				vagas);
+				vagas,usuario);
 		caronas.add(novaCarona);
 
 		return novaCarona.getId();
@@ -249,6 +270,17 @@ public class Sistema {
 		return carona;
 	}
 
+	public Sessao getSessao(String idSessao){
+		
+		for (Sessao s : sessoes) {
+			if (s.getId().equals(idSessao)) {
+				return s;
+			}
+		}
+		return null;
+		
+	}
+	
 	private Carona localizaCarona(String idCarona) throws Exception {
 
 		if (idCarona == null || idCarona == "") {
@@ -264,9 +296,121 @@ public class Sistema {
 		throw new Exception("Carona Inexistente");
 	}
 
+	public String sugerirPontoEncontro(String idSessao, String idCarona, String pontos) throws Exception{
+		
+		Carona carona = localizaCarona(idCarona);
+		GeradorDeID gerador = new GeradorDeID();
+		String id = gerador.geraId();
+		carona.setPontos(id,pontos);
+		
+		return id;
+	}
+	
+	public String responderSugestaoPontoEncontro(String idSessao, String idCarona, String idSugestao,String pontos) throws Exception{
+		
+		Carona carona = localizaCarona(idCarona);
+		Sessao sessao = getSessao(idSessao);
+		
+		if(pontos.equals("") || pontos.equals(null)){
+			throw new Exception("Ponto Inválido");
+			
+		}else if(sessao.getLogin().equals(carona.getCriador().getLogin())){
+			carona.setPontos(idSugestao,pontos);
+		}
+		
+		return pontos;
+	}
+	
+	public String solicitarVagaPontoEncontro(String idSessao, String idCarona, String ponto) throws Exception{
+		
+		Carona carona = localizaCarona(idCarona);
+		Sessao sessao = getSessao(idSessao);
+		Usuario usuario = buscaUsuario(sessao.getLogin());
+		GeradorDeID gerador = new GeradorDeID();
+		String id = gerador.geraId();
+		Solicitacao sol = new Solicitacao(id,usuario,carona,ponto);
+		carona.addSolicitacao(sol);
+		
+		return id;
+	
+	}
+	
+	public String solicitarVaga(String idSessao, String idCarona) throws Exception{
+		
+		return solicitarVagaPontoEncontro(idSessao,idCarona,"Qualquer");
+	
+	}
+	
+	public String getAtributoSolicitacao(String idSolicitacao, String atributo) throws Exception{
+		
+		Solicitacao solicitacao = getSolicitacao(idSolicitacao);
+		
+		if(atributo.equals("origem")){
+			return solicitacao.getCarona().getOrigem();
+		}else if(atributo.equals("destino")){
+			return solicitacao.getCarona().getDestino();
+		}else if(atributo.equals("Dono da carona")){
+			return solicitacao.getCarona().getCriador().getNome();
+		}else if(atributo.equals("Dono da solicitacao")){
+			return solicitacao.getSolicitador().getNome();
+		}else if(atributo.equals("Ponto de Encontro")){
+			return solicitacao.getPonto();
+		}
+		
+		return solicitacao.toString();
+	}
+
+	private Solicitacao getSolicitacao(String idSolicitacao) throws Exception{
+		
+		for (Carona c : caronas) {
+			List<Solicitacao> solicitacoes = c.getSolicitacoes();
+			for (Solicitacao sol: solicitacoes) {  
+	            if(idSolicitacao.equals(sol.getId())){
+	            	return sol;
+	            }
+			}
+		}
+		
+		throw new Exception("Solicitação inexistente");
+	}
+	
+	public String aceitarSolicitacaoPontoEncontro(String idSessao, String idSolicitacao) throws Exception{
+		
+		Solicitacao solicitacao = getSolicitacao(idSolicitacao);
+		Sessao sessao = getSessao(idSessao);
+		Carona carona = localizaCarona(solicitacao.getCarona().getId());
+		
+		if(sessao.getLogin().equals(solicitacao.getCarona().getCriador().getLogin())){
+			caronas.remove(carona);
+			carona.addCaroneiro(solicitacao.getSolicitador());
+			carona.setVagas(carona.getVagas()-1);
+			caronas.add(carona);
+			carona.removeSolicitacao(solicitacao);
+		}
+	
+		return solicitacao.getId();
+	}
+	
+	public String aceitarSolicitacao(String idSessao, String idSolicitacao) throws Exception{
+		
+		return aceitarSolicitacaoPontoEncontro(idSessao,idSolicitacao);
+	}
+	
+	public String desistirRequisicao(String idSessao, String idCarona, String idSugestao) throws Exception{
+		
+		Carona carona = localizaCarona(idCarona);
+		Sessao sessao = getSessao(idSessao);
+		
+		if(sessao.getLogin().equals(carona.getCriador().getLogin())){
+			carona.removeSugestao(idSugestao);
+		}
+		
+		return idSugestao;
+	}
+	
 	public static void main(String[] args) throws Exception {
 		Sistema sis = new Sistema();
-
+		
 		sis.criarUsuario("mark", "123456", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
 		System.out.println(sis.buscaUsuario("mark").getNome());
@@ -274,9 +418,13 @@ public class Sistema {
 		String sessaoMark = sis.abrirSessao("mark", "123456");
 		System.out.println("sessao mark: " + sessaoMark);
 
-		sis.cadastrarCarona(sessaoMark, "Campina Grande", "Joao Pessoa",
-				"06/04/2012", "04h50", 2);
-
+		String id = sis.cadastrarCarona(sessaoMark, "Campina Grande", "Joao Pessoa",
+				"06/04/2012", "04:50", 2);
+		
+		String idSol = sis.solicitarVagaPontoEncontro(sessaoMark,id,"Aqui mermo");
+		System.out.println(sis.getAtributoSolicitacao(idSol, "origem"));
 	}
+
+	
 
 }

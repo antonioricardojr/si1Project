@@ -7,9 +7,9 @@ import java.util.List;
 import easyaccept.EasyAcceptFacade;
 
 public class Si1ProjectTestClient {
-
+	
 	/**
-	 * @param args
+	 * @param args 
 	 */
 	public static void main(String[] args) {
 
@@ -18,8 +18,9 @@ public class Si1ProjectTestClient {
 		files.add("US/US01.txt");
 		files.add("US/US02.txt");
 		files.add("US/US03.txt");
-		
-		
+		files.add("US/US04.txt");
+		files.add("US/US05.txt");
+	
 		Si1ProjectFacade si1ProjectFacade = new Si1ProjectFacade();
 		// Instantiate EasyAccept façade
 		EasyAcceptFacade eaFacade = new EasyAcceptFacade(si1ProjectFacade,
