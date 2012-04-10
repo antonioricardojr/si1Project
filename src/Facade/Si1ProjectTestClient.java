@@ -15,11 +15,11 @@ public class Si1ProjectTestClient {
 
 		List<String> files = new ArrayList<String>();
 		// Put the us1.txt file into the "test scripts" list
-		files.add("US/US01.txt");
-		files.add("US/US02.txt");
-		files.add("US/US03.txt");
-		files.add("US/US04.txt");
-		files.add("US/US05.txt");
+		files.add("scripts/US01.txt");
+		files.add("scripts/US02.txt");
+		files.add("scripts/US03.txt");
+		files.add("scripts/US04.txt");
+		files.add("scripts/US05.txt");
 	
 		Si1ProjectFacade si1ProjectFacade = new Si1ProjectFacade();
 		// Instantiate EasyAccept façade
