@@ -136,7 +136,7 @@ public class Sistema {
 		return null;
 	}
 
-	public List<Integer> localizarCarona(String idSessao, String origem,
+	public String localizarCarona(String idSessao, String origem,
 			String destino) throws Exception {
 
 		if (origem == null || origem.equals("") || contemCharInvalidos(origem)) {
@@ -146,18 +146,20 @@ public class Sistema {
 				|| contemCharInvalidos(destino)) {
 			throw new Exception("Destino inválido");
 		}
-		List<Integer> caronasLocalizadas = new LinkedList<Integer>();
+		List<String> caronasLocalizadas = new LinkedList<String>();
 
 		if (verificaSessao(idSessao)) {
 			for (Carona c : caronas) {
 				if (c.getOrigem().equals(origem)
 						&& c.getDestino().equals(destino)) {
 					// add em caronasLocalizadas
+					
+					caronasLocalizadas.add(c.getId());
 				}
 			}
 		}
 
-		return caronasLocalizadas;
+		return caronasLocalizadas.toString().replace("[", "{").replace("]", "}");
 	}
 
 	private static boolean contemCharInvalidos(String nome) {

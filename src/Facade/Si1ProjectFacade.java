@@ -68,7 +68,7 @@ public class Si1ProjectFacade {
 		return S1.desistirRequisicao(idSessao, idCarona, idSugestao);
 	}
 	
-	public List<Integer> localizarCarona(String idSessao, String origem,
+	public String localizarCarona(String idSessao, String origem,
 			String destino) throws Exception {
 
 		return S1.localizarCarona(idSessao, origem, destino);
