@@ -1,5 +1,8 @@
 package si1.logica;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Classe que representa um usuario do sistema.
  * 
@@ -14,6 +17,9 @@ public class Usuario {
 	private String endereco;
 	private String email;
 
+	private List<Carona> caronasOferecidas;
+	private List<Carona> caronasComoCaroneiro;
+
 	public Usuario(String login, String senha, String nome, String endereco,
 			String email) throws Exception {
 
@@ -22,6 +28,9 @@ public class Usuario {
 		setNome(nome);
 		setEndereco(endereco);
 		setEmail(email);
+
+		caronasOferecidas = new ArrayList<Carona>();
+		caronasComoCaroneiro = new ArrayList<Carona>();
 	}
 
 	public String getLogin() {
@@ -29,7 +38,7 @@ public class Usuario {
 	}
 
 	public void setLogin(String login) throws Exception {
-		
+
 		if (login == null || login.equals("")
 				|| contemCharInvalidosLogin(login)) {
 			throw new Exception("Login inválido");
@@ -162,7 +171,29 @@ public class Usuario {
 
 	}
 
-public static void main(String[] args) throws Exception {
-	Usuario u  = new Usuario(null, "asdas", "asdas","asdas","asdas@as.com");
-}
+	public List<Carona> getCaronasOferecidas() {
+		return caronasOferecidas;
+	}
+
+	public void adicionaCaronaOferecida(Carona novaCarona) {
+		caronasOferecidas.add(novaCarona);
+
+	}
+
+	public void removeCaronaOferecida(Carona caronaARemover) {
+		caronasOferecidas.remove(caronaARemover);
+	}
+
+	public List<Carona> getCaronasComoCaroneiro() {
+		return caronasComoCaroneiro;
+	}
+
+	public void adicionaCaronaComoCaroneiro(Carona novaCarona) {
+		caronasComoCaroneiro.add(novaCarona);
+	}
+
+	public void removeCaronaComoCaroneiro(Carona caronaARemover) {
+		caronasComoCaroneiro.remove(caronaARemover);
+	}
+
 }

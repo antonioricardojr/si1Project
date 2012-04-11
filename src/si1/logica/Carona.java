@@ -288,10 +288,10 @@ public class Carona {
 	// verificar
 	public void setVagas(Object vagas) throws Exception {
 
-		if(vagas == null){
+		if (vagas == null) {
 			throw new Exception("Vaga inválida");
 		}
-		
+
 		int intVagas;
 
 		try {
@@ -328,5 +328,11 @@ public class Carona {
 
 	}
 
+	@Override
+	public String toString() {
+
+		return "origem=" + origem + " destino=" + destino + " data=" + data
+				+ " hora=" + hora + " vagas=" + vagas;
+	}
 
 }

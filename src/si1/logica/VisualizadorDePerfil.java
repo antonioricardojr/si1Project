@@ -30,14 +30,31 @@ public class VisualizadorDePerfil {
 	}
 
 	public String getHistoricoDeCaronas() {
-		// TODO Auto-generated method stub
-		
-		return null;
+		String historicoDeCaronas = "";
+
+		for (Carona c : usuario.getCaronasOferecidas()) {
+			historicoDeCaronas += c.toString() + ",";
+		}
+
+		if (historicoDeCaronas.length() != 0) {
+			historicoDeCaronas = historicoDeCaronas.substring(0,
+					historicoDeCaronas.length() - 1);
+		}
+
+		return historicoDeCaronas;
 	}
 
 	public String getHistoricoDeVagasEmCaronas() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String vagasOcupadasEmCaronas = "";
+		
+		int vagas = 0;
+		
+		for(Carona c : usuario.getCaronasComoCaroneiro()){
+			vagas++;
+		}
+		
+		return vagasOcupadasEmCaronas;
 	}
 
 	public String getCaronasSegurasETranquilas() {

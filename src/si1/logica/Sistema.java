@@ -229,6 +229,7 @@ public class Sistema {
 		Carona novaCarona = new Carona(origem, destino, data, hora, vagas,
 				usuario);
 		caronas.add(novaCarona);
+		usuario.adicionaCaronaOferecida(novaCarona);
 
 		return novaCarona.getId();
 	}
@@ -476,65 +477,70 @@ public class Sistema {
 
 	}
 
-	public String visualizarPerfil(String login) throws Exception {
+	public String visualizarPerfil(String idSessao, String login)
+			throws Exception {
+
+		VisualizadorDePerfil vp = null;
 		
-		Usuario usuario = buscaUsuario(login);
-		
-		VisualizadorDePerfil vp = new VisualizadorDePerfil(usuario);
-		
+		if (verificaSessao(idSessao)) {
+			Usuario usuario = buscaUsuario(login);
+			if (usuario == null) {
+				throw new Exception("Login inválido");
+			}
+			vp = new VisualizadorDePerfil(usuario);
+		}
 		return vp.getNome();
 	}
 
-	public String getAtributoPerfil(String login, String atributo) throws Exception {
-		
+	public String getAtributoPerfil(String login, String atributo)
+			throws Exception {
+
 		Usuario usuario = buscaUsuario(login);
 
-		
 		VisualizadorDePerfil vp;
 		if (usuario != null) {
 			vp = new VisualizadorDePerfil(usuario);
 		} else {
 			throw new Exception();
 		}
-		
-		if(atributo.equals("nome")){
+
+		if (atributo.equals("nome")) {
 			return vp.getNome();
 		}
-		
-		if(atributo.equals("endereco")){
+
+		if (atributo.equals("endereco")) {
 			return vp.getEndereco();
 		}
-		
-		if(atributo.equals("email")){
+
+		if (atributo.equals("email")) {
 			return vp.getEmail();
 		}
-		
-		if(atributo.equals("historico de caronas")){
+
+		if (atributo.equals("historico de caronas")) {
 			return vp.getHistoricoDeCaronas();
 		}
-		
-		if(atributo.equals("historico de vagas em caronas")){
+
+		if (atributo.equals("historico de vagas em caronas")) {
 			return vp.getHistoricoDeVagasEmCaronas();
 		}
-		
-		if(atributo.equals("caronas seguras e tranquilas")){
+
+		if (atributo.equals("caronas seguras e tranquilas")) {
 			return vp.getCaronasSegurasETranquilas();
 		}
-		if(atributo.equals("caronas que não funcionaram")){
+		if (atributo.equals("caronas que não funcionaram")) {
 			return vp.getCaronasQueNaoFuncionaram();
 		}
-		
-		if(atributo.equals("faltas em vagas de caronas")){
+
+		if (atributo.equals("faltas em vagas de caronas")) {
 			return vp.getFaltasEmVagasDeCaronas();
 		}
-		
-		if(atributo.equals("presenças em vagas de caronas")){
+
+		if (atributo.equals("presenças em vagas de caronas")) {
 			return vp.getPresencasEmVagasDeCaronas();
 		}
-		
-		
+
 		return null;
-		
+
 	}
 
 }
