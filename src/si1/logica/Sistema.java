@@ -181,7 +181,7 @@ public class Sistema {
 		}
 
 		return caronasLocalizadas.toString().replace("[", "{")
-				.replace("]", "}");
+				.replace("]", "}").replace(" ", "");
 	}
 
 	private static boolean contemCharInvalidos(String nome) {
