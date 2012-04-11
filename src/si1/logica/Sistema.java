@@ -192,6 +192,9 @@ public class Sistema {
 	public String cadastrarCarona(String idSessao, String origem,
 			String destino, String data, String hora, int vagas)
 			throws Exception {
+		
+		
+		
 		Sessao sessao = getSessao(idSessao);
 		Usuario usuario = buscaUsuario(sessao.getLogin());
 		Carona novaCarona = new Carona(idSessao, origem, destino, data, hora,
