@@ -14,34 +14,30 @@ import java.util.List;
 
 public class Carona {
 
-	private String idSessao;
 	private String id;
 	private String origem;
 	private String destino;
 	private String data;
 	private String hora;
-	private int vagas;
-	private HashMap<String,String> pontosSugeridos;
+	private Object vagas;
+	private HashMap<String, String> pontosSugeridos;
 	private List<Solicitacao> solicitacoes;
 	private List<Usuario> caroneiros;
 	private Usuario criador;
-	
 
+	public Carona(String origem, String destino, String data, String hora,
+			Object vagas, Usuario criador) throws Exception {
 
-	public Carona(String idSessao, String origem, String destino, String data,
-			String hora, int vagas, Usuario criador) throws Exception {
-
-		this.setIdSessao(idSessao);
 		this.setOrigem(origem);
 		this.setDestino(destino);
 		this.setData(data);
 		this.setHora(hora);
 		this.setVagas(vagas);
 		this.setCriador(criador);
-		this.pontosSugeridos = new HashMap<String,String>();
+		this.pontosSugeridos = new HashMap<String, String>();
 		this.solicitacoes = new ArrayList<Solicitacao>();
 		this.caroneiros = new ArrayList<Usuario>();
-		
+
 		GeradorDeID gerador = new GeradorDeID();
 		id = gerador.geraId();
 	}
@@ -61,8 +57,8 @@ public class Carona {
 	public void setCaroneiros(List<Usuario> caroneiros) {
 		this.caroneiros = caroneiros;
 	}
-	
-	public void addCaroneiro(Usuario caroneiro){
+
+	public void addCaroneiro(Usuario caroneiro) {
 		this.caroneiros.add(caroneiro);
 	}
 
@@ -86,18 +82,18 @@ public class Carona {
 		return origem;
 	}
 
-	public List<Solicitacao> getSolicitacoes(){
+	public List<Solicitacao> getSolicitacoes() {
 		return solicitacoes;
 	}
-	
+
 	public Usuario getCriador() {
 		return criador;
 	}
-	
-	public void addSolicitacao(Solicitacao solicitacao){
+
+	public void addSolicitacao(Solicitacao solicitacao) {
 		solicitacoes.add(solicitacao);
 	}
-	
+
 	public void setOrigem(String origem) throws Exception {
 		if (origem == null || origem.equals("") || contemCharInvalidos(origem)) {
 			throw new Exception("Origem inválida");
@@ -110,20 +106,21 @@ public class Carona {
 		return destino;
 	}
 
-	public HashMap<String,String> getPontos(){
+	public HashMap<String, String> getPontos() {
 		return pontosSugeridos;
 	}
-	
-	public void setPontos(String id,String pontos){
-		
-		if(pontos != null && !pontos.equals("")){
-			pontosSugeridos.put(id,pontos);
+
+	public void setPontos(String id, String pontos) {
+
+		if (pontos != null && !pontos.equals("")) {
+			pontosSugeridos.put(id, pontos);
 		}
-		
+
 	}
-	
+
 	public void setDestino(String destino) throws Exception {
-		if (destino == null || destino.equals("") || contemCharInvalidos(destino)) {
+		if (destino == null || destino.equals("")
+				|| contemCharInvalidos(destino)) {
 			throw new Exception("Destino inválido");
 		} else {
 			this.destino = destino;
@@ -134,14 +131,15 @@ public class Carona {
 		String[] palavra = nome.trim().split("");
 
 		for (int i = 1; i < palavra.length; i++) {
-			if ("'!@#$%¨¨¨&*()+¹²³¢¬§=[{ª]}º;:>,</|/0123456789*-".contains(palavra[i])) {
+			if ("'!@#$%¨¨¨&*()+¹²³¢¬§=[{ª]}º;:>,</|/0123456789*-"
+					.contains(palavra[i])) {
 				return true;
 			}
 		}
 
 		return false;
 	}
-	
+
 	public String getData() {
 		return data;
 	}
@@ -208,40 +206,40 @@ public class Carona {
 			return false;
 		}
 
-		//Compara com a data atual
-		if(comparaDataAtual(dia, mes, ano)<0){
+		// Compara com a data atual
+		if (comparaDataAtual(dia, mes, ano) < 0) {
 			return false;
 		}
-		
+
 		// Aceita a data
 		return true;
 
 	}
-	
-	private static int comparaDataAtual(int dia, int mes, int ano){
+
+	private static int comparaDataAtual(int dia, int mes, int ano) {
 		Date date = new Date();
-		if(ano==date.getYear()+1900){
-			if(mes==date.getMonth()+1){
-				if(dia==date.getDay()+1){
+		if (ano == date.getYear() + 1900) {
+			if (mes == date.getMonth() + 1) {
+				if (dia == date.getDay() + 1) {
 					return 0;
-				}else{
-					if(dia>date.getDay()+1){
+				} else {
+					if (dia > date.getDay() + 1) {
 						return 1;
-					}else{
+					} else {
 						return -1;
 					}
 				}
-			}else{
-				if(mes>date.getMonth()+1){
+			} else {
+				if (mes > date.getMonth() + 1) {
 					return 1;
-				}else{
+				} else {
 					return -1;
 				}
 			}
-		}else{
-			if(ano>date.getYear()+1900){
+		} else {
+			if (ano > date.getYear() + 1900) {
 				return 1;
-			}else{
+			} else {
 				return 0;
 			}
 		}
@@ -282,37 +280,33 @@ public class Carona {
 	}
 
 	public int getVagas() {
-		return vagas;
+		int intVagas = (Integer) vagas;
+
+		return intVagas;
 	}
 
-	
-	//verificar 
-	public void setVagas(int vagas) throws Exception {
-		
-		String stringVagas = "" + vagas;
-		
-		if (vagas <= 0 || stringVagas == null) {
+	// verificar
+	public void setVagas(Object vagas) throws Exception {
+
+		if(vagas == null){
 			throw new Exception("Vaga inválida");
 		}
-		this.vagas = vagas;
-	}
+		
+		int intVagas;
 
-	public String getIdSessao() {
-		return idSessao;
-	}
+		try {
+			intVagas = (Integer) vagas;
 
-	public void setIdSessao(String idSessao) throws Exception {
-		if (idSessao == null || idSessao.equals("")) {
-			throw new Exception("Sessão inválida");
-		} else {
-			String[] caracteres = idSessao.split("");
-			for (int i = 1; i < caracteres.length; i++) {
-				if (temInvalidoNosNumeros(caracteres[i])) {
-					throw new Exception("Sessão inexistente");
-				}
-			}
+		} catch (Exception e) {
+			throw new Exception("Vaga inválida");
 		}
-		this.idSessao = idSessao;
+
+		String stringVagas = "" + vagas;
+
+		if (intVagas <= 0 || stringVagas == null) {
+			throw new Exception("Vaga inválida");
+		}
+		this.vagas = intVagas;
 	}
 
 	public static boolean temInvalidoNosNumeros(String s) {
@@ -324,22 +318,18 @@ public class Carona {
 	}
 
 	public void removeSolicitacao(Solicitacao solicitacao) {
-		
+
 		solicitacoes.remove(solicitacao);
-		
+
 	}
-	
+
 	public void removeSugestao(String idSugestao) {
 		pontosSugeridos.remove(idSugestao);
-		
-	}
-	
-	public static void main(String[] args){
-		System.out.println(contemCharInvalidos("bucatã oiE"));
+
 	}
 
-
-
-
+	public static void main(String[] args) {
+		Integer j = null;
+	}
 
 }
