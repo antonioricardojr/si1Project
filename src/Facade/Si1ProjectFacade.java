@@ -103,6 +103,10 @@ public class Si1ProjectFacade {
 	public String getCarona(String idCarona) throws Exception {
 		return S1.getCarona(idCarona);
 	}
+	
+	public void rejeitarSolicitacao(String idSessao, String idSolicitacao){
+		S1.rejeitarSolicitacao(idSessao, idSolicitacao);
+	}
 
 	public void encerrarSistema() {
 

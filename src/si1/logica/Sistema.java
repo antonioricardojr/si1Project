@@ -432,6 +432,8 @@ public class Sistema {
 			carona.setVagas(carona.getVagas() - 1);
 			caronas.add(carona);
 			carona.removeSolicitacao(solicitacao);
+			
+			
 		}
 
 		return solicitacao.getId();
@@ -455,6 +457,8 @@ public class Sistema {
 
 		return idSugestao;
 	}
+	
+	
 
 	public static void main(String[] args) throws Exception {
 		Sistema sis = new Sistema();
@@ -473,5 +477,13 @@ public class Sistema {
 				"Aqui mermo");
 		System.out.println(sis.getAtributoSolicitacao(idSol, "origem"));
 	}
+
+	public void rejeitarSolicitacao(String idSessao, String idSolicitacao) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
 
 }

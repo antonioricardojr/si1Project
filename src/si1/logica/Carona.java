@@ -328,8 +328,5 @@ public class Carona {
 
 	}
 
-	public static void main(String[] args) {
-		Integer j = null;
-	}
 
 }
