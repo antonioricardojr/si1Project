@@ -107,6 +107,14 @@ public class Si1ProjectFacade {
 	public void rejeitarSolicitacao(String idSessao, String idSolicitacao){
 		S1.rejeitarSolicitacao(idSessao, idSolicitacao);
 	}
+	
+	public String visualizarPerfil(String login) throws Exception{
+		return S1.visualizarPerfil(login);
+	}
+	
+	public String getAtributoPerfil(String login, String atributo) throws Exception{
+		return S1.getAtributoPerfil(login, atributo);
+	}
 
 	public void encerrarSistema() {
 
