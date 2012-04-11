@@ -360,8 +360,13 @@ public class Sistema {
 	public String solicitarVagaPontoEncontro(String idSessao, String idCarona,
 			String ponto) throws Exception {
 
+		
+		
 		Carona carona = localizaCarona(idCarona);
 		Sessao sessao = getSessao(idSessao);
+		
+	
+		
 		Usuario usuario = buscaUsuario(sessao.getLogin());
 		GeradorDeID gerador = new GeradorDeID();
 		String id = gerador.geraId();

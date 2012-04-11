@@ -18,7 +18,7 @@ public class Si1ProjectTestClient {
 		//files.add("scripts/US01.txt");
 		//files.add("scripts/US02.txt");
 		files.add("scripts/US03.txt");
-		//files.add("scripts/US04.txt");
+		files.add("scripts/US04.txt");
 		//files.add("scripts/US05.txt");
 	
 		Si1ProjectFacade si1ProjectFacade = new Si1ProjectFacade();
