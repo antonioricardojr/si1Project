@@ -59,22 +59,22 @@ public class VisualizadorDePerfil {
 
 	public String getCaronasSegurasETranquilas() {
 		// TODO Auto-generated method stub
-		return null;
+		return "0";
 	}
 
 	public String getCaronasQueNaoFuncionaram() {
 		// TODO Auto-generated method stub
-		return null;
+		return "0";
 	}
 
 	public String getFaltasEmVagasDeCaronas() {
 		// TODO Auto-generated method stub
-		return null;
+		return "0";
 	}
 
 	public String getPresencasEmVagasDeCaronas() {
 		// TODO Auto-generated method stub
-		return null;
+		return "0";
 	}
 
 }
