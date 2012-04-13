@@ -600,7 +600,7 @@ public class Sistema {
 			todasAsCaronas.add(c.getId());
 		}
 		
-		String saida = todasAsCaronas.toString().replace("[", "{").replace("]", "}");
+		String saida = todasAsCaronas.toString().replace("[", "{").replace("]", "}").replace(" ", "");
 		
 		return saida;
 		

@@ -125,6 +125,22 @@ public class Si1ProjectFacade {
 		
 	}
 	
+	public String getSolicitacoesConfirmadas(String idSessao){
+		return null;
+	}
+	
+	public String getSolicitacoesConfirmadas(String idSessao, String idCarona){
+		return null;
+	}
+	
+	public String getPontosSugeridos(String idSessao, String idCarona){
+		return null;
+	}
+	
+	public String getPontosEncontro(String idSessao, String idCarona){
+		return null;
+	}
+	
 	public void reiniciarSistema(){
 		
 	}
