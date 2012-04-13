@@ -29,6 +29,15 @@ public class Sistema {
 		return usuarios;
 	}
 
+	public Usuario getUsuario(String login) {
+		for (Usuario u : usuarios) {
+			if (u.getLogin().equals(login)) {
+				return u;
+			}
+		}
+		return null;
+	}
+
 	public Usuario criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
 
@@ -230,6 +239,7 @@ public class Sistema {
 				usuario);
 		caronas.add(novaCarona);
 		usuario.adicionaCaronaOferecida(novaCarona);
+		usuario.adicionaCarona(novaCarona);
 
 		return novaCarona.getId();
 	}
@@ -481,7 +491,7 @@ public class Sistema {
 			throws Exception {
 
 		VisualizadorDePerfil vp = null;
-		
+
 		if (verificaSessao(idSessao)) {
 			Usuario usuario = buscaUsuario(login);
 			if (usuario == null) {
@@ -541,6 +551,59 @@ public class Sistema {
 
 		return null;
 
+	}
+
+	public String getCaronaUsuario(String idSessao, int indexCarona) {
+
+		Usuario u = null;
+		for (Sessao s : sessoes) {
+			if (s.getId().equals(idSessao)) {
+				u = getUsuario(s.getLogin());
+			}
+		}
+
+		Carona c = null;
+		
+		if (u != null) {
+
+			int i = indexCarona - 1;
+			if (i >= 0 && i < u.getCaronas().size()) {
+				c = u.getCaronas().get(i);
+			}
+		}
+		
+		
+		String saida = null;
+		
+		
+		if(c != null){
+			saida= c.getId();
+		}
+
+		return saida;
+	}
+	
+	
+	public String getTodasCaronasUsuario(String idSessao){
+		
+		Usuario u = null;
+		
+		List<String> todasAsCaronas = new ArrayList<String>();
+		
+		for(Sessao s : sessoes){
+			if(s.getId().equals(idSessao)){
+				u = getUsuario(s.getLogin());
+			}
+		}
+		
+		for(Carona c : u.getCaronas()){
+			todasAsCaronas.add(c.getId());
+		}
+		
+		String saida = todasAsCaronas.toString().replace("[", "{").replace("]", "}");
+		
+		return saida;
+		
 	}
 
 }

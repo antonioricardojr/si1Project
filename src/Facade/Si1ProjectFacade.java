@@ -116,6 +116,19 @@ public class Si1ProjectFacade {
 		return S1.getAtributoPerfil(login, atributo);
 	}
 
+	public String getCaronaUsuario(String idSessao, int indexCarona){
+		return S1.getCaronaUsuario(idSessao, indexCarona);
+	}
+	
+	public String getTodasCaronasUsuario(String idSessao){
+		return S1.getTodasCaronasUsuario(idSessao);
+		
+	}
+	
+	public void reiniciarSistema(){
+		
+	}
+	
 	public void encerrarSistema() {
 
 	}

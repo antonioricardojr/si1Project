@@ -1,5 +1,7 @@
 package si1.logica;
 
+import java.util.List;
+
 public class VisualizadorDePerfil {
 
 	private Usuario usuario;
@@ -75,6 +77,11 @@ public class VisualizadorDePerfil {
 	public String getPresencasEmVagasDeCaronas() {
 		// TODO Auto-generated method stub
 		return "0";
+	}
+	
+	
+	public List<Usuario> getAmigos(){
+		return usuario.getAmigos();
 	}
 
 }

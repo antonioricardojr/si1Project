@@ -20,6 +20,10 @@ public class Usuario {
 	private List<Carona> caronasOferecidas;
 	private List<Carona> caronasComoCaroneiro;
 
+	private List<Carona> caronas;
+
+	private List<Usuario> amigos;
+
 	public Usuario(String login, String senha, String nome, String endereco,
 			String email) throws Exception {
 
@@ -31,6 +35,10 @@ public class Usuario {
 
 		caronasOferecidas = new ArrayList<Carona>();
 		caronasComoCaroneiro = new ArrayList<Carona>();
+
+		setCaronas(new ArrayList<Carona>());
+
+		setAmigos(new ArrayList<Usuario>());
 	}
 
 	public String getLogin() {
@@ -194,6 +202,42 @@ public class Usuario {
 
 	public void removeCaronaComoCaroneiro(Carona caronaARemover) {
 		caronasComoCaroneiro.remove(caronaARemover);
+	}
+
+	public List<Usuario> getAmigos() {
+		return amigos;
+	}
+
+	public void setAmigos(List<Usuario> amigos) {
+		this.amigos = amigos;
+	}
+
+	public void adicionaAmigo(Usuario u) throws Exception {
+		if (u != null) {
+			amigos.add(u);
+		} else {
+			throw new Exception("Amigo inválido");
+		}
+	}
+
+	public List<Carona> getCaronas() {
+		return caronas;
+	}
+
+	public void setCaronas(List<Carona> caronas) {
+		this.caronas = caronas;
+	}
+
+	public void adicionaCarona(Carona c) {
+		if (c != null) {
+			caronas.add(c);
+		}
+	}
+
+	public void removeCarona(Carona c) {
+		if (c != null) {
+			caronas.remove(c);
+		}
 	}
 
 }
