@@ -487,7 +487,7 @@ public class Sistema {
 
 	}
 
-	public String visualizarPerfil(String idSessao, String login)
+	public String visualizaPerfil(String idSessao, String login)
 			throws Exception {
 
 		VisualizadorDePerfil vp = null;
@@ -501,6 +501,7 @@ public class Sistema {
 		}
 		return vp.getNome();
 	}
+
 
 	public String getAtributoPerfil(String login, String atributo)
 			throws Exception {
@@ -563,7 +564,7 @@ public class Sistema {
 		}
 
 		Carona c = null;
-		
+
 		if (u != null) {
 
 			int i = indexCarona - 1;
@@ -571,39 +572,37 @@ public class Sistema {
 				c = u.getCaronas().get(i);
 			}
 		}
-		
-		
+
 		String saida = null;
-		
-		
-		if(c != null){
-			saida= c.getId();
+
+		if (c != null) {
+			saida = c.getId();
 		}
 
 		return saida;
 	}
-	
-	
-	public String getTodasCaronasUsuario(String idSessao){
-		
+
+	public String getTodasCaronasUsuario(String idSessao) {
+
 		Usuario u = null;
-		
+
 		List<String> todasAsCaronas = new ArrayList<String>();
-		
-		for(Sessao s : sessoes){
-			if(s.getId().equals(idSessao)){
+
+		for (Sessao s : sessoes) {
+			if (s.getId().equals(idSessao)) {
 				u = getUsuario(s.getLogin());
 			}
 		}
-		
-		for(Carona c : u.getCaronas()){
+
+		for (Carona c : u.getCaronas()) {
 			todasAsCaronas.add(c.getId());
 		}
-		
-		String saida = todasAsCaronas.toString().replace("[", "{").replace("]", "}").replace(" ", "");
-		
+
+		String saida = todasAsCaronas.toString().replace("[", "{")
+				.replace("]", "}").replace(" ", "");
+
 		return saida;
-		
+
 	}
 
 }

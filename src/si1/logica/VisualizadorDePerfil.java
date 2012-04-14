@@ -48,15 +48,21 @@ public class VisualizadorDePerfil {
 
 	public String getHistoricoDeVagasEmCaronas() {
 		
-		String vagasOcupadasEmCaronas = "";
+		String saida = "";
 		
-		int vagas = 0;
-		
-		for(Carona c : usuario.getCaronasComoCaroneiro()){
-			vagas++;
+		if(usuario.getCaronas().size() == 0){
+			return "";
 		}
 		
-		return vagasOcupadasEmCaronas;
+		for(Carona c : usuario.getCaronas()){
+			saida += c.getId() + ",";
+		}
+		
+		saida = saida.substring(0, saida.length() - 2);
+
+		saida = "[" + saida + "]";
+		
+		return saida;
 	}
 
 	public String getCaronasSegurasETranquilas() {
@@ -78,9 +84,8 @@ public class VisualizadorDePerfil {
 		// TODO Auto-generated method stub
 		return "0";
 	}
-	
-	
-	public List<Usuario> getAmigos(){
+
+	public List<Usuario> getAmigos() {
 		return usuario.getAmigos();
 	}
 
