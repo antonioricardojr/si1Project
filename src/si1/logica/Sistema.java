@@ -221,8 +221,14 @@ public class Sistema {
 	}
 
 	public String cadastrarCarona(String idSessao, String origem,
-			String destino, String data, String hora, Object vagas)
+			String destino, String data, String hora, Integer vagas)
 			throws Exception {
+		
+		
+		
+		if(vagas == null){
+			throw new Exception("Vaga inválida");
+		}
 
 		if (idSessao == null || idSessao.equals("")) {
 			throw new Exception("Sessão inválida");
@@ -231,6 +237,8 @@ public class Sistema {
 		if (!verificaSessao(idSessao)) {
 			throw new Exception("Sessão inexistente");
 		}
+		
+		
 
 		Sessao sessao = getSessao(idSessao);
 
@@ -464,23 +472,7 @@ public class Sistema {
 		return idSugestao;
 	}
 
-	public static void main(String[] args) throws Exception {
-		Sistema sis = new Sistema();
 
-		sis.criarUsuario("mark", "123456", "Mark Zuckerberg",
-				"Palo Alto, California", "mark@facebook.com");
-		System.out.println(sis.buscaUsuario("mark").getNome());
-
-		String sessaoMark = sis.abrirSessao("mark", "123456");
-		System.out.println("sessao mark: " + sessaoMark);
-
-		String id = sis.cadastrarCarona(sessaoMark, "Campina Grande",
-				"Joao Pessoa", "06/04/2012", "04:50", 2);
-
-		String idSol = sis.solicitarVagaPontoEncontro(sessaoMark, id,
-				"Aqui mermo");
-		System.out.println(sis.getAtributoSolicitacao(idSol, "origem"));
-	}
 
 	public void rejeitarSolicitacao(String idSessao, String idSolicitacao) {
 		// TODO Auto-generated method stub
@@ -604,5 +596,19 @@ public class Sistema {
 		return saida;
 
 	}
+	
+	
+	public static void main(String[] args) {
+		
+		Integer i = null;
+		
+		if(i == null){
+			System.out.println("igual a null");
+		}
+		
+		
+		
+	}
+	
 
 }
