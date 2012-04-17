@@ -221,12 +221,14 @@ public class Sistema {
 	}
 
 	public String cadastrarCarona(String idSessao, String origem,
-			String destino, String data, String hora, Integer vagas)
+			String destino, String data, String hora, String vagas)
 			throws Exception {
-		
-		
-		
-		if(vagas == null){
+
+		int intVagas;
+
+		try {
+			intVagas = Integer.parseInt(vagas);
+		} catch (Exception e) {
 			throw new Exception("Vaga inválida");
 		}
 
@@ -237,13 +239,12 @@ public class Sistema {
 		if (!verificaSessao(idSessao)) {
 			throw new Exception("Sessão inexistente");
 		}
-		
-		
 
 		Sessao sessao = getSessao(idSessao);
 
 		Usuario usuario = buscaUsuario(sessao.getLogin());
-		Carona novaCarona = new Carona(origem, destino, data, hora, vagas,
+
+		Carona novaCarona = new Carona(origem, destino, data, hora, intVagas,
 				usuario);
 		caronas.add(novaCarona);
 		usuario.adicionaCaronaOferecida(novaCarona);
@@ -279,6 +280,10 @@ public class Sistema {
 				}
 				if (atributo.equals("vagas")) {
 					return "" + c.getVagas();
+				}
+				if (atributo.equals("Ponto de Encontro")) {
+					return "" + c.getPontos();
+
 				} else {
 					throw new Exception("Atributo inexistente");
 				}
@@ -440,15 +445,15 @@ public class Sistema {
 		Sessao sessao = getSessao(idSessao);
 		Carona carona = localizaCarona(solicitacao.getCarona().getId());
 
-		if (sessao.getLogin().equals(
-				solicitacao.getCarona().getCriador().getLogin())) {
+		//if (sessao.getLogin().equals(
+		//		solicitacao.getCarona().getCriador().getLogin())) {
 			caronas.remove(carona);
 			carona.addCaroneiro(solicitacao.getSolicitador());
 			carona.setVagas(carona.getVagas() - 1);
 			caronas.add(carona);
 			carona.removeSolicitacao(solicitacao);
 
-		}
+		//}
 
 		return solicitacao.getId();
 	}
@@ -472,8 +477,6 @@ public class Sistema {
 		return idSugestao;
 	}
 
-
-
 	public void rejeitarSolicitacao(String idSessao, String idSolicitacao) {
 		// TODO Auto-generated method stub
 
@@ -493,7 +496,6 @@ public class Sistema {
 		}
 		return vp.getNome();
 	}
-
 
 	public String getAtributoPerfil(String login, String atributo)
 			throws Exception {
@@ -596,19 +598,10 @@ public class Sistema {
 		return saida;
 
 	}
-	
-	
-	public static void main(String[] args) {
-		
-		Integer i = null;
-		
-		if(i == null){
-			System.out.println("igual a null");
-		}
-		
-		
-		
+
+
+	public String getSolicitacoesConfirmadas(String idSessao) {
+		return null;
 	}
-	
 
 }

@@ -75,7 +75,7 @@ public class Si1ProjectFacade {
 	}
 
 	public String cadastrarCarona(String idSessao, String origem,
-			String destino, String data, String hora, Integer vagas)
+			String destino, String data, String hora, String vagas)
 			throws Exception {
 		return S1.cadastrarCarona(idSessao, origem, destino, data, hora, vagas);
 	}
@@ -127,7 +127,7 @@ public class Si1ProjectFacade {
 	}
 	
 	public String getSolicitacoesConfirmadas(String idSessao){
-		return null;
+		return S1.getSolicitacoesConfirmadas(idSessao);
 	}
 	
 	public String getSolicitacoesConfirmadas(String idSessao, String idCarona){
