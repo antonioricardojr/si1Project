@@ -11,7 +11,7 @@ criarUsuario login="mark" senha="m@rk" nome="Mark Zuckerberg" endereco="Palo Alt
 sessaoMark=abrirSessao login="mark" senha="m@rk"
 
 #Visualizar perfil.
-perfilMark=visualizarPerfil idSessao=${sessaoMark} login=mark
+perfilMark=visualizaPerfil idSessao=${sessaoMark} login=mark
 
 expect "Mark Zuckerberg" getAtributoPerfil login="mark" atributo="nome"
 expect "Palo Alto, California" getAtributoPerfil login="mark" atributo="endereco"
@@ -38,7 +38,7 @@ expect "0" getAtributoPerfil login="mark" atributo="presenças em vagas de carona
 
 
 #possivel erro
-expectError "Login inválido" visualizarPerfil idSessao=${sessaoMark} login=pedro
+expectError "Login inválido" visualizaPerfil idSessao=${sessaoMark} login=pedro
 
 #Sair do sistema.
 encerrarSistema

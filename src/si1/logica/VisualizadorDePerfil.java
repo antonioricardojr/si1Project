@@ -32,37 +32,39 @@ public class VisualizadorDePerfil {
 	}
 
 	public String getHistoricoDeCaronas() {
-		String historicoDeCaronas = "";
 
+		if(usuario.getCaronasOferecidas().size()==0){
+			return "";
+		}
+		
+		String historicoDeCaronas = "[";
+		
 		for (Carona c : usuario.getCaronasOferecidas()) {
-			historicoDeCaronas += c.toString() + ",";
+			historicoDeCaronas += c.getId() + ",";
 		}
 
 		if (historicoDeCaronas.length() != 0) {
 			historicoDeCaronas = historicoDeCaronas.substring(0,
 					historicoDeCaronas.length() - 1);
 		}
-
+		historicoDeCaronas += "]";
+		
 		return historicoDeCaronas;
 	}
 
 	public String getHistoricoDeVagasEmCaronas() {
 		
-		String saida = "";
+		int saida = 0;
 		
 		if(usuario.getCaronas().size() == 0){
 			return "";
 		}
 		
 		for(Carona c : usuario.getCaronas()){
-			saida += c.getId() + ",";
+			saida += c.getVagas();
 		}
 		
-		saida = saida.substring(0, saida.length() - 2);
-
-		saida = "[" + saida + "]";
-		
-		return saida;
+		return saida+"";
 	}
 
 	public String getCaronasSegurasETranquilas() {

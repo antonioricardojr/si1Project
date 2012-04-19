@@ -1,11 +1,7 @@
 package Facade;
 
-import java.util.List;
-
-import si1.logica.Carona;
-import si1.logica.Sessao;
+import Exceptions.SolicitacaoInexistenteException;
 import si1.logica.Sistema;
-import si1.logica.Usuario;
 
 /**
  * Classe Facade para usar os testes do easyAccept.
@@ -104,7 +100,7 @@ public class Si1ProjectFacade {
 		return S1.getCarona(idCarona);
 	}
 	
-	public void rejeitarSolicitacao(String idSessao, String idSolicitacao){
+	public void rejeitarSolicitacao(String idSessao, String idSolicitacao) throws Exception{
 		S1.rejeitarSolicitacao(idSessao, idSolicitacao);
 	}
 	
@@ -126,20 +122,20 @@ public class Si1ProjectFacade {
 		
 	}
 	
-	public String getSolicitacoesConfirmadas(String idSessao){
-		return S1.getSolicitacoesConfirmadas(idSessao);
+	public String getSolicitacoesConfirmadas(String idSessao, String idCarona) throws Exception{
+		return S1.getSolicitacoesConfirmadas(idSessao,idCarona);
 	}
 	
-	public String getSolicitacoesConfirmadas(String idSessao, String idCarona){
-		return null;
+	public String getSolicitacoesPendentes(String idCarona) throws Exception{
+		return S1.getSolicitacoesPendentes(idCarona);
 	}
 	
-	public String getPontosSugeridos(String idSessao, String idCarona){
-		return null;
+	public String getPontosSugeridos(String idSessao, String idCarona) throws Exception{
+		return S1.getPontosSugeridos(idSessao,idCarona);
 	}
 	
-	public String getPontosEncontro(String idSessao, String idCarona){
-		return null;
+	public String reviewVagaEmCarona(String idSessao, String idCarona, String loginCaroneiro, String review) throws Exception{
+		return S1.reviewVagaEmCarona(idSessao,idCarona, loginCaroneiro,review);
 	}
 	
 	public void reiniciarSistema(){

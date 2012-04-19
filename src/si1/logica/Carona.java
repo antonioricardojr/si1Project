@@ -1,9 +1,13 @@
 package si1.logica;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import Exceptions.*;
 
 /**
  * Classe que representa uma carona no sistema.
@@ -20,10 +24,12 @@ public class Carona {
 	private String data;
 	private String hora;
 	private Object vagas;
-	private HashMap<String, String> pontosSugeridos;
+	private Map<String, String> pontosSugeridos;
+	private String pontoDeEncontro;
 	private List<Solicitacao> solicitacoes;
-	private List<Usuario> caroneiros;
+	private List<Solicitacao> caroneirosConfirmados;
 	private Usuario criador;
+	private List<Review> reviews;
 
 	public Carona(String origem, String destino, String data, String hora,
 			Object vagas, Usuario criador) throws Exception {
@@ -36,34 +42,55 @@ public class Carona {
 		this.setCriador(criador);
 		this.pontosSugeridos = new HashMap<String, String>();
 		this.solicitacoes = new ArrayList<Solicitacao>();
-		this.caroneiros = new ArrayList<Usuario>();
-
+		this.caroneirosConfirmados = new ArrayList<Solicitacao>();
+		this.reviews = new ArrayList<Review>();
+		
 		GeradorDeID gerador = new GeradorDeID();
 		id = gerador.geraId();
 	}
 
-	public HashMap<String, String> getPontosSugeridos() {
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public Map<String, String> getPontosSugeridos() {
 		return pontosSugeridos;
+	}
+	
+	public  Collection<String> getPontosSugeridosValues() {
+		return pontosSugeridos.values();
 	}
 
 	public void setPontosSugeridos(HashMap<String, String> pontosSugeridos) {
 		this.pontosSugeridos = pontosSugeridos;
 	}
 
-	public List<Usuario> getCaroneiros() {
-		return caroneiros;
+	public List<Solicitacao> getCaroneiros() {
+		return caroneirosConfirmados;
 	}
 
-	public void setCaroneiros(List<Usuario> caroneiros) {
-		this.caroneiros = caroneiros;
+	public void setCaroneiros(List<Solicitacao> caroneiros) {
+		this.caroneirosConfirmados = caroneiros;
 	}
 
-	public void addCaroneiro(Usuario caroneiro) {
-		this.caroneiros.add(caroneiro);
+	public void addCaroneiro(Solicitacao caroneiro) {
+		this.caroneirosConfirmados.add(caroneiro);
+	}
+	
+	public void removeCaroneiro(Usuario caroneiro) {
+		this.caroneirosConfirmados.remove(caroneiro);
 	}
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public void setPonto(String ponto) {
+		this.pontoDeEncontro = ponto;
 	}
 
 	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
@@ -74,6 +101,10 @@ public class Carona {
 		this.criador = criador;
 	}
 
+	public String getPontoDeEncontro(){
+		return pontoDeEncontro;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -93,10 +124,16 @@ public class Carona {
 	public void addSolicitacao(Solicitacao solicitacao) {
 		solicitacoes.add(solicitacao);
 	}
+	
+	public void aceitaSolicitacao(Solicitacao solicitacao) {
+		solicitacoes.remove(solicitacao);
+		solicitacao.setEstado("Confirmada");
+		addSolicitacao(solicitacao);
+	}
 
 	public void setOrigem(String origem) throws Exception {
 		if (origem == null || origem.equals("") || contemCharInvalidos(origem)) {
-			throw new Exception("Origem inválida");
+			throw new OrigemInvalidaException();
 		} else {
 			this.origem = origem;
 		}
@@ -106,12 +143,13 @@ public class Carona {
 		return destino;
 	}
 
-	public HashMap<String, String> getPontos() {
+	public Map<String, String> getPontos() {
 		return pontosSugeridos;
 	}
 
-	public void setPontos(String id, String pontos) {
+	public void setPontosSugeridos(String id, String pontos) {
 
+		pontosSugeridos.clear();
 		if (pontos != null && !pontos.equals("")) {
 			pontosSugeridos.put(id, pontos);
 		}
@@ -121,7 +159,7 @@ public class Carona {
 	public void setDestino(String destino) throws Exception {
 		if (destino == null || destino.equals("")
 				|| contemCharInvalidos(destino)) {
-			throw new Exception("Destino inválido");
+			throw new DestinoInvalidoException();
 		} else {
 			this.destino = destino;
 		}
@@ -146,7 +184,7 @@ public class Carona {
 
 	public void setData(String data) throws Exception {
 		if (data == null || data.equals("") || !validaData(data)) {
-			throw new Exception("Data inválida");
+			throw new DataInvalidaException();
 		} else {
 			this.data = data;
 		}
@@ -168,7 +206,7 @@ public class Carona {
 			ano = Integer.parseInt(data.substring(6));
 
 		} catch (Exception e) {
-			throw new Exception("Data inválida.");
+			throw new DataInvalidaException();
 		}
 
 		// Verifica ano >= que atual
@@ -251,7 +289,7 @@ public class Carona {
 
 	public void setHora(String hora) throws Exception {
 		if (hora == null || hora.equals("") || !validaHora(hora)) {
-			throw new Exception("Hora inválida");
+			throw new HoraInvalidaException();
 		} else {
 			this.hora = hora;
 		}
@@ -289,7 +327,7 @@ public class Carona {
 	public void setVagas(Object vagas) throws Exception {
 
 		if (vagas == null) {
-			throw new Exception("Vaga inválida");
+			throw new VagaInvalidaException();
 		}
 
 		int intVagas;
@@ -298,13 +336,13 @@ public class Carona {
 			intVagas = (Integer) vagas;
 
 		} catch (Exception e) {
-			throw new Exception("Vaga inválida");
+			throw new VagaInvalidaException();
 		}
 
 		String stringVagas = "" + vagas;
 
 		if (intVagas <= 0 || stringVagas == null) {
-			throw new Exception("Vaga inválida");
+			throw new VagaInvalidaException();
 		}
 		this.vagas = intVagas;
 	}
@@ -333,6 +371,12 @@ public class Carona {
 
 		return "origem=" + origem + " destino=" + destino + " data=" + data
 				+ " hora=" + hora + " vagas=" + vagas;
+	}
+
+	
+	public void addReview(Review review) {
+		reviews.add(review);
+		
 	}
 
 }

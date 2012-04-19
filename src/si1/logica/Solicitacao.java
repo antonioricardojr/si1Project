@@ -6,6 +6,7 @@ public class Solicitacao {
 	private Usuario solicitador;
 	private Carona carona;
 	private String ponto;
+	private String estado;
 	
 	public Solicitacao(String id, Usuario usuario, Carona carona, String ponto) {
 		
@@ -13,8 +14,17 @@ public class Solicitacao {
 		this.solicitador = usuario;
 		this.carona = carona;
 		this.ponto = ponto;
+		this.estado = "pendente";
 	}
 
+	public String getEstado(){
+		return estado;
+	}
+	
+	public void setEstado(String estado){
+		this.estado = estado;
+	}
+	
 	public String getId() {
 		return id;
 	}
