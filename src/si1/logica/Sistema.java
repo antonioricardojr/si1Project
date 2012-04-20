@@ -10,8 +10,10 @@ import si1.Excecoes.AtributoInvalidoException;
 import si1.Excecoes.CaronaInexistenteException;
 import si1.Excecoes.CaronaInvalidaException;
 import si1.Excecoes.DestinoInvalidoException;
+import si1.Excecoes.EmailExistenteException;
 import si1.Excecoes.IdentificadorCaronaInvalidoException;
 import si1.Excecoes.ItemInexistenteException;
+import si1.Excecoes.LoginExistenteException;
 import si1.Excecoes.LoginInvalidoException;
 import si1.Excecoes.NomeInvalidoException;
 import si1.Excecoes.OrigemInvalidaException;
@@ -63,6 +65,15 @@ public class Sistema {
 
 		if (login == null || login.equals("") || senha == null) {
 			throw new LoginInvalidoException();
+		}
+		
+		for(Usuario u : usuarios){
+			if(u.getLogin().equals(login)){
+				throw new LoginExistenteException();
+			}
+			if(u.getEmail().equals(email)){
+				throw new EmailExistenteException();
+			}
 		}
 
 		if (nome == null || nome.equals("")) {

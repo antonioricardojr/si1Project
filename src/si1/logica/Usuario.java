@@ -3,6 +3,8 @@ package si1.logica;
 import java.util.ArrayList;
 import java.util.List;
 
+import si1.Excecoes.LoginInvalidoException;
+
 /**
  * Classe que representa um usuario do sistema.
  * 
@@ -49,7 +51,7 @@ public class Usuario {
 
 		if (login == null || login.equals("")
 				|| contemCharInvalidosLogin(login)) {
-			throw new Exception("Login inválido");
+			throw new LoginInvalidoException();
 		}
 		this.login = login;
 	}
