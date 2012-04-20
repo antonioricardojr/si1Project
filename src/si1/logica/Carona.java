@@ -7,7 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Exceptions.*;
+import si1.Excecoes.DataInvalidaException;
+import si1.Excecoes.HoraInvalidaException;
+import si1.Excecoes.OrigemInvalidaException;
+import si1.Excecoes.VagaInvalidaException;
+
+
+
+
 
 /**
  * Classe que representa uma carona no sistema.
@@ -159,7 +166,7 @@ public class Carona {
 	public void setDestino(String destino) throws Exception {
 		if (destino == null || destino.equals("")
 				|| contemCharInvalidos(destino)) {
-			throw new DestinoInvalidoException();
+			throw new si1.Excecoes.DestinoInvalidoException();
 		} else {
 			this.destino = destino;
 		}

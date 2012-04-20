@@ -5,24 +5,26 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import Exceptions.AtributoInexistenteException;
-import Exceptions.AtributoInvalidoException;
-import Exceptions.CaronaInexistenteException;
-import Exceptions.CaronaInvalidaException;
-import Exceptions.DestinoInvalidoException;
-import Exceptions.IdentificadorCaronaInvalidoException;
-import Exceptions.ItemInexistenteException;
-import Exceptions.LoginInvalidoException;
-import Exceptions.NomeInvalidoException;
-import Exceptions.OrigemInvalidaException;
-import Exceptions.PontoInvalidoException;
-import Exceptions.SessaoInexistenteException;
-import Exceptions.SessaoInvalidaException;
-import Exceptions.SolicitacaoInexistenteException;
-import Exceptions.TrajetoInexistenteException;
-import Exceptions.TrajetoInvalidoException;
-import Exceptions.UsuarioInexistenteException;
-import Exceptions.VagaInvalidaException;
+import si1.Excecoes.AtributoInexistenteException;
+import si1.Excecoes.AtributoInvalidoException;
+import si1.Excecoes.CaronaInexistenteException;
+import si1.Excecoes.CaronaInvalidaException;
+import si1.Excecoes.DestinoInvalidoException;
+import si1.Excecoes.IdentificadorCaronaInvalidoException;
+import si1.Excecoes.ItemInexistenteException;
+import si1.Excecoes.LoginInvalidoException;
+import si1.Excecoes.NomeInvalidoException;
+import si1.Excecoes.OrigemInvalidaException;
+import si1.Excecoes.PontoInvalidoException;
+import si1.Excecoes.SessaoInexistenteException;
+import si1.Excecoes.SessaoInvalidaException;
+import si1.Excecoes.SolicitacaoInexistenteException;
+import si1.Excecoes.TrajetoInexistenteException;
+import si1.Excecoes.TrajetoInvalidoException;
+import si1.Excecoes.UsuarioInexistenteException;
+import si1.Excecoes.VagaInvalidaException;
+
+
 
 /**
  * Classe que representará as chamadas do sistema.
@@ -151,7 +153,7 @@ public class Sistema {
 			return u.getEndereco();
 		}
 
-		throw new AtributoInvalidoException();
+		throw new AtributoInexistenteException();
 	}
 
 	private Usuario buscaUsuario(String login) {

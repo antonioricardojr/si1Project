@@ -1,6 +1,5 @@
 package Facade;
 
-import Exceptions.SolicitacaoInexistenteException;
 import si1.logica.Sistema;
 
 /**
