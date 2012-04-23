@@ -103,8 +103,8 @@ public class Si1ProjectFacade {
 		S1.rejeitarSolicitacao(idSessao, idSolicitacao);
 	}
 	
-	public String visualizaPerfil(String idSessao, String login) throws Exception{
-		return S1.visualizaPerfil(idSessao, login);
+	public String visualizarPerfil(String idSessao, String login) throws Exception{
+		return S1.visualizarPerfil(idSessao, login);
 	}
 	
 	

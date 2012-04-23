@@ -529,7 +529,7 @@ public class Sistema {
 		return solicitacao.getId();
 	}
 
-	public String visualizaPerfil(String idSessao, String login)
+	public String visualizarPerfil(String idSessao, String login)
 			throws Exception {
 
 		VisualizadorDePerfil vp = null;
