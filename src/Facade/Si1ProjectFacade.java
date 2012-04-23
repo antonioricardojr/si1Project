@@ -1,6 +1,7 @@
 package Facade;
 
 import si1.logica.Sistema;
+import si1.logica.Usuario;
 
 /**
  * Classe Facade para usar os testes do easyAccept.
@@ -136,6 +137,11 @@ public class Si1ProjectFacade {
 	public String reviewVagaEmCarona(String idSessao, String idCarona, String loginCaroneiro, String review) throws Exception{
 		return S1.reviewVagaEmCarona(idSessao,idCarona, loginCaroneiro,review);
 	}
+	
+	public void reviewCarona(String idSessao, String idCarona, String review){
+		S1.reviewCarona(idSessao, idCarona, review);
+	}
+	
 	
 	public void reiniciarSistema(){
 		

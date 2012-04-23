@@ -688,6 +688,33 @@ public class Sistema {
 		return res;
 	}
 
+	public boolean reviewCarona(String idSessao, String idCarona, String review) {
+
+		Usuario u;
+
+		for (Sessao s : sessoes) {
+			if (s.getId().equals(idSessao)) {
+				u = buscaUsuario(s.getLogin());
+				for (Carona c : caronas) {
+					if (c.getId().equals(idCarona)) {
+
+						GeradorDeID gerador = new GeradorDeID();
+						String id = gerador.geraId();
+
+						Review novoReview = new Review(id, u, c, review);
+						c.addReview(novoReview);
+						return true;
+
+					}
+				}
+
+			}
+		}
+
+		return false;
+
+	}
+
 	public String reviewVagaEmCarona(String idSessao, String idCarona,
 			String loginCaroneiro, String review) throws Exception {
 
