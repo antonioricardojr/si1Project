@@ -78,8 +78,20 @@ public class VisualizadorDePerfil {
 	}
 
 	public String getFaltasEmVagasDeCaronas() {
-		// TODO Auto-generated method stub
-		return "0";
+		
+		int faltas = 0;
+		for(Carona c : usuario.getCaronas()){
+			for(Review r : c.getReviews()){
+				
+				if(r.getReview() == "faltou"){
+					
+					faltas++;
+				}
+			}
+		}
+		
+		
+		return "" + faltas;
 	}
 
 	public String getPresencasEmVagasDeCaronas() {

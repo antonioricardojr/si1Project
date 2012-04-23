@@ -16,6 +16,7 @@ import si1.Excecoes.ItemInexistenteException;
 import si1.Excecoes.LoginExistenteException;
 import si1.Excecoes.LoginInvalidoException;
 import si1.Excecoes.NomeInvalidoException;
+import si1.Excecoes.OpcaoInvalidaException;
 import si1.Excecoes.OrigemInvalidaException;
 import si1.Excecoes.PontoInvalidoException;
 import si1.Excecoes.SessaoInexistenteException;
@@ -25,8 +26,6 @@ import si1.Excecoes.TrajetoInexistenteException;
 import si1.Excecoes.TrajetoInvalidoException;
 import si1.Excecoes.UsuarioInexistenteException;
 import si1.Excecoes.VagaInvalidaException;
-
-
 
 /**
  * Classe que representará as chamadas do sistema.
@@ -66,12 +65,12 @@ public class Sistema {
 		if (login == null || login.equals("") || senha == null) {
 			throw new LoginInvalidoException();
 		}
-		
-		for(Usuario u : usuarios){
-			if(u.getLogin().equals(login)){
+
+		for (Usuario u : usuarios) {
+			if (u.getLogin().equals(login)) {
 				throw new LoginExistenteException();
 			}
-			if(u.getEmail().equals(email)){
+			if (u.getEmail().equals(email)) {
 				throw new EmailExistenteException();
 			}
 		}
@@ -414,8 +413,8 @@ public class Sistema {
 
 	public String solicitarVagaPontoEncontro(String idSessao, String idCarona,
 			String ponto) throws Exception {
-		
-		if(idSessao == null || idCarona == null || ponto == null){
+
+		if (idSessao == null || idCarona == null || ponto == null) {
 			throw new PontoInvalidoException();
 		}
 
@@ -425,12 +424,11 @@ public class Sistema {
 		Usuario usuario = buscaUsuario(sessao.getLogin());
 		GeradorDeID gerador = new GeradorDeID();
 		String id = gerador.geraId();
-		
-		
+
 		Solicitacao sol = new Solicitacao(id, usuario, carona, ponto);
 		carona.addSolicitacao(sol);
 		return id;
-		
+
 	}
 
 	public String solicitarVaga(String idSessao, String idCarona)
@@ -478,19 +476,19 @@ public class Sistema {
 			String idSolicitacao) throws Exception {
 
 		Solicitacao solicitacao = getSolicitacao(idSolicitacao);
-		//Sessao sessao = getSessao(idSessao);
+		// Sessao sessao = getSessao(idSessao);
 		Carona carona = localizaCarona(solicitacao.getCarona().getId());
 
-		//if (sessao.getLogin().equals(
-		//		solicitacao.getCarona().getCriador().getLogin())) {
-			caronas.remove(carona);
-			carona.addCaroneiro(solicitacao);
-			carona.setVagas(carona.getVagas() - 1);
-			carona.removeSolicitacao(solicitacao);
-			carona.setPonto(solicitacao.getPonto());
-			caronas.add(carona);
-			
-		//}
+		// if (sessao.getLogin().equals(
+		// solicitacao.getCarona().getCriador().getLogin())) {
+		caronas.remove(carona);
+		carona.addCaroneiro(solicitacao);
+		carona.setVagas(carona.getVagas() - 1);
+		carona.removeSolicitacao(solicitacao);
+		carona.setPonto(solicitacao.getPonto());
+		caronas.add(carona);
+
+		// }
 
 		return solicitacao.getId();
 	}
@@ -514,18 +512,19 @@ public class Sistema {
 		return idSugestao;
 	}
 
-	public String rejeitarSolicitacao(String idSessao, String idSolicitacao) throws Exception {
-		
+	public String rejeitarSolicitacao(String idSessao, String idSolicitacao)
+			throws Exception {
+
 		Solicitacao solicitacao = getSolicitacao(idSolicitacao);
-		//Sessao sessao = getSessao(idSessao);
+		// Sessao sessao = getSessao(idSessao);
 		Carona carona = localizaCarona(solicitacao.getCarona().getId());
 
-		//if (sessao.getLogin().equals(
-		//		solicitacao.getCarona().getCriador().getLogin())) {
-			caronas.remove(carona);
-			carona.removeSolicitacao(solicitacao);
-			caronas.add(carona);
-		//}
+		// if (sessao.getLogin().equals(
+		// solicitacao.getCarona().getCriador().getLogin())) {
+		caronas.remove(carona);
+		carona.removeSolicitacao(solicitacao);
+		caronas.add(carona);
+		// }
 
 		return solicitacao.getId();
 	}
@@ -647,60 +646,69 @@ public class Sistema {
 
 	}
 
-	public String getSolicitacoesConfirmadas(String idSessao,String idCarona) throws Exception {
-		
+	public String getSolicitacoesConfirmadas(String idSessao, String idCarona)
+			throws Exception {
+
 		Carona carona = localizaCarona(idCarona);
 		String res = "{";
 		for (Solicitacao sol : carona.getCaroneiros()) {
 			res += sol.getId();
-			
+
 		}
 		res += "}";
-		
+
 		return res;
 	}
-	
+
 	public String getSolicitacoesPendentes(String idCarona) throws Exception {
-		
+
 		Carona carona = localizaCarona(idCarona);
 		String res = "{";
 		for (Solicitacao sol : carona.getSolicitacoes()) {
 			res += sol.getId();
-			
+
 		}
 		res += "}";
-		
+
 		return res;
 	}
 
-	
-	public String getPontosSugeridos(String idSessao, String idCarona) throws Exception {
-		
+	public String getPontosSugeridos(String idSessao, String idCarona)
+			throws Exception {
+
 		Carona carona = localizaCarona(idCarona);
 		String res = "";
 		Collection<String> pontos = carona.getPontosSugeridosValues();
 		for (String ponto : pontos) {
 			res += ponto;
-			
+
 		}
 		res += "";
-		
+
 		return res;
 	}
-	
-	public String reviewVagaEmCarona(String idSessao, String idCarona, String loginCaroneiro, String review) throws Exception{
-		
-		Carona carona = localizaCarona(idCarona);
+
+	public String reviewVagaEmCarona(String idSessao, String idCarona,
+			String loginCaroneiro, String review) throws Exception {
+
 		Sessao sessao = getSessao(idSessao);
 		Usuario user = buscaUsuario(sessao.getLogin());
 		GeradorDeID gerador = new GeradorDeID();
 		String id = gerador.geraId();
-		caronas.remove(carona);
-		Review rev = new Review(id, user, carona, review);
-		carona.addReview(rev);
-		caronas.add(carona);
-		
-		return rev.getId();
-		
+
+		Usuario caroneiro = buscaUsuario(loginCaroneiro);
+		for (Carona c : caroneiro.getCaronasComoCaroneiro()) {
+			if (c.getId().equals(idCarona)) {
+				caronas.remove(c);
+				Review rev = new Review(id, user, c, review);
+				c.addReview(rev);
+				caronas.add(c);
+
+				return rev.getId();
+			}
+		}
+
+		return null;
+
 	}
 }
