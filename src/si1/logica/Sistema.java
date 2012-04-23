@@ -414,6 +414,10 @@ public class Sistema {
 
 	public String solicitarVagaPontoEncontro(String idSessao, String idCarona,
 			String ponto) throws Exception {
+		
+		if(idSessao == null || idCarona == null || ponto == null){
+			throw new PontoInvalidoException();
+		}
 
 		Carona carona = localizaCarona(idCarona);
 		Sessao sessao = getSessao(idSessao);
@@ -421,11 +425,12 @@ public class Sistema {
 		Usuario usuario = buscaUsuario(sessao.getLogin());
 		GeradorDeID gerador = new GeradorDeID();
 		String id = gerador.geraId();
+		
+		
 		Solicitacao sol = new Solicitacao(id, usuario, carona, ponto);
 		carona.addSolicitacao(sol);
-
 		return id;
-
+		
 	}
 
 	public String solicitarVaga(String idSessao, String idCarona)

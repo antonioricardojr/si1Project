@@ -1,6 +1,5 @@
 package si1.TesteLogica;
 
-import static org.junit.Assert.*;
 import junit.framework.Assert;
 
 import org.junit.After;
