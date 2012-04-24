@@ -1,5 +1,7 @@
 package Facade;
 
+import java.util.List;
+
 import si1.logica.Sistema;
 import si1.logica.Usuario;
 
