@@ -31,6 +31,7 @@ public class Carona {
 	private String data;
 	private String hora;
 	private Object vagas;
+	private Object vagasAtual;
 	private Map<String, String> pontosSugeridos;
 	private String pontoDeEncontro;
 	private List<Solicitacao> solicitacoes;
@@ -51,7 +52,7 @@ public class Carona {
 		this.solicitacoes = new ArrayList<Solicitacao>();
 		this.caroneirosConfirmados = new ArrayList<Solicitacao>();
 		this.reviews = new ArrayList<Review>();
-		
+		this.setVagasAtual(0);
 		GeradorDeID gerador = new GeradorDeID();
 		id = gerador.geraId();
 	}
@@ -84,6 +85,7 @@ public class Carona {
 		this.caroneirosConfirmados = caroneiros;
 	}
 
+	
 	public void addCaroneiro(Solicitacao caroneiro) {
 		this.caroneirosConfirmados.add(caroneiro);
 	}
@@ -384,6 +386,14 @@ public class Carona {
 	public void addReview(Review review) {
 		reviews.add(review);
 		
+	}
+
+	public Object getVagasAtual() {
+		return vagasAtual;
+	}
+
+	public void setVagasAtual(Object vagasAtual) {
+		this.vagasAtual = vagasAtual;
 	}
 
 }

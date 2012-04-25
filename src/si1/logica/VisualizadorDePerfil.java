@@ -54,17 +54,7 @@ public class VisualizadorDePerfil {
 
 	public String getHistoricoDeVagasEmCaronas() {
 		
-		int saida = 0;
-		
-		if(usuario.getCaronas().size() == 0){
-			return "";
-		}
-		
-		for(Carona c : usuario.getCaronas()){
-			saida += c.getVagas();
-		}
-		
-		return saida+"";
+		return "";
 	}
 
 	public String getCaronasSegurasETranquilas() {
