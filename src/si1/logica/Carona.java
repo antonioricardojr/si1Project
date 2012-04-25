@@ -12,10 +12,6 @@ import si1.Excecoes.HoraInvalidaException;
 import si1.Excecoes.OrigemInvalidaException;
 import si1.Excecoes.VagaInvalidaException;
 
-
-
-
-
 /**
  * Classe que representa uma carona no sistema.
  * 
@@ -31,13 +27,15 @@ public class Carona {
 	private String data;
 	private String hora;
 	private Object vagas;
-	private Object vagasAtual;
+	private int vagasTotal;
 	private Map<String, String> pontosSugeridos;
 	private String pontoDeEncontro;
 	private List<Solicitacao> solicitacoes;
 	private List<Solicitacao> caroneirosConfirmados;
 	private Usuario criador;
 	private List<Review> reviews;
+	
+	private boolean isFinalizada;
 
 	public Carona(String origem, String destino, String data, String hora,
 			Object vagas, Usuario criador) throws Exception {
@@ -52,9 +50,12 @@ public class Carona {
 		this.solicitacoes = new ArrayList<Solicitacao>();
 		this.caroneirosConfirmados = new ArrayList<Solicitacao>();
 		this.reviews = new ArrayList<Review>();
-		this.setVagasAtual(0);
 		GeradorDeID gerador = new GeradorDeID();
 		id = gerador.geraId();
+
+		vagasTotal = (Integer) vagas;
+		
+		this.setFinalizada(false);
 	}
 
 	public List<Review> getReviews() {
@@ -68,8 +69,8 @@ public class Carona {
 	public Map<String, String> getPontosSugeridos() {
 		return pontosSugeridos;
 	}
-	
-	public  Collection<String> getPontosSugeridosValues() {
+
+	public Collection<String> getPontosSugeridosValues() {
 		return pontosSugeridos.values();
 	}
 
@@ -85,11 +86,10 @@ public class Carona {
 		this.caroneirosConfirmados = caroneiros;
 	}
 
-	
 	public void addCaroneiro(Solicitacao caroneiro) {
 		this.caroneirosConfirmados.add(caroneiro);
 	}
-	
+
 	public void removeCaroneiro(Usuario caroneiro) {
 		this.caroneirosConfirmados.remove(caroneiro);
 	}
@@ -97,7 +97,7 @@ public class Carona {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public void setPonto(String ponto) {
 		this.pontoDeEncontro = ponto;
 	}
@@ -110,10 +110,10 @@ public class Carona {
 		this.criador = criador;
 	}
 
-	public String getPontoDeEncontro(){
+	public String getPontoDeEncontro() {
 		return pontoDeEncontro;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -133,7 +133,7 @@ public class Carona {
 	public void addSolicitacao(Solicitacao solicitacao) {
 		solicitacoes.add(solicitacao);
 	}
-	
+
 	public void aceitaSolicitacao(Solicitacao solicitacao) {
 		solicitacoes.remove(solicitacao);
 		solicitacao.setEstado("Confirmada");
@@ -382,18 +382,21 @@ public class Carona {
 				+ " hora=" + hora + " vagas=" + vagas;
 	}
 
-	
 	public void addReview(Review review) {
 		reviews.add(review);
-		
+
 	}
 
-	public Object getVagasAtual() {
-		return vagasAtual;
+	public int getVagasTotal() {
+		return (Integer) vagasTotal;
 	}
 
-	public void setVagasAtual(Object vagasAtual) {
-		this.vagasAtual = vagasAtual;
+	public boolean isFinalizada() {
+		return isFinalizada;
+	}
+
+	public void setFinalizada(boolean isFinalizada) {
+		this.isFinalizada = isFinalizada;
 	}
 
 }

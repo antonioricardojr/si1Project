@@ -6,12 +6,14 @@ public class Review {
 	private Usuario usuario;
 	private Carona carona;
 	private String review;
+	private ReviewGeral reviewGeral;
 	
 	public Review(String id, Usuario usuario, Carona carona, String review){
 		this.setId(id);
 		this.setUsuario(usuario);
 		this.setCarona(carona);
 		this.setReview(review);
+		this.setReviewGeral(reviewGeral);
 	}
 
 	public String getReview() {
@@ -45,5 +47,15 @@ public class Review {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	public ReviewGeral getReviewGeral() {
+		return reviewGeral;
+	}
+
+	public void setReviewGeral(ReviewGeral reviewGeral) {
+		this.reviewGeral = reviewGeral;
+	}
+
+
 
 }

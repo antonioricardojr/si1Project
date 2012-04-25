@@ -33,12 +33,12 @@ public class VisualizadorDePerfil {
 
 	public String getHistoricoDeCaronas() {
 
-		if(usuario.getCaronasOferecidas().size()==0){
+		if (usuario.getCaronasOferecidas().size() == 0) {
 			return "";
 		}
-		
+
 		String historicoDeCaronas = "[";
-		
+
 		for (Carona c : usuario.getCaronasOferecidas()) {
 			historicoDeCaronas += c.getId() + ",";
 		}
@@ -48,13 +48,23 @@ public class VisualizadorDePerfil {
 					historicoDeCaronas.length() - 1);
 		}
 		historicoDeCaronas += "]";
-		
+
 		return historicoDeCaronas;
 	}
 
 	public String getHistoricoDeVagasEmCaronas() {
-		
-		return "";
+
+		String saida = "";
+		if (usuario.getCaronas().size() == 0) {
+			return "";
+		} else {
+			for (Carona c : usuario.getCaronas()) {
+				saida += c.getId() + ", ";
+			}
+
+			saida = "[" + saida.substring(0, saida.length() - 2) + "]";
+			return saida;
+		}
 	}
 
 	public String getCaronasSegurasETranquilas() {
@@ -68,19 +78,18 @@ public class VisualizadorDePerfil {
 	}
 
 	public String getFaltasEmVagasDeCaronas() {
-		
+
 		int faltas = 0;
-		for(Carona c : usuario.getCaronas()){
-			for(Review r : c.getReviews()){
-				
-				if(r.getReview() == "faltou"){
-					
+		for (Carona c : usuario.getCaronas()) {
+			for (Review r : c.getReviews()) {
+
+				if (r.getReview() == "faltou") {
+
 					faltas++;
 				}
 			}
 		}
-		
-		
+
 		return "" + faltas;
 	}
 
