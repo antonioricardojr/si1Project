@@ -1,5 +1,7 @@
 package si1.logica;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -16,7 +18,6 @@ import si1.Excecoes.ItemInexistenteException;
 import si1.Excecoes.LoginExistenteException;
 import si1.Excecoes.LoginInvalidoException;
 import si1.Excecoes.NomeInvalidoException;
-import si1.Excecoes.OpcaoInvalidaException;
 import si1.Excecoes.OrigemInvalidaException;
 import si1.Excecoes.PontoInvalidoException;
 import si1.Excecoes.SessaoInexistenteException;
@@ -26,6 +27,10 @@ import si1.Excecoes.TrajetoInexistenteException;
 import si1.Excecoes.TrajetoInvalidoException;
 import si1.Excecoes.UsuarioInexistenteException;
 import si1.Excecoes.VagaInvalidaException;
+import si1.Excecoes.XMLNaoGeradaException;
+import si1.xml.FactoryXml;
+import si1.xml.GravaXml;
+import si1.xml.Xml;
 
 /**
  * Classe que representará as chamadas do sistema.
@@ -39,11 +44,13 @@ public class Sistema {
 	private List<Usuario> usuarios;
 	private List<Sessao> sessoes;
 	private List<Carona> caronas;
+	private Xml xmlCreator;
 
 	public Sistema() {
 		usuarios = new ArrayList<Usuario>();
 		sessoes = new ArrayList<Sessao>();
 		caronas = new ArrayList<Carona>();
+		this.xmlCreator = new FactoryXml("sistema");
 	}
 
 	public List<Usuario> getUsuarios() {
@@ -737,5 +744,26 @@ public class Sistema {
 
 		return null;
 
+	}
+	
+	public void encerrarSistema() throws IOException, XMLNaoGeradaException{
+		
+		// Gera XML de todos os usuarios do sistema
+		for(Usuario u : usuarios){
+			u.geraXml();
+			this.xmlCreator.geraXML(u.getXml());
+		}
+		GravaXml gravador = new GravaXml(this.xmlCreator.getRaiz());
+		gravador.gravar("arquivo.xml");
+		
+		
+	}
+
+	public void zerarSistema() {
+		File f = new File("arquivo.xml");
+		if(f.exists()){	
+			f.delete();	
+		}
+		
 	}
 }

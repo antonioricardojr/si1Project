@@ -3,7 +3,13 @@ package si1.logica;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jdom2.Element;
+
 import si1.Excecoes.LoginInvalidoException;
+import si1.Excecoes.XMLNaoGeradaException;
+import si1.xml.FactoryXml;
+import si1.xml.Xml;
+
 
 /**
  * Classe que representa um usuario do sistema.
@@ -25,6 +31,8 @@ public class Usuario {
 	private List<Carona> caronas;
 
 	private List<Usuario> amigos;
+	
+	private Xml xmlCreator;
 
 	public Usuario(String login, String senha, String nome, String endereco,
 			String email) throws Exception {
@@ -41,6 +49,7 @@ public class Usuario {
 		setCaronas(new ArrayList<Carona>());
 
 		setAmigos(new ArrayList<Usuario>());
+		this.xmlCreator = new FactoryXml("usuario");
 	}
 
 	public String getLogin() {
@@ -241,5 +250,12 @@ public class Usuario {
 			caronas.remove(c);
 		}
 	}
-
+	
+	public void geraXml(){
+		this.xmlCreator.geraXML(this);
+	}
+	
+	public Element getXml() throws XMLNaoGeradaException{
+		return this.xmlCreator.getRaiz();
+	}
 }
