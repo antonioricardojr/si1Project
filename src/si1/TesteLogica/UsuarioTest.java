@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import si1.logica.Carona;
 import si1.logica.Usuario;
 
 public class UsuarioTest {
@@ -195,12 +196,48 @@ public class UsuarioTest {
 			Assert.assertEquals("Email inválido", e.getMessage());
 		}
 		
-		u2 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
-		Assert.assertEquals("mark@facebook.com.br", u2.getEmail());
+		u2 = new Usuario("steve", "654321", "Steve Pal Jobs", "Palo Alto, California", "steve@apple.com");
+		Assert.assertEquals("steve@apple.com", u2.getEmail());
 		
 		u3 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com");
 		Assert.assertEquals("mark@facebook.com", u3.getEmail());
 		
+		
+	}
+	
+	@Test
+	public void testeAdicionarAmigo() throws Exception{
+		
+		u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
+		
+		u2 = new Usuario("steve", "654321", "Steve Pal Jobs", "Palo Alto, California", "steve@apple.com");
+		
+		u3 = new Usuario("bill", "456789", "William Henry Gates III", "Palo Alto, California", "bill@microsoft.com");
+		
+		u1.adicionaAmigo(u2);
+		
+		Assert.assertEquals(u2, u1.getAmigos().get(0));
+		Assert.assertEquals(u1, u2.getAmigos().get(0));
+		
+		u2.adicionaAmigo(u1);
+		
+				
+	}
+	
+	@Test
+	public void testeAdicionarCarona() throws Exception{
+		
+		u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
+		
+		u2 = new Usuario("steve", "654321", "Steve Pal Jobs", "Palo Alto, California", "steve@apple.com");
+		
+		u3 = new Usuario("bill", "456789", "William Henry Gates III", "Palo Alto, California", "bill@microsoft.com");
+		
+		
+		Carona c1 = new Carona("Campina Grande", "João Pessoa", "01/10/2012", "17:50", 3, u1);
+		u1.adicionaCarona(c1);
+		Assert.assertEquals(c1, u1.getCaronas().get(0));
+		Assert.assertEquals(c1, u1.getCaronasComoCaroneiro().get(0));
 		
 	}
 
