@@ -1,13 +1,16 @@
 package si1.TesteLogica;
 
 import static org.junit.Assert.*;
+import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import si1.logica.Carona;
+import si1.logica.GeradorDeID;
 import si1.logica.Sistema;
+import si1.logica.Solicitacao;
 import si1.logica.Usuario;
 
 public class CaronaTest {
@@ -18,6 +21,10 @@ public class CaronaTest {
 	Carona c4;
 	Carona c5;
 	Usuario usuario;
+	
+	
+	GeradorDeID gerador = new GeradorDeID();
+	
 	@Before
 	public void setUp() throws Exception {
 		Sistema sis = new Sistema();
@@ -150,6 +157,39 @@ public class CaronaTest {
 		}catch (Exception e){
 			assertEquals("Vaga inválida", e.getMessage());
 		}
+	}
+	
+	@Test
+	public void testVagasTotal() throws Exception{
+		c1 = new Carona("Campina Grande", "Joao Pessoa",
+				"01/02/2013", "19:00", 3,usuario);
+		
+		c2 = new Carona("Campina Grande", "Joao Pessoa",
+				"01/02/2013", "19:00", 2,usuario);
+		
+		Usuario u1 = new Usuario("random", "123456", "Homem Random", "Palo Alto, California", "random@random.com");
+		
+		Usuario u2 = new Usuario("Steve", "123456", "Steve Paul Jobs", "Palo Alto, California", "steve@apple.com");
+		
+		Solicitacao s1 = new Solicitacao(gerador.geraId(), u1, c1, "Açude Velho");
+		Solicitacao s2 = new Solicitacao(gerador.geraId(), u2, c1, "Praça da Bandeira");
+		
+		c1.addCaroneiro(s1);
+		c1.addCaroneiro(s2);
+		
+		Assert.assertEquals(s1, c1.getCaroneiros().get(0));
+		Assert.assertEquals(s2, c1.getCaroneiros().get(1));
+		
+		
+		c1.removeSolicitacao(s1);
+		
+		Assert.assertEquals(s2, c1.getCaroneiros().get(0));
+				
+	}
+	
+	@Test
+	public void testeReview(){
+		
 	}
 
 }
