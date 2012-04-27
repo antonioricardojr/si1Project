@@ -49,7 +49,7 @@ public class Usuario {
 		setCaronas(new ArrayList<Carona>());
 
 		setAmigos(new ArrayList<Usuario>());
-		this.xmlCreator = new FactoryXml("usuario");
+		this.xmlCreator = new FactoryXml("Xml usuario");
 	}
 
 	public String getLogin() {

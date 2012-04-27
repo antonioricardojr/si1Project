@@ -1,8 +1,12 @@
 package si1.xml;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -17,12 +21,14 @@ public class GravaXml {
 	}
 	
 	public void gravar(String endereco) throws IOException{
+		
 		Document doc = new Document();
 		doc.setRootElement(this.raiz);
 		XMLOutputter xout = new XMLOutputter();
-		FileWriter arquivo = new FileWriter(new File(endereco));
-		xout.output(doc, arquivo);
-		arquivo.close();
+		//FileWriter arquivo = new FileWriter(new File(endereco));
+		Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(endereco), "UTF8")); 
+		xout.output(doc, out);
+		out.close();
 	}
 
 }

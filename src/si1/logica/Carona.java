@@ -7,10 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jdom2.Element;
+
 import si1.Excecoes.DataInvalidaException;
 import si1.Excecoes.HoraInvalidaException;
 import si1.Excecoes.OrigemInvalidaException;
 import si1.Excecoes.VagaInvalidaException;
+import si1.Excecoes.XMLNaoGeradaException;
+import si1.xml.FactoryXml;
+import si1.xml.Xml;
 
 /**
  * Classe que representa uma carona no sistema.
@@ -36,6 +41,8 @@ public class Carona {
 	private List<Review> reviews;
 	
 	private boolean isFinalizada;
+	
+	private Xml xmlCreator;
 
 	public Carona(String origem, String destino, String data, String hora,
 			Object vagas, Usuario criador) throws Exception {
@@ -56,6 +63,8 @@ public class Carona {
 		vagasTotal = (Integer) vagas;
 		
 		this.setFinalizada(false);
+		
+		this.xmlCreator = new FactoryXml("Xml carona");
 	}
 
 	public List<Review> getReviews() {
@@ -292,7 +301,7 @@ public class Carona {
 		}
 	}
 
-	public String getHora() throws Exception {
+	public String getHora() {
 		return this.hora;
 	}
 
@@ -397,6 +406,14 @@ public class Carona {
 
 	public void setFinalizada(boolean isFinalizada) {
 		this.isFinalizada = isFinalizada;
+	}
+	
+	public void geraXml(){
+		this.xmlCreator.geraXML(this);
+	}
+	
+	public Element getXml() throws XMLNaoGeradaException{
+		return this.xmlCreator.getRaiz();
 	}
 
 }

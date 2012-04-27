@@ -44,13 +44,17 @@ public class Sistema {
 	private List<Usuario> usuarios;
 	private List<Sessao> sessoes;
 	private List<Carona> caronas;
-	private Xml xmlCreator;
+	private Xml xmlCreatorUsuarios;
+	private Xml xmlCreatorCaronas;
+	private Xml xmlCreatorSistema;
 
 	public Sistema() {
 		usuarios = new ArrayList<Usuario>();
 		sessoes = new ArrayList<Sessao>();
 		caronas = new ArrayList<Carona>();
-		this.xmlCreator = new FactoryXml("sistema");
+		this.xmlCreatorUsuarios = new FactoryXml("Xml Usuarios do sistema");
+		this.xmlCreatorCaronas = new FactoryXml("Xml Caronas do sistema");
+		this.xmlCreatorSistema = new FactoryXml("Xml Sistema");
 	}
 
 	public List<Usuario> getUsuarios() {
@@ -751,9 +755,17 @@ public class Sistema {
 		// Gera XML de todos os usuarios do sistema
 		for(Usuario u : usuarios){
 			u.geraXml();
-			this.xmlCreator.geraXML(u.getXml());
+			this.xmlCreatorUsuarios.geraXML(u.getXml());
 		}
-		GravaXml gravador = new GravaXml(this.xmlCreator.getRaiz());
+		
+		for(Carona c : caronas){
+			c.geraXml();
+			this.xmlCreatorCaronas.geraXML(c.getXml());
+		}
+		
+		this.xmlCreatorSistema.geraXML(this.xmlCreatorUsuarios.getRaiz());
+		this.xmlCreatorSistema.geraXML(this.xmlCreatorCaronas.getRaiz());
+		GravaXml gravador = new GravaXml(this.xmlCreatorSistema.getRaiz());
 		gravador.gravar("arquivo.xml");
 		
 		
