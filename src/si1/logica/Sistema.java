@@ -699,7 +699,7 @@ public class Sistema {
 		return res;
 	}
 
-	public boolean reviewCarona(String idSessao, String idCarona, String review) {
+	public boolean reviewCarona(String idSessao, String idCarona, String review) throws Exception {
 
 		Usuario u;
 

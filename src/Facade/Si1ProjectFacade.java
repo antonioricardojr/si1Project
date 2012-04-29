@@ -143,7 +143,7 @@ public class Si1ProjectFacade {
 		return S1.reviewVagaEmCarona(idSessao,idCarona, loginCaroneiro,review);
 	}
 	
-	public void reviewCarona(String idSessao, String idCarona, String review){
+	public void reviewCarona(String idSessao, String idCarona, String review) throws Exception{
 		S1.reviewCarona(idSessao, idCarona, review);
 	}
 	

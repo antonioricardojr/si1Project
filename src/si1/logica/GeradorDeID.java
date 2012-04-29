@@ -18,12 +18,5 @@ public class GeradorDeID {
 
 		return id;
 	}
-	
-	
-	public static void main(String[] args) {
-		GeradorDeID gerador = new GeradorDeID();
-		
-		System.out.println(gerador.geraId());
-	}
 
 }

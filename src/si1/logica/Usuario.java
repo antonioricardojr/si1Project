@@ -134,7 +134,6 @@ public class Usuario {
 			throw new Exception("Email inválido");
 		}
 		String[] caracteres = email.split("");
-
 		String substring1 = "";
 		String substring2 = "";
 

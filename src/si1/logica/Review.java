@@ -1,19 +1,26 @@
 package si1.logica;
 
+import si1.Excecoes.NomeInvalidoException;
+import si1.Excecoes.ReviewInvalidaException;
+
 public class Review {
 	
 	private String id;
 	private Usuario usuario;
 	private Carona carona;
 	private String review;
-	private ReviewGeral reviewGeral;
 	
-	public Review(String id, Usuario usuario, Carona carona, String review){
-		this.setId(id);
-		this.setUsuario(usuario);
-		this.setCarona(carona);
-		this.setReview(review);
-		this.setReviewGeral(reviewGeral);
+	public Review(String id, Usuario usuario, Carona carona, String review)throws Exception {
+		
+		if(id == null || usuario == null || carona == null || review == null){
+			throw new ReviewInvalidaException();
+		}else{
+			this.setId(id);
+			this.setUsuario(usuario);
+			this.setCarona(carona);
+			this.setReview(review);
+		}	
+		
 	}
 
 	public String getReview() {
@@ -47,15 +54,6 @@ public class Review {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	public ReviewGeral getReviewGeral() {
-		return reviewGeral;
-	}
-
-	public void setReviewGeral(ReviewGeral reviewGeral) {
-		this.reviewGeral = reviewGeral;
-	}
-
 
 
 }

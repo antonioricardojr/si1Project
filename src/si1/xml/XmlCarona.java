@@ -136,7 +136,6 @@ public class XmlCarona implements Xml{
 			usuarioLogin.addContent(r.getUsuario().getLogin());
 			idCarona.addContent(r.getCarona().getId());
 			reviewTexto.addContent(r.getReview());
-			reviewGeral.addContent(r.getReviewGeral().toString());
 			
 			review.addContent(reviewId);
 			review.addContent(usuarioLogin);
