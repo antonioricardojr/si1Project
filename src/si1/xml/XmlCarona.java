@@ -57,6 +57,16 @@ public class XmlCarona implements Xml{
 		this.raiz.addContent(hora);
 		this.raiz.addContent(vagas);
 		this.raiz.addContent(vagasTotal);
+		
+		for(String id : carona.getPontosSugeridos().keySet()){
+			Element pontos = new Element("pontos");
+			pontos.setAttribute("id",id);
+			pontos.addContent(carona.getPontosSugeridos().get(id));
+			pontosSugeridos.addContent(pontos);
+		}
+		
+		this.raiz.addContent(pontosSugeridos);
+		
 		this.raiz.addContent(pontoDeEncontro);
 		
 		//Adicionando as solicitacoes
