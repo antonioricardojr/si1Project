@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jdom2.JDOMException;
+
 import si1.Excecoes.AtributoInexistenteException;
 import si1.Excecoes.AtributoInvalidoException;
 import si1.Excecoes.CaronaInexistenteException;
@@ -31,6 +33,7 @@ import si1.Excecoes.XMLNaoGeradaException;
 import si1.xml.FactoryXml;
 import si1.xml.GravaXml;
 import si1.xml.Xml;
+import si1.xml.leXml;
 
 /**
  * Classe que representará as chamadas do sistema.
@@ -776,6 +779,14 @@ public class Sistema {
 		if(f.exists()){	
 			f.delete();	
 		}
+		
+	}
+
+	public void reiniciarSistema() throws JDOMException, IOException {
+		leXml leitor = new leXml("arquivo.xml");
+		//this.caronas = leitor.getCaronas();
+		//this.usuarios = leitor.getUsuarios();
+		
 		
 	}
 }

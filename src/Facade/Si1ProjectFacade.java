@@ -3,6 +3,8 @@ package Facade;
 import java.io.IOException;
 import java.util.List;
 
+import org.jdom2.JDOMException;
+
 import si1.Excecoes.XMLNaoGeradaException;
 import si1.logica.Sistema;
 import si1.logica.Usuario;
@@ -148,7 +150,8 @@ public class Si1ProjectFacade {
 	}
 	
 	
-	public void reiniciarSistema(){
+	public void reiniciarSistema() throws JDOMException, IOException{
+		S1.reiniciarSistema();
 		
 	}
 	
