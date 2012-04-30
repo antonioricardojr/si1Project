@@ -18,6 +18,7 @@ import excecoes.ItemInexistenteException;
 import excecoes.LoginExistenteException;
 import excecoes.LoginInvalidoException;
 import excecoes.NomeInvalidoException;
+import excecoes.OpcaoInvalidaException;
 import excecoes.OrigemInvalidaException;
 import excecoes.PontoInvalidoException;
 import excecoes.SessaoInexistenteException;
@@ -741,29 +742,28 @@ public class Sistema {
 
 	public String reviewVagaEmCarona(String idSessao, String idCarona,
 			String loginCaroneiro, String review) throws Exception {
+		
+		if(review.equals("faltou") || review.equals("não faltou")){
+			Sessao sessao = getSessao(idSessao);
+			Usuario user = buscaUsuario(sessao.getLogin());
+			GeradorDeID gerador = new GeradorDeID();
+			String id = gerador.geraId();
 
-		Sessao sessao = getSessao(idSessao);
-		Usuario user = buscaUsuario(sessao.getLogin());
-		GeradorDeID gerador = new GeradorDeID();
-		String id = gerador.geraId();
+			Usuario caroneiro = buscaUsuario(loginCaroneiro);
+			for (String c : caroneiro.getCaronasComoCaroneiro()) {
+				if (c.equals(idCarona)) {
+					Carona carona = localizaCarona(c);
+					caronas.remove(carona);
+					Review rev = new Review(id, user.getLogin(), c, review);
+					carona.addReview(rev);
+					caronas.add(carona);
 
-		Usuario caroneiro = buscaUsuario(loginCaroneiro);
-		for (String c : caroneiro.getCaronasComoCaroneiro()) {
-			if (c.equals(idCarona)) {
-				Carona carona = localizaCarona(c);
-				caronas.remove(carona);
-				Review rev = new Review(id, user.getLogin(), c, review);
-				carona.addReview(rev);
-				caronas.add(carona);
-
-				return rev.getId();
+					return rev.getId();
+				}
 			}
 		}
-
-		return null;
-
+			throw new OpcaoInvalidaException();
 	}
-	
 	public void encerrarSistema() throws IOException, XMLNaoGeradaException{
 		
 		// Gera XML de todos os usuarios do sistema
