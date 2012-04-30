@@ -20,6 +20,12 @@ public class TestaSessao {
 	
 	@Before
 	public void setUp() throws Exception{
+		Sistema sis = new Sistema();
+		id = gerador.geraId();
+		usuario = sis.criarUsuario("Mark", "123456", "Mark Zuckerberg",
+				"Palo Alto, California", "mark@facebook.com");
+		usuario2 = sis.criarUsuario("Jurema", "123456", "Jurema da Silva",
+				"Cabedelo", "jurema@cidadelinda.com");
 		sessao = new Sessao(usuario.getLogin());
 	}
 	

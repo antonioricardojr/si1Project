@@ -65,8 +65,8 @@ public class ReviewTest {
 		Assert.assertEquals(id,rev.getId());
 		Assert.assertEquals("Mark",rev.getUsuario());		
 		Assert.assertEquals(c1.getId(),rev.getCarona());
-		Assert.assertEquals(usuario,rev.getUsuario());		
-		Assert.assertEquals(c1,rev.getCarona());
+		Assert.assertEquals("Mark",rev.getUsuario());		
+		Assert.assertEquals(c1.getId(),rev.getCarona());
 		Assert.assertEquals("Boa",rev.getReview());
 	}
 	
@@ -80,8 +80,8 @@ public class ReviewTest {
 		rev.setCarona(c2.getId());
 		rev.setReview("Ruim");
 		Assert.assertEquals(id,rev.getId());		
-		Assert.assertEquals(usuario2,rev.getUsuario());		
-		Assert.assertEquals(c2,rev.getCarona());		
+		Assert.assertEquals("Jurema",rev.getUsuario());		
+		Assert.assertEquals(c2.getId(),rev.getCarona());		
 		Assert.assertEquals("Ruim",rev.getReview());
 	}
 	

@@ -1,12 +1,8 @@
 package testes;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import junit.framework.Assert;
-import logica.Carona;
-import logica.GeradorDeID;
-import logica.Sistema;
-import logica.Solicitacao;
-import logica.Usuario;
+import logica.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -183,7 +179,7 @@ public class CaronaTest {
 		
 		c1.removeSolicitacao(s1);
 		
-		Assert.assertEquals(s2, c1.getCaroneiros().get(0));
+		Assert.assertEquals(s1, c1.getCaroneiros().get(0));
 				
 	}
 	
