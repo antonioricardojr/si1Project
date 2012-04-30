@@ -44,12 +44,9 @@ public class TestaSistema {
 	
 	@Test
 	public void testaGets() throws Exception{
-		c1 = new Carona("Campina Grande", "Joao Pessoa",
-				 3,usuario.getLogin());
-	
 		sis.abrirSessao(usuario.getLogin(), usuario.getSenha());
 		
-		sis.cadastrarCarona(idSessao,"Campina Grande","Joao Pessoa","20/09/2012","19:00",3)
-		sis
+		//sis.cadastrarCarona(idSessao,"Campina Grande","Joao Pessoa","20/09/2012","19:00",3)
+		//sis
 	}
 }

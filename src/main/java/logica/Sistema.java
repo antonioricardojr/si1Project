@@ -18,6 +18,7 @@ import excecoes.ItemInexistenteException;
 import excecoes.LoginExistenteException;
 import excecoes.LoginInvalidoException;
 import excecoes.NomeInvalidoException;
+import excecoes.OpcaoInvalidaException;
 import excecoes.OrigemInvalidaException;
 import excecoes.PontoInvalidoException;
 import excecoes.SessaoInexistenteException;
@@ -51,9 +52,9 @@ public class Sistema {
 	private Xml xmlCreatorSistema;
 
 	public Sistema() {
-		usuarios = new ArrayList<Usuario>();
-		sessoes = new ArrayList<Sessao>();
-		caronas = new ArrayList<Carona>();
+		this.usuarios = new ArrayList<Usuario>();
+		this.sessoes = new ArrayList<Sessao>();
+		this.caronas = new ArrayList<Carona>();
 		this.xmlCreatorUsuarios = new FactoryXml("Xml Usuarios do sistema");
 		this.xmlCreatorCaronas = new FactoryXml("Xml Caronas do sistema");
 		this.xmlCreatorSistema = new FactoryXml("Xml Sistema");
@@ -499,6 +500,7 @@ public class Sistema {
 		carona.setVagas(carona.getVagas() - 1);
 		carona.removeSolicitacao(solicitacao);
 		carona.setPonto(solicitacao.getPonto());
+		buscaUsuario(solicitacao.getSolicitador()).adicionaCaronaComoCaroneiro(carona.getId());
 		caronas.add(carona);
 
 		// }
@@ -740,31 +742,31 @@ public class Sistema {
 
 	public String reviewVagaEmCarona(String idSessao, String idCarona,
 			String loginCaroneiro, String review) throws Exception {
+		
+		if(review.equals("faltou") || review.equals("não faltou")){
+			Sessao sessao = getSessao(idSessao);
+			Usuario user = buscaUsuario(sessao.getLogin());
+			GeradorDeID gerador = new GeradorDeID();
+			String id = gerador.geraId();
 
-		Sessao sessao = getSessao(idSessao);
-		Usuario user = buscaUsuario(sessao.getLogin());
-		GeradorDeID gerador = new GeradorDeID();
-		String id = gerador.geraId();
+			Usuario caroneiro = buscaUsuario(loginCaroneiro);
+			for (String c : caroneiro.getCaronasComoCaroneiro()) {
+				if (c.equals(idCarona)) {
+					Carona carona = localizaCarona(c);
+					caronas.remove(carona);
+					Review rev = new Review(id, user.getLogin(), c, review);
+					carona.addReview(rev);
+					caronas.add(carona);
 
-		Usuario caroneiro = buscaUsuario(loginCaroneiro);
-		for (String c : caroneiro.getCaronasComoCaroneiro()) {
-			if (c.equals(idCarona)) {
-				Carona carona = localizaCarona(c);
-				caronas.remove(carona);
-				Review rev = new Review(id, user.getLogin(), c, review);
-				carona.addReview(rev);
-				caronas.add(carona);
-
-				return rev.getId();
+					return rev.getId();
+				}
 			}
 		}
-
-		return null;
-
+			throw new OpcaoInvalidaException();
 	}
-	
 	public void encerrarSistema() throws IOException, XMLNaoGeradaException{
-		
+		this.xmlCreatorUsuarios = new FactoryXml("Xml Usuarios do sistema");
+		this.xmlCreatorCaronas = new FactoryXml("Xml Caronas do sistema");
 		// Gera XML de todos os usuarios do sistema
 		for(Usuario u : usuarios){
 			u.geraXml();
@@ -782,11 +784,13 @@ public class Sistema {
 		gravador.gravar("arquivo.xml");
 		
 		
+		
 	}
 
 	public void zerarSistema() {
 		File f = new File("arquivo.xml");
 		if(f.exists()){	
+			
 			f.delete();	
 		}
 		

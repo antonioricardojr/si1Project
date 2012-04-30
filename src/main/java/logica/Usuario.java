@@ -134,59 +134,13 @@ public class Usuario {
 		if (email == null || email.equals("")) {
 			throw new Exception("Email inválido");
 		}
-		String[] caracteres = email.split("");
-		String substring1 = "";
-		String substring2 = "";
-
-		for (int i = 1; i < caracteres.length; i++) {
-			if (!caracteres[i].equals("@")) {
-				substring1 += caracteres[i];
-			} else {
-
-				try {
-					substring2 = email.substring(i + 1);
-				} catch (Exception e) {
-					throw new Exception("Email inválido");
-
-				}
-				break;
-			}
-		}
-
-		String[] arraySubs2 = substring2.split("");
-
-		for (int i = 1; i < arraySubs2.length; i++) {
-			if (arraySubs2[i].equals("@")) {
-				throw new Exception("Email inválido");
-			}
-			if (arraySubs2[i].equals(".")) {
-				try {
-					if ("qweasdzxcrtyfghvbnuiojklnmp"
-							.contains(caracteres[i - 1])
-							&& "qweasdzxcrtyfghvbnuiojklnmp"
-									.contains(caracteres[i + 1])) {
-
-					} else {
-						throw new Exception("Email inválido.");
-					}
-				} catch (Exception e) {
-					throw new Exception("Email inválido");
-
-				}
-			}
-
-		}
-
-		if (substring1.equals(null) || substring1.equals("")) {
+		ValidadorDeEmail validadorDeEmail = new ValidadorDeEmail();
+		
+		if(validadorDeEmail.validaEmail(email)){
+			this.email = email;
+		}else{
 			throw new Exception("Email inválido");
 		}
-
-		if (substring2 == null || substring2.equals("")
-				|| substring2.contains("@")) {
-			throw new Exception("Email inválido");
-		}
-
-		this.email = email;
 
 	}
 
@@ -211,8 +165,8 @@ public class Usuario {
 		caronasComoCaroneiro.add(novaCarona);
 	}
 
-	public void removeCaronaComoCaroneiro(Carona caronaARemover) {
-		caronasComoCaroneiro.remove(caronaARemover);
+	public void removeCaronaComoCaroneiro(String idCarona) {
+		caronasComoCaroneiro.remove(idCarona);
 	}
 
 	public List<String> getAmigos() {

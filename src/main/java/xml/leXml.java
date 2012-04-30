@@ -3,6 +3,7 @@ package xml;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,8 @@ public class leXml {
 		
 		Element xml = d.getRootElement();
 		
+		
+		
 		return xml;
 	}
 	
@@ -64,24 +67,26 @@ public class leXml {
 			carona.setVagasTotal(Integer.parseInt(vagasTotal));
 			carona.setPonto(pontoDeEncontro);
 			carona.setId(id);
-			System.out.println();
+			
 			
 			//Adicionando os pontos sugeridos em um mapa
-			Map<String,String> pontosSugeridos = null;
+			Map<String,String> pontosSugeridos = new HashMap<String, String>();
 			Element pontos = element.getChild("pontosSugeridos");
 			List elementsPontos = pontos.getChildren();
 			Iterator i2 = elementsPontos.iterator();
 			
 			while(i2.hasNext()){
 				Element element2 = (Element) i2.next();
-				pontosSugeridos.put(element2.getAttributeValue("id"), element2.getChildText("pontos"));
+				pontosSugeridos.put(element2.getAttributeValue("id"), element2.getText());
 			}
 			carona.setPontosSugeridos(pontosSugeridos);
 			
 			//Adicionando as solicitacoes numa lista
 			List<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
 			
-			Element solicitacoesElement = element.getChild("solicitacoes");
+			
+			
+			Element solicitacoesElement = this.buscaElement("solicitacoes", element);
 			
 			List solicitacoesList = solicitacoesElement.getChildren();
 			
@@ -91,6 +96,7 @@ public class leXml {
 				Element element3 = (Element) i3.next();
 				
 				String idSoliciatacao = element3.getChildText("idSolicitacao");
+				
 				String loginSolicitador = element3.getChildText("loginSolicitador");
 				String idCarona = element3.getChildText("idCarona");
 				String ponto = element3.getChildText("ponto");
@@ -100,6 +106,8 @@ public class leXml {
 				s.setEstado(estado);
 				solicitacoes.add(s);
 			}
+			
+			carona.setSolicitacoes(solicitacoes);
 			
 			//Adicionando os caroneiros confirmados
 			List<Solicitacao> caroneirosConfirmados = new ArrayList<Solicitacao>();
@@ -123,7 +131,8 @@ public class leXml {
 				caroneirosConfirmados.add(s);
 			}
 			
-			carona.setCaroneirosConfirmados(caroneirosList);
+			
+			carona.setCaroneirosConfirmados(caroneirosConfirmados);
 			
 			//Adiciona a lista de Reviews
 			List<Review> reviews = new ArrayList<Review>();
@@ -181,30 +190,31 @@ public class leXml {
 			//cria o objeto do tipo usuario
 			Usuario usuario = new Usuario(login,senha,nome,endereco, email);
 			
-			//recupera as caronas
+			//recupera as caronas oferecidas
 			
-			Element caronas = element.getChild("caronas");
+			Element caronasOferecidas = element.getChild("caronasOferecidas");
 			
-			List elementsCarona = caronas.getChildren();
+			List elementsCaronaO = caronasOferecidas.getChildren();
+		
 			
-			Iterator i2 = elementsCarona.iterator();
+			Iterator i4 = elementsCaronaO.iterator();
 			
-			List<String> caronasList = new ArrayList<String>();
+			List<String> caronasOList = new ArrayList<String>();
 			
-			while(i2.hasNext()){
-				Element idCarona = (Element) i2.next();
-				String id = idCarona.getChildText("caronaId");
-				caronasList.add(id);
+			while(i4.hasNext()){
+			
+				Element idCarona = (Element) i4.next();
+				String iddacarona = idCarona.getText();
+				caronasOList.add(iddacarona);
 			}
 			
-			usuario.setCaronas(caronasList);
-			
+			usuario.setCaronasOferecidas(caronasOList);
 			
 			//recupera as caronas como caroneiro
 			
-			Element caronasComoCaroneiro = element.getChild("caronasComoCaroneiro");
-			
-			List elementsCaronaCC = caronasComoCaroneiro.getChildren();
+			Element caronasCC = element.getChild("caronasComoCaroneiro");
+				
+			List elementsCaronaCC = caronasCC.getChildren();
 			
 			Iterator i3 = elementsCaronaCC.iterator();
 			
@@ -212,27 +222,27 @@ public class leXml {
 			
 			while(i3.hasNext()){
 				Element idCarona = (Element) i3.next();
-				caronasCCList.add(idCarona.getChildText("caronaId"));
+				caronasCCList.add(idCarona.getText());
 			}
 			
 			usuario.setCaronasComoCaroneiro(caronasCCList);
+			//recupera as caronas
 			
-			//recupera as caronas oferecidas
+			Element elementCarona  = element.getChild("caronas");
 			
-			Element caronasOferecidas = element.getChild("caronasOferecidas");
+			List elementsCarona = elementCarona.getChildren();
 			
-			List elementsCaronaO = caronasOferecidas.getChildren();
+			Iterator i2 = elementsCarona.iterator();
 			
-			Iterator i4 = elementsCaronaO.iterator();
+			List<String> caronasList = new ArrayList<String>();
 			
-			List<String> caronasOList = new ArrayList<String>();
-			
-			while(i4.hasNext()){
-				Element idCarona = (Element) i4.next();
-				caronasOList.add(idCarona.getChildText("caronaId"));
+			while(i2.hasNext()){
+				Element idCarona = (Element) i2.next();
+				String id = idCarona.getText();
+				caronasList.add(id);
 			}
 			
-			usuario.setCaronasOferecidas(caronasOList);
+			usuario.setCaronas(caronasList);
 			
 			//recupera os amigos
 			
@@ -246,7 +256,7 @@ public class leXml {
 			
 			while(i5.hasNext()){
 				Element idAmigo = (Element) i5.next();
-				amigosList.add(idAmigo.getChildText("amigoLogin"));
+				amigosList.add(idAmigo.getText());
 			}
 			usuario.setAmigos(amigosList);
 			
@@ -257,6 +267,29 @@ public class leXml {
 		
 	}
 
+	
+	@SuppressWarnings("unused")
+	private Element buscaElement(String nome, Element e) throws JDOMException, IOException, XMLNaoGeradaException{
+		
+		Element elemento = null;
+		@SuppressWarnings("rawtypes")
+		List elements = e.getChildren();
+		@SuppressWarnings("rawtypes")
+		Iterator i = elements.iterator();
+		while(i.hasNext()){
+			Element element = (Element) i.next();
+			if(element.getName().equals(nome)){
+				elemento = element;
+				break;
+			}
+			
+		}
+		if(elemento!=null){
+			return elemento;
+		}else{
+			throw new XMLNaoGeradaException();
+		}
+	}
 	private Element elementCaronas() throws JDOMException, IOException, XMLNaoGeradaException{
 		Element root = this.le();
 		Element carona = null;
@@ -305,18 +338,5 @@ public class leXml {
 	}
 	
 	
-	public static void main(String[] args) throws Exception{
-		leXml l = new leXml("arquivo.xml");
-		List<Carona> c = l.getCaronas();
-		List<Usuario> u = l.getUsuarios();
-		for(Usuario o : u){
-			System.out.println(o.getLogin());
-			for(String ca: o.getCaronasOferecidas()){
-				System.out.println(ca);
-				
-			}
-		}
-		
-	}
 
 }

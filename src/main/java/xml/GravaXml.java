@@ -1,6 +1,7 @@
 package xml;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -21,9 +22,13 @@ public class GravaXml {
 	public void gravar(String endereco) throws IOException{
 		
 		Document doc = new Document();
-		doc.setRootElement(this.raiz);
+		Element root = this.raiz.detach();
+		doc.setRootElement(root);
 		XMLOutputter xout = new XMLOutputter();
-		//FileWriter arquivo = new FileWriter(new File(endereco));
+		File f = new File(endereco);
+		if(f.exists()){
+			f.delete();
+		}
 		Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(endereco), "UTF8")); 
 		xout.output(doc, out);
 		out.close();

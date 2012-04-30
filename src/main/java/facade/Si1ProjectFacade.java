@@ -145,7 +145,7 @@ public class Si1ProjectFacade {
 	
 	
 	public void reiniciarSistema() throws Exception{
-		S1.reiniciarSistema();
+		S1.zerarSistema();
 		
 	}
 	
