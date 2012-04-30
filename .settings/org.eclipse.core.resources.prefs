@@ -2,5 +2,7 @@
 <<<<<<<=HEAD
 >>>>>>>=branch 'master' of git@github.com\:antonioricardojr/si1Project.git
 eclipse.preferences.version=1
+encoding//src/main/java/facade/Si1ProjectTestClient.java=ISO-8859-1
+encoding/scripts=ISO-8859-1
 encoding/src=ISO-8859-1
 separateDerivedEncodings=true
