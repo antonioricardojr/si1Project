@@ -22,7 +22,8 @@ public class GravaXml {
 	public void gravar(String endereco) throws IOException{
 		
 		Document doc = new Document();
-		doc.setRootElement(this.raiz);
+		Element root = this.raiz.detach();
+		doc.setRootElement(root);
 		XMLOutputter xout = new XMLOutputter();
 		File f = new File(endereco);
 		if(f.exists()){

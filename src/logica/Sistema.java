@@ -765,7 +765,8 @@ public class Sistema {
 			throw new OpcaoInvalidaException();
 	}
 	public void encerrarSistema() throws IOException, XMLNaoGeradaException{
-		
+		this.xmlCreatorUsuarios = new FactoryXml("Xml Usuarios do sistema");
+		this.xmlCreatorCaronas = new FactoryXml("Xml Caronas do sistema");
 		// Gera XML de todos os usuarios do sistema
 		for(Usuario u : usuarios){
 			u.geraXml();
