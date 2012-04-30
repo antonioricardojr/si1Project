@@ -63,8 +63,8 @@ public class ReviewTest {
 		
 		Review rev = new Review(id,usuario.getLogin(),c1.getId(),"Boa");
 		Assert.assertEquals(id,rev.getId());
-		Assert.assertEquals(usuario,rev.getUsuario());		
-		Assert.assertEquals(c1,rev.getCarona());
+		Assert.assertEquals("Mark",rev.getUsuario());		
+		Assert.assertEquals(c1.getId(),rev.getCarona());
 		Assert.assertEquals("Boa",rev.getReview());
 	}
 	
