@@ -46,7 +46,7 @@ public class XmlUsuario implements Xml{
 		
 		//Pega os ids das caronas oferecidas e coloca no xml
 		for(String c : usuario.getCaronasOferecidas()){
-			Element caronaId = new Element("caronaId");
+			Element caronaId = new Element("caronaId1");
 			caronaId.addContent(c);
 			caronasOferecidas.addContent(caronaId);
 		}
@@ -55,7 +55,7 @@ public class XmlUsuario implements Xml{
 		
 		//Pega os ids das caronas como caroneiro e coloca no XML
 		for(String c : usuario.getCaronasComoCaroneiro()){
-			Element caronaId = new Element("caronaId");
+			Element caronaId = new Element("caronaId2");
 			caronaId.addContent(c);
 			caronasComoCaroneiro.addContent(caronaId);
 		}
@@ -64,7 +64,7 @@ public class XmlUsuario implements Xml{
 		
 		//Pega os ids das caronas e coloca no xml
 		for(String c : usuario.getCaronas()){
-			Element caronaId = new Element("caronaId");
+			Element caronaId = new Element("caronaId3");
 			caronaId.addContent(c);
 			caronas.addContent(caronaId);
 		}
