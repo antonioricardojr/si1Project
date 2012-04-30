@@ -218,7 +218,7 @@ public class UsuarioTest {
 		
 		u1.adicionaAmigo(u2.getLogin());
 		
-		Assert.assertEquals(u2, u1.getAmigos().get(0));
+		Assert.assertEquals(u2.getLogin(), u1.getAmigos().get(0));
 		Assert.assertEquals(u1, u2.getAmigos().get(0));
 		
 		u2.adicionaAmigo(u1.getLogin());
