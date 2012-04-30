@@ -67,7 +67,7 @@ public class leXml {
 			carona.setVagasTotal(Integer.parseInt(vagasTotal));
 			carona.setPonto(pontoDeEncontro);
 			carona.setId(id);
-			//System.out.println(id);
+			
 			
 			//Adicionando os pontos sugeridos em um mapa
 			Map<String,String> pontosSugeridos = new HashMap<String, String>();
@@ -211,8 +211,10 @@ public class leXml {
 			usuario.setCaronasOferecidas(caronasOList);
 			
 			//recupera as caronas como caroneiro
+			
+			Element caronasCC = element.getChild("caronasComoCaroneiro");
 				
-			List elementsCaronaCC = element.getChildren("caronasComoCaroneiro");
+			List elementsCaronaCC = caronasCC.getChildren();
 			
 			Iterator i3 = elementsCaronaCC.iterator();
 			
@@ -226,9 +228,9 @@ public class leXml {
 			usuario.setCaronasComoCaroneiro(caronasCCList);
 			//recupera as caronas
 			
-			//Element elementCarona  = element.getChild("caronas");
+			Element elementCarona  = element.getChild("caronas");
 			
-			List<Element> elementsCarona = element.getChildren("caronas");
+			List elementsCarona = elementCarona.getChildren();
 			
 			Iterator i2 = elementsCarona.iterator();
 			
@@ -336,25 +338,5 @@ public class leXml {
 	}
 	
 	
-	public static void main(String[] args) throws Exception{
-		leXml l = new leXml("arquivo.xml");
-		List<Carona> c = l.getCaronas();
-		List<Usuario> u = l.getUsuarios();
-		System.out.println(u);
-		for(Usuario o : u){
-			
-			System.out.println(o.getLogin() + " " + o.getEndereco() + " " + o.getSenha());
-			for(String ca: o.getCaronasOferecidas()){
-				System.out.println(ca);
-				
-			}
-		}
-		
-		for(Carona i: c){
-			List<Solicitacao> o = i.getCaroneiros();
-			System.out.println(i + i.getId() + " " + i.getCriador());
-		}
-		
-	}
 
 }
