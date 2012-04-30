@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.018" errors="1" skipped="0" tests="3" name="testes.TestaVisualizadorDePerfil">
+<testsuite failures="0" time="0.01" errors="1" skipped="0" tests="3" name="testes.TestaVisualizadorDePerfil">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/java/jdk1.7.0_04/jre/lib/i386"/>
@@ -19,7 +19,7 @@
     <property name="basedir" value="/home/bellezeta/git/si1Project"/>
     <property name="java.endorsed.dirs" value="/usr/java/jdk1.7.0_04/jre/lib/endorsed"/>
     <property name="os.arch" value="i386"/>
-    <property name="surefire.real.class.path" value="/tmp/surefirebooter2731484529764388749.jar"/>
+    <property name="surefire.real.class.path" value="/tmp/surefirebooter2958055278377347147.jar"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="line.separator" value="
 "/>
@@ -42,7 +42,7 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="32"/>
     <property name="java.home" value="/usr/java/jdk1.7.0_04/jre"/>
-    <property name="sun.java.command" value="/tmp/surefirebooter2731484529764388749.jar /tmp/surefire7305500171137172700tmp /tmp/surefire1312608245987623180tmp"/>
+    <property name="sun.java.command" value="/tmp/surefirebooter2958055278377347147.jar /tmp/surefire1206393376730849494tmp /tmp/surefire2624948016854034321tmp"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="pt"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -58,9 +58,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.002" classname="testes.TestaVisualizadorDePerfil" name="testaGets">
+  <testcase time="0.001" classname="testes.TestaVisualizadorDePerfil" name="testaGets">
     <error type="java.lang.NullPointerException">java.lang.NullPointerException
-	at testes.TestaVisualizadorDePerfil.testaGets(TestaVisualizadorDePerfil.java:51)
+	at testes.TestaVisualizadorDePerfil.testaGets(TestaVisualizadorDePerfil.java:52)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -91,6 +91,6 @@
 	at org.apache.maven.surefire.booter.SurefireBooter.main(SurefireBooter.java:1009)
 </error>
   </testcase>
-  <testcase time="0.001" classname="testes.TestaVisualizadorDePerfil" name="testaSets"/>
-  <testcase time="0.002" classname="testes.TestaVisualizadorDePerfil" name="testaCriacao"/>
+  <testcase time="0" classname="testes.TestaVisualizadorDePerfil" name="testaSets"/>
+  <testcase time="0.001" classname="testes.TestaVisualizadorDePerfil" name="testaCriacao"/>
 </testsuite>
