@@ -217,17 +217,14 @@ public class UsuarioTest {
 		u3 = new Usuario("bill", "456789", "William Henry Gates III", "Palo Alto, California", "bill@microsoft.com");
 		
 		u1.adicionaAmigo(u2.getLogin());
+		Assert.assertEquals(u2.getLogin(), u1.getAmigos().get(0));	
 		
-		Assert.assertEquals(u2.getLogin(), u1.getAmigos().get(0));
-		Assert.assertEquals(u1, u2.getAmigos().get(0));
-		
-		u2.adicionaAmigo(u1.getLogin());
-		
-				
+		u2.adicionaAmigo(u1.getLogin());		
+		Assert.assertEquals(u1.getLogin(), u2.getAmigos().get(0));	
 	}
 	
 	@Test
-	public void testeAdicionarERemoverCarona() throws Exception{
+	public void testeAdicionarERemoverCaronaOferecida() throws Exception{
 		
 		u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
 		
@@ -237,39 +234,73 @@ public class UsuarioTest {
 		
 		
 		Carona c1 = new Carona("Campina Grande", "João Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
-		u1.adicionaCarona(c1.getId());
-		Assert.assertEquals(c1, u1.getCaronas().get(0));
-		Assert.assertEquals(c1, u1.getCaronasComoCaroneiro().get(0));
+		u1.adicionaCaronaOferecida(c1.getId());
+		Assert.assertEquals(c1.getId(), u1.getCaronasOferecidas().get(0));
 		
 		
 		Carona c2 = new Carona("Campina Grande", "João Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
-		u2.adicionaCarona(c2.getId());
-		Assert.assertEquals(c2, u2.getCaronas().get(0));
-		Assert.assertEquals(c1, u1.getCaronasComoCaroneiro().get(0));
+		u2.adicionaCaronaOferecida(c2.getId());
+		Assert.assertEquals(c2.getId(), u2.getCaronasOferecidas().get(0));
 		
 		
 		Carona c3 = new Carona("Recife", "João Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
-		
-		u3.adicionaCarona(c3.getId());
-		Assert.assertEquals(c3, u3.getCaronas().get(0));
-		Assert.assertEquals(c3, u3.getCaronasComoCaroneiro().get(0));
+		u3.adicionaCaronaOferecida(c3.getId());
+		Assert.assertEquals(c3.getId(), u3.getCaronasOferecidas().get(0));
 		
 		
 		Carona c4 = new Carona("Recife", "Nata", "28/11/2012", "07:20", 1, u1.getLogin());
+		u1.adicionaCaronaOferecida(c4.getId());
+		Assert.assertEquals(c4.getId(), u1.getCaronasOferecidas().get(1));
 		
-		Assert.assertEquals(c4, u1.getCaronas().get(1));
-		Assert.assertEquals(c4, u1.getCaronasComoCaroneiro().get(1));
 		
 		
-		Assert.assertEquals(2, u1.getCaronas().size());
+		Assert.assertEquals(2, u1.getCaronasOferecidas().size());
+		u1.removeCaronaOferecida(c1.getId());
+		Assert.assertEquals(1, u1.getCaronasOferecidas().size());
 		
-		u1.removeCarona(c1);
-		
-		Assert.assertEquals(1, u1.getCaronas().size());
-		
-		Assert.assertEquals(c4, u1.getCaronas().get(0));
-		Assert.assertEquals(c4, u1.getCaronasComoCaroneiro().get(0));
+		u1.removeCaronaOferecida(c4.getId());
+		Assert.assertEquals(0, u1.getCaronasOferecidas().size());
+
+	}
 	
+	@Test
+	public void testeAdicionarERemoverCaronaComoCaroneiro() throws Exception{
+		
+		u1 = new Usuario("mark", "123456", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com.br");
+		
+		u2 = new Usuario("steve", "654321", "Steve Pal Jobs", "Palo Alto, California", "steve@apple.com");
+		
+		u3 = new Usuario("bill", "456789", "William Henry Gates III", "Palo Alto, California", "bill@microsoft.com");
+		
+		
+		Carona c1 = new Carona("Campina Grande", "João Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
+		u1.adicionaCaronaComoCaroneiro(c1.getId());
+		Assert.assertEquals(c1.getId(), u1.getCaronasComoCaroneiro().get(0));
+		
+		
+		Carona c2 = new Carona("Campina Grande", "João Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
+		u2.adicionaCaronaComoCaroneiro(c2.getId());
+		Assert.assertEquals(c2.getId(), u2.getCaronasComoCaroneiro().get(0));
+		
+		
+		Carona c3 = new Carona("Recife", "João Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
+		u3.adicionaCaronaComoCaroneiro(c3.getId());
+		Assert.assertEquals(c3.getId(), u3.getCaronasComoCaroneiro().get(0));
+		
+		
+		Carona c4 = new Carona("Recife", "Nata", "28/11/2012", "07:20", 1, u1.getLogin());
+		u1.adicionaCaronaComoCaroneiro(c4.getId());
+		Assert.assertEquals(c4.getId(), u1.getCaronasComoCaroneiro().get(1));
+		
+		
+		
+		Assert.assertEquals(2, u1.getCaronasComoCaroneiro().size());
+		u1.removeCaronaComoCaroneiro(c1.getId());
+		Assert.assertEquals(1, u1.getCaronasComoCaroneiro().size());
+		
+		u1.removeCaronaComoCaroneiro(c4.getId());
+		Assert.assertEquals(0, u1.getCaronasComoCaroneiro().size());
+
 	}
 
 }

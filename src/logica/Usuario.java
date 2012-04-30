@@ -165,8 +165,8 @@ public class Usuario {
 		caronasComoCaroneiro.add(novaCarona);
 	}
 
-	public void removeCaronaComoCaroneiro(Carona caronaARemover) {
-		caronasComoCaroneiro.remove(caronaARemover);
+	public void removeCaronaComoCaroneiro(String idCarona) {
+		caronasComoCaroneiro.remove(idCarona);
 	}
 
 	public List<String> getAmigos() {
