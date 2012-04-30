@@ -233,16 +233,16 @@ public class UsuarioTest {
 		u3 = new Usuario("bill", "456789", "William Henry Gates III", "Palo Alto, California", "bill@microsoft.com");
 		
 		
-		Carona c1 = new Carona("Campina Grande", "João Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
+		Carona c1 = new Carona("Campina Grande", "Joao Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
 		u1.adicionaCarona(c1.getId());
 		Assert.assertEquals(c1.getId(), u1.getCaronas().get(0));		
 		
-		Carona c2 = new Carona("Campina Grande", "João Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
+		Carona c2 = new Carona("Campina Grande", "Joao Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
 		u2.adicionaCarona(c2.getId());
 		Assert.assertEquals(c2.getId(), u2.getCaronas().get(0));
 		
 		
-		Carona c3 = new Carona("Recife", "João Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
+		Carona c3 = new Carona("Recife", "Joao Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
 		
 		u3.adicionaCarona(c3.getId());
 		Assert.assertEquals(c3.getId(), u3.getCaronas().get(0));
