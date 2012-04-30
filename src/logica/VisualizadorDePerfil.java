@@ -61,14 +61,14 @@ public class VisualizadorDePerfil {
 	public String getHistoricoDeVagasEmCaronas() {
 
 		String saida = "";
-		if (usuario.getCaronas().size() == 0) {
+		if (usuario.getCaronasComoCaroneiro().size() == 0) {
 			return "";
 		} else {
-			for (String c : usuario.getCaronas()) {
-				saida += c + ", ";
+			for (String c : usuario.getCaronasComoCaroneiro()) {
+				saida += c + ",";
 			}
 
-			saida = "[" + saida.substring(0, saida.length() - 2) + "]";
+			saida = "[" + saida.substring(0, saida.length() - 1) + "]";
 			return saida;
 		}
 	}
