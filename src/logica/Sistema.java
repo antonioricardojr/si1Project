@@ -52,9 +52,9 @@ public class Sistema {
 	private Xml xmlCreatorSistema;
 
 	public Sistema() {
-		usuarios = new ArrayList<Usuario>();
-		sessoes = new ArrayList<Sessao>();
-		caronas = new ArrayList<Carona>();
+		this.usuarios = new ArrayList<Usuario>();
+		this.sessoes = new ArrayList<Sessao>();
+		this.caronas = new ArrayList<Carona>();
 		this.xmlCreatorUsuarios = new FactoryXml("Xml Usuarios do sistema");
 		this.xmlCreatorCaronas = new FactoryXml("Xml Caronas do sistema");
 		this.xmlCreatorSistema = new FactoryXml("Xml Sistema");
@@ -788,6 +788,7 @@ public class Sistema {
 	public void zerarSistema() {
 		File f = new File("arquivo.xml");
 		if(f.exists()){	
+			
 			f.delete();	
 		}
 		

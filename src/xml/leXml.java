@@ -3,6 +3,7 @@ package xml;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,8 @@ public class leXml {
 		
 		Element xml = d.getRootElement();
 		
+		
+		
 		return xml;
 	}
 	
@@ -64,17 +67,17 @@ public class leXml {
 			carona.setVagasTotal(Integer.parseInt(vagasTotal));
 			carona.setPonto(pontoDeEncontro);
 			carona.setId(id);
-			System.out.println();
+			//System.out.println(id);
 			
 			//Adicionando os pontos sugeridos em um mapa
-			Map<String,String> pontosSugeridos = null;
+			Map<String,String> pontosSugeridos = new HashMap<String, String>();
 			Element pontos = element.getChild("pontosSugeridos");
 			List elementsPontos = pontos.getChildren();
 			Iterator i2 = elementsPontos.iterator();
 			
 			while(i2.hasNext()){
 				Element element2 = (Element) i2.next();
-				pontosSugeridos.put(element2.getAttributeValue("id"), element2.getChildText("pontos"));
+				pontosSugeridos.put(element2.getAttributeValue("id"), element2.getText());
 			}
 			carona.setPontosSugeridos(pontosSugeridos);
 			
@@ -129,7 +132,7 @@ public class leXml {
 			}
 			
 			
-			carona.setCaroneirosConfirmados(caroneirosList);
+			carona.setCaroneirosConfirmados(caroneirosConfirmados);
 			
 			//Adiciona a lista de Reviews
 			List<Review> reviews = new ArrayList<Review>();
@@ -337,7 +340,9 @@ public class leXml {
 		leXml l = new leXml("arquivo.xml");
 		List<Carona> c = l.getCaronas();
 		List<Usuario> u = l.getUsuarios();
+		System.out.println(u);
 		for(Usuario o : u){
+			
 			System.out.println(o.getLogin() + " " + o.getEndereco() + " " + o.getSenha());
 			for(String ca: o.getCaronasOferecidas()){
 				System.out.println(ca);
@@ -346,11 +351,8 @@ public class leXml {
 		}
 		
 		for(Carona i: c){
-			List<Solicitacao> o = i.getSolicitacoes();
-			System.out.println(o.size());
-			for(Solicitacao s: o){
-				System.out.println("oi" + s.getCarona() + s.getEstado());
-			}
+			List<Solicitacao> o = i.getCaroneiros();
+			System.out.println(i + i.getId() + " " + i.getCriador());
 		}
 		
 	}
