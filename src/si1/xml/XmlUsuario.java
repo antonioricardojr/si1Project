@@ -3,7 +3,6 @@ package si1.xml;
 import org.jdom2.Element;
 
 import si1.Excecoes.XMLNaoGeradaException;
-import si1.logica.Carona;
 import si1.logica.Usuario;
 
 public class XmlUsuario implements Xml{
@@ -81,7 +80,6 @@ public class XmlUsuario implements Xml{
 		
 	}
 
-	@Override
 	public Element getRaiz() throws XMLNaoGeradaException {
 		if(this.raiz == null){
 			throw new XMLNaoGeradaException();

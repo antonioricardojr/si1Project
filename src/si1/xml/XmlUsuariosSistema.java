@@ -18,13 +18,11 @@ public class XmlUsuariosSistema implements Xml {
 		this.raiz = new Element("usuariosDoSistema");
 	}
 
-	@Override
 	public void geraXML(Object o) {
 		this.raiz.addContent((Element) o);
 		
 	}
 
-	@Override
 	public Element getRaiz() throws XMLNaoGeradaException {
 		if(this.raiz == null){
 			throw new XMLNaoGeradaException();

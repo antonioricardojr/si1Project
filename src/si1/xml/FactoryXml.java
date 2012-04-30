@@ -24,12 +24,10 @@ public class FactoryXml implements Xml{
 			
 	}
 
-	@Override
 	public void geraXML(Object o) {
 		this.factory.geraXML(o);
 	}
 
-	@Override
 	public Element getRaiz() throws XMLNaoGeradaException {
 		return this.factory.getRaiz();
 	}

@@ -15,7 +15,6 @@ public class XmlCarona implements Xml{
 		this.raiz = null;
 	}
 
-	@Override
 	public void geraXML(Object o) {
 		//Cria a raiz da carona
 		this.raiz = new Element("carona");
@@ -168,7 +167,6 @@ public class XmlCarona implements Xml{
 		
 	}
 
-	@Override
 	public Element getRaiz() throws XMLNaoGeradaException {
 		if(this.raiz == null){
 			throw new XMLNaoGeradaException();

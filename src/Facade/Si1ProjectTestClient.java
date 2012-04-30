@@ -29,7 +29,7 @@ public class Si1ProjectTestClient {
 		//files.add("scripts/US12.txt");
 	
 		Si1ProjectFacade si1ProjectFacade = new Si1ProjectFacade();
-		// Instantiate EasyAccept façade
+		// Instantiate EasyAccept faï¿½ade
 		EasyAcceptFacade eaFacade = new EasyAcceptFacade(si1ProjectFacade,
 				files);
 
