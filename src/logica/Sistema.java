@@ -499,6 +499,7 @@ public class Sistema {
 		carona.setVagas(carona.getVagas() - 1);
 		carona.removeSolicitacao(solicitacao);
 		carona.setPonto(solicitacao.getPonto());
+		buscaUsuario(solicitacao.getSolicitador()).adicionaCaronaComoCaroneiro(carona.getId());
 		caronas.add(carona);
 
 		// }
