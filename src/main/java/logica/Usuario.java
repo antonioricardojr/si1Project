@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.jdom2.Element;
 
-import excecoes.LoginInvalidoException;
+import excecoes.AtributoInvalidoException;
 import excecoes.XMLNaoGeradaException;
 
 import xml.FactoryXml;
@@ -61,7 +61,7 @@ public class Usuario {
 
 		if (login == null || login.equals("")
 				|| contemCharInvalidosLogin(login)) {
-			throw new LoginInvalidoException();
+			throw new AtributoInvalidoException("Login inválido");
 		}
 		this.login = login;
 	}

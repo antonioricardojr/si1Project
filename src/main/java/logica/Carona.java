@@ -388,8 +388,10 @@ public class Carona {
 	@Override
 	public String toString() {
 
-		return "origem=" + origem + " destino=" + destino + " data=" + data
-				+ " hora=" + hora + " vagas=" + vagas;
+		String carona = getOrigem() + " para " + getDestino() + ", no dia "
+				+ getData() + ", as " + getHora();
+
+		return carona;
 	}
 
 	public void addReview(Review review) {

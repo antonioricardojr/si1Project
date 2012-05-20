@@ -87,7 +87,7 @@ expectError "Carona Inexistente" getCarona idCarona=""
 expectError "Carona Inválida" getCarona idCarona=
 expectError "Carona Inexistente" getCarona idCarona="xpto"
 expectError "Trajeto Inexistente" getTrajeto idCarona=""
-expectError "Trajeto Inválida" getTrajeto idCarona=
+expectError "Trajeto Inválido" getTrajeto idCarona=
 expectError "Trajeto Inexistente" getTrajeto idCarona="xpto"
 
 #Localizar carona com entrada inválida

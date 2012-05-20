@@ -26,12 +26,12 @@ public class Si1ProjectFacade {
 	}
 
 	public String abrirSessao(String login, String senha) throws Exception {
-		return S1.abrirSessao(login, senha);
+		return S1.abrirSessao(login, senha).getId();
 
 	}
 	
 	public String encerrarSessao(String login) throws Exception{
-		return S1.encerrarSessao(login);
+		return S1.encerrarSessao(login).getLogin();
 	}
 
 	public String sugerirPontoEncontro(String idSessao, String idCarona, String pontos) throws Exception{
@@ -45,7 +45,7 @@ public class Si1ProjectFacade {
 	
 	public String solicitarVagaPontoEncontro(String idSessao, String idCarona, String ponto) throws Exception{
 	
-		return S1.solicitarVagaPontoEncontro(idSessao, idCarona, ponto);
+		return S1.solicitarVagaPontoEncontro(idSessao, idCarona, ponto).getId();
 	}
 	
 	public String getAtributoSolicitacao(String idSolicitacao, String atributo) throws Exception{
@@ -58,7 +58,7 @@ public class Si1ProjectFacade {
 	}
 
 	public String aceitarSolicitacao(String idSessao, String idSolicitacao) throws Exception{
-		return S1.aceitarSolicitacao(idSessao, idSolicitacao);
+		return S1.aceitarSolicitacao(idSessao, idSolicitacao).getId();
 	}
 	
 	public String desistirRequisicao(String idSessao, String idCarona, String idSugestao) throws Exception{
@@ -74,7 +74,7 @@ public class Si1ProjectFacade {
 	public String cadastrarCarona(String idSessao, String origem,
 			String destino, String data, String hora, String vagas)
 			throws Exception {
-		return S1.cadastrarCarona(idSessao, origem, destino, data, hora, vagas);
+		return S1.cadastrarCarona(idSessao, origem, destino, data, hora, vagas).getId();
 	}
 
 	public String getAtributoCarona(String idCarona, String atributo)
@@ -90,15 +90,15 @@ public class Si1ProjectFacade {
 	}
 	
 	public String aceitarSolicitacaoPontoEncontro(String idSessao, String idSolicitacao) throws Exception{
-		return S1.aceitarSolicitacaoPontoEncontro(idSessao, idSolicitacao);
+		return S1.aceitarSolicitacaoPontoEncontro(idSessao, idSolicitacao).getId();
 	}
 
 	public String solicitarVaga(String idSessao, String idCarona) throws Exception{
-		return S1.solicitarVaga(idSessao, idCarona);
+		return S1.solicitarVaga(idSessao, idCarona).getId();
 	}
 	
 	public String getCarona(String idCarona) throws Exception {
-		return S1.getCarona(idCarona);
+		return S1.getCarona(idCarona).toString();
 	}
 	
 	public void rejeitarSolicitacao(String idSessao, String idSolicitacao) throws Exception{
@@ -106,7 +106,7 @@ public class Si1ProjectFacade {
 	}
 	
 	public String visualizarPerfil(String idSessao, String login) throws Exception{
-		return S1.visualizarPerfil(idSessao, login);
+		return S1.visualizarPerfil(idSessao, login).getNome();
 	}
 	
 	
@@ -115,7 +115,7 @@ public class Si1ProjectFacade {
 	}
 
 	public String getCaronaUsuario(String idSessao, int indexCarona) throws Exception{
-		return S1.getCaronaUsuario(idSessao, indexCarona);
+		return S1.getCaronaUsuario(idSessao, indexCarona).getId();
 	}
 	
 	public String getTodasCaronasUsuario(String idSessao) throws Exception{
@@ -136,7 +136,7 @@ public class Si1ProjectFacade {
 	}
 	
 	public String reviewVagaEmCarona(String idSessao, String idCarona, String loginCaroneiro, String review) throws Exception{
-		return S1.reviewVagaEmCarona(idSessao,idCarona, loginCaroneiro,review);
+		return S1.reviewVagaEmCarona(idSessao,idCarona, loginCaroneiro,review).getId();
 	}
 	
 	public void reviewCarona(String idSessao, String idCarona, String review) throws Exception{

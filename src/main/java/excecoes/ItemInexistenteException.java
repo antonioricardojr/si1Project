@@ -2,8 +2,8 @@ package excecoes;
 
 public class ItemInexistenteException extends Exception {
 
-	public ItemInexistenteException() {
-		super("Item inexistente");
+	public ItemInexistenteException(String message) {
+		super(message);
 	}
 
 

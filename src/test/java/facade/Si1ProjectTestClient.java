@@ -23,7 +23,7 @@ public class Si1ProjectTestClient {
 		files.add("scripts/US06.txt");
 		files.add("scripts/US07.txt");
 		files.add("scripts/US08.txt");
-		//files.add("scripts/US09.txt");
+		files.add("scripts/US09.txt");
 		//files.add("scripts/US10.txt");
 		//files.add("scripts/US11.txt");
 		//files.add("scripts/US12.txt");

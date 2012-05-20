@@ -7,26 +7,13 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import excecoes.AtributoInexistenteException;
 import excecoes.AtributoInvalidoException;
-import excecoes.CaronaInexistenteException;
 import excecoes.CaronaInvalidaException;
 import excecoes.DestinoInvalidoException;
-import excecoes.EmailExistenteException;
-import excecoes.IdentificadorCaronaInvalidoException;
 import excecoes.ItemInexistenteException;
-import excecoes.LoginExistenteException;
-import excecoes.LoginInvalidoException;
-import excecoes.NomeInvalidoException;
 import excecoes.OpcaoInvalidaException;
 import excecoes.OrigemInvalidaException;
-import excecoes.PontoInvalidoException;
-import excecoes.SessaoInexistenteException;
 import excecoes.SessaoInvalidaException;
-import excecoes.SolicitacaoInexistenteException;
-import excecoes.TrajetoInexistenteException;
-import excecoes.TrajetoInvalidoException;
-import excecoes.UsuarioInexistenteException;
 import excecoes.VagaInvalidaException;
 import excecoes.XMLNaoGeradaException;
 
@@ -37,8 +24,6 @@ import xml.leXml;
 
 /**
  * Classe que representará as chamadas do sistema.
- * 
- * @author ANTONIOR
  * 
  */
 
@@ -51,6 +36,9 @@ public class Sistema {
 	private Xml xmlCreatorCaronas;
 	private Xml xmlCreatorSistema;
 
+	/**
+	 * Construtor da classe Sistema
+	 */
 	public Sistema() {
 		this.usuarios = new ArrayList<Usuario>();
 		this.sessoes = new ArrayList<Sessao>();
@@ -60,10 +48,19 @@ public class Sistema {
 		this.xmlCreatorSistema = new FactoryXml("Xml Sistema");
 	}
 
+	/**
+	 * Método que retorna lista com usuários
+	 * @return usuarios
+	 */
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
+	/**
+	 * Método que retorna um usuário a partir de seu login
+	 * @param login
+	 * @return usuario
+	 */
 	public Usuario getUsuario(String login) {
 		for (Usuario u : usuarios) {
 			if (u.getLogin().equals(login)) {
@@ -72,25 +69,35 @@ public class Sistema {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Método que cria usuário e o adiciona a lista de usuários
+	 * @param login
+	 * @param senha
+	 * @param nome
+	 * @param endereco
+	 * @param email
+	 * @return novoUsuario
+	 * @throws Exception
+	 */
 	public Usuario criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws Exception {
 
 		if (login == null || login.equals("") || senha == null) {
-			throw new LoginInvalidoException();
+			throw new AtributoInvalidoException("Login inválido");
 		}
 
 		for (Usuario u : usuarios) {
 			if (u.getLogin().equals(login)) {
-				throw new LoginExistenteException();
+				throw new AtributoInvalidoException("Já existe um usuário com este login");
 			}
 			if (u.getEmail().equals(email)) {
-				throw new EmailExistenteException();
+				throw new AtributoInvalidoException("Já existe um usuário com este email");
 			}
 		}
 
 		if (nome == null || nome.equals("")) {
-			throw new NomeInvalidoException();
+			throw new AtributoInvalidoException("Nome inválido");
 		}
 
 		Usuario novoUsuario = new Usuario(login, senha, nome, endereco, email);
@@ -100,74 +107,102 @@ public class Sistema {
 		return novoUsuario;
 	}
 
-	public String abrirSessao(String login, String senha) throws Exception {
+	/**
+	 * Método para criar sessão e adiciona-la a lista de sessões
+	 * @param login
+	 * @param senha
+	 * @return sessao
+	 * @throws Exception
+	 */
+	public Sessao abrirSessao(String login, String senha) throws Exception {
 		if (login == null || login.equals("")) {
-			throw new LoginInvalidoException();
+			throw new AtributoInvalidoException("Login inválido");
 		}
 
 		Sessao novaSessao = null;
 
 		for (Usuario u : usuarios) {
 			if (u.getLogin().equals(login)) {
-				if (verificaSenha(senha)) {
+				if (verificaSenha(u,senha)) {
 					novaSessao = new Sessao(login);
 					sessoes.add(novaSessao);
-					return novaSessao.getId();
+					return novaSessao;
 				} else {
-					throw new LoginInvalidoException();
+					throw new AtributoInvalidoException("Login inválido");
 				}
 			}
 		}
-		throw new UsuarioInexistenteException();
+		throw new ItemInexistenteException("Usuário inexistente");
 	}
 
-	public String encerrarSessao(String login) throws Exception {
+	/**
+	 * Método que remove a sessão com o login passado por parâmetro da lista de sessões
+	 * @param login
+	 * @return sessaoRemovida
+	 * @throws Exception
+	 */
+	public Sessao encerrarSessao(String login) throws Exception {
 
 		if (login == null || login.equals("")) {
-			throw new LoginInvalidoException();
+			throw new AtributoInvalidoException("Login inválido");
 		}
 
 		for (Sessao s : sessoes) {
 			if (s.getLogin().equals(login)) {
 				sessoes.remove(s);
-				return login;
+				return s;
 			}
 		}
-
-		throw new UsuarioInexistenteException();
-
+		throw new ItemInexistenteException("Usuário inexistente");
 	}
-
-	private boolean verificaSenha(String senha) {
+	/**
+	 * Método interno para verificar se a senha é valida para
+	 * @param senha
+	 * @return
+	 */
+	private boolean verificaSenha(Usuario usuario, String senha) {
 
 		for (Usuario u : usuarios) {
-			if (u.getSenha().equals(senha)) {
-				return true;
+			if (u.equals(usuario)) {
+				if(u.getSenha().equals(senha)){
+					return true;
+				}				
 			}
 		}
 
 		return false;
 	}
-
+	
+	/**
+	 * Método que retorna lista com as sessões abertas
+	 * @return sessoes
+	 */
 	public List<Sessao> getSessoes() {
 		return sessoes;
 	}
 
+	/**
+	 * Método que retorna o atributo requerido pelo usuário se for válido
+	 * @param login
+	 * @param atributo
+	 * @return atributo
+	 * @throws Exception
+	 */
 	public String getAtributoUsuario(String login, String atributo)
 			throws Exception {
 
 		if (atributo == null || atributo.equals("")) {
-			throw new AtributoInvalidoException();
+			throw new AtributoInvalidoException("Atributo inválido");
 		}
 
 		if (login == null || login.equals("")) {
-			throw new LoginInvalidoException();
+			throw new AtributoInvalidoException("Login inválido");
 		}
 
-		Usuario u = buscaUsuario(login);
+		Usuario u = getUsuario(login);
 
 		if (u == null) {
-			throw new UsuarioInexistenteException();
+			throw new AtributoInvalidoException("Usuário inexistente");
 		}
 
 		if (atributo.equals("nome")) {
@@ -177,18 +212,17 @@ public class Sistema {
 			return u.getEndereco();
 		}
 
-		throw new AtributoInexistenteException();
+		throw new AtributoInvalidoException("Atributo inexistente");
 	}
 
-	private Usuario buscaUsuario(String login) {
-		for (Usuario u : usuarios) {
-			if (u.getLogin().equals(login)) {
-				return u;
-			}
-		}
-		return null;
-	}
-
+	/**
+	 * Método que retorna carona se esta existir
+	 * @param idSessao
+	 * @param origem
+	 * @param destino
+	 * @return caronasLocalizadas
+	 * @throws Exception
+	 */
 	public String localizarCarona(String idSessao, String origem, String destino)
 			throws Exception {
 
@@ -237,6 +271,11 @@ public class Sistema {
 				.replace("]", "}").replace(" ", "");
 	}
 
+	/**
+	 * Método interno que verifica se nome contém caracteres inválidos
+	 * @param nome
+	 * @return true se conter, false se não
+	 */
 	private static boolean contemCharInvalidos(String nome) {
 		String[] palavra = nome.trim().split("");
 
@@ -250,6 +289,11 @@ public class Sistema {
 		return false;
 	}
 
+	/**
+	 * Método interno que verifica se sessão está aberta
+	 * @param idSessao
+	 * @return true se estiver, false se não
+	 */
 	private boolean verificaSessao(String idSessao) {
 		for (Sessao s : sessoes) {
 			if (s.getId().equals(idSessao)) {
@@ -260,11 +304,26 @@ public class Sistema {
 		return false;
 	}
 
+	/**
+	 * Método que retorna lista com caronas
+	 * @return caronas
+	 */
 	public List<Carona> getCaronas() {
 		return caronas;
 	}
 
-	public String cadastrarCarona(String idSessao, String origem,
+	/**
+	 * Método que cadastra e adiciona caronas a lista de caronas
+	 * @param idSessao
+	 * @param origem
+	 * @param destino
+	 * @param data
+	 * @param hora
+	 * @param vagas
+	 * @return caronaCadastrada
+	 * @throws Exception
+	 */
+	public Carona cadastrarCarona(String idSessao, String origem,
 			String destino, String data, String hora, String vagas)
 			throws Exception {
 
@@ -277,35 +336,42 @@ public class Sistema {
 		}
 
 		if (idSessao == null || idSessao.equals("")) {
-			throw new SessaoInvalidaException();
+			throw new SessaoInvalidaException("Sessão inválida");
 		}
 
 		if (!verificaSessao(idSessao)) {
-			throw new SessaoInexistenteException();
+			throw new SessaoInvalidaException("Sessão inexistente");
 		}
 
 		Sessao sessao = getSessao(idSessao);
 
-		Usuario usuario = buscaUsuario(sessao.getLogin());
+		Usuario usuario = getUsuario(sessao.getLogin());
 
-		Carona novaCarona = new Carona(origem, destino, data, hora, intVagas,
+		Carona caronaCadastrada = new Carona(origem, destino, data, hora, intVagas,
 				usuario.getLogin());
-		caronas.add(novaCarona);
-		usuario.adicionaCaronaOferecida(novaCarona.getId());
-		usuario.adicionaCarona(novaCarona.getId());
+		caronas.add(caronaCadastrada);
+		usuario.adicionaCaronaOferecida(caronaCadastrada.getId());
+		usuario.adicionaCarona(caronaCadastrada.getId());
 
-		return novaCarona.getId();
+		return caronaCadastrada;
 	}
 
+	/**
+	 * Método que retorna string de atributo de carona se esta existir
+	 * @param idCarona
+	 * @param atributo
+	 * @return atributo
+	 * @throws Exception
+	 */
 	public String getAtributoCarona(String idCarona, String atributo)
 			throws Exception {
 
 		if (idCarona == null || idCarona.equals("")) {
-			throw new IdentificadorCaronaInvalidoException();
+			throw new AtributoInvalidoException("Identificador do carona é inválido");
 		}
 
 		if (atributo == null || atributo.equals("")) {
-			throw new AtributoInvalidoException();
+			throw new AtributoInvalidoException("Atributo inválido");
 		}
 
 		for (Carona c : caronas) {
@@ -329,64 +395,52 @@ public class Sistema {
 					return "" + c.getPontoDeEncontro();
 
 				} else {
-					throw new AtributoInexistenteException();
+					throw new AtributoInvalidoException("Atributo inexistente");
 				}
 			}
 		}
-		throw new ItemInexistenteException();
+		throw new ItemInexistenteException("Item inexistente");
 
 	}
 
+	/**
+	 * Método que retorna string com trajeto a partir da id da carona
+	 * @param idCarona
+	 * @return trajeto
+	 * @throws Exception
+	 */
 	public String getTrajeto(String idCarona) throws Exception {
 
 		if (idCarona == null) {
-			throw new TrajetoInvalidoException();
+			throw new AtributoInvalidoException("Trajeto Inválido");
 
 		}
 
 		String trajeto = null;
 
 		try {
-			Carona c = localizaCarona(idCarona);
+			Carona c = getCarona(idCarona);
 
 			trajeto = c.getOrigem() + " - " + c.getDestino();
 
 		} catch (Exception e) {
-			throw new TrajetoInexistenteException();
+			throw new ItemInexistenteException("Trajeto Inexistente");
 		}
 
 		return trajeto;
 
 	}
 
-	public String getCarona(String idCarona) throws Exception {
-
-		if (idCarona == null) {
-			throw new CaronaInvalidaException();
-		}
-		Carona c = localizaCarona(idCarona);
-
-		String carona = c.getOrigem() + " para " + c.getDestino() + ", no dia "
-				+ c.getData() + ", as " + c.getHora();
-
-		return carona;
-	}
-
-	public Sessao getSessao(String idSessao) {
-
-		for (Sessao s : sessoes) {
-			if (s.getId().equals(idSessao)) {
-				return s;
-			}
-		}
-		return null;
-
-	}
-
-	private Carona localizaCarona(String idCarona) throws Exception {
+	/**
+	 * Método que retorna carona a partir da id
+	 * @param idCarona
+	 * @return carona
+	 * @throws Exception
+	 */
+	public Carona getCarona(String idCarona) throws Exception {
 
 		if (idCarona == null || idCarona == "") {
-			throw new CaronaInvalidaException();
+			throw new CaronaInvalidaException("Carona Inválida");
 		}
 
 		for (Carona c : caronas) {
@@ -395,13 +449,37 @@ public class Sistema {
 			}
 		}
 
-		throw new CaronaInexistenteException();
+		throw new CaronaInvalidaException("Carona Inexistente");
 	}
 
+	/**
+	 * Método que retorna sessão a partir de sua id
+	 * @param idSessao
+	 * @return sessao
+	 */
+	public Sessao getSessao(String idSessao) {
+
+		for (Sessao sessao : sessoes) {
+			if (sessao.getId().equals(idSessao)) {
+				return sessao;
+			}
+		}
+		return null;
+
+	}
+
+	/**
+	 * Método que cadastra sugestao de ponto de encontro
+	 * @param idSessao
+	 * @param idCarona
+	 * @param pontos
+	 * @return id
+	 * @throws Exception
+	 */
 	public String sugerirPontoEncontro(String idSessao, String idCarona,
 			String pontos) throws Exception {
 
-		Carona carona = localizaCarona(idCarona);
+		Carona carona = getCarona(idCarona);
 		GeradorDeID gerador = new GeradorDeID();
 		String id = gerador.geraId();
 		carona.setPontosSugeridos(id, pontos);
@@ -409,14 +487,23 @@ public class Sistema {
 		return id;
 	}
 
+	/**
+	 * Método para responder sugestao de encontro para a carona de tal id passado por parâmetro
+	 * @param idSessao
+	 * @param idCarona
+	 * @param idSugestao
+	 * @param pontos
+	 * @return pontos
+	 * @throws Exception
+	 */
 	public String responderSugestaoPontoEncontro(String idSessao,
 			String idCarona, String idSugestao, String pontos) throws Exception {
 
-		Carona carona = localizaCarona(idCarona);
+		Carona carona = getCarona(idCarona);
 		Sessao sessao = getSessao(idSessao);
 
 		if (pontos.equals("") || pontos.equals(null)) {
-			throw new PontoInvalidoException();
+			throw new AtributoInvalidoException("Ponto Inválido");
 
 		} else if (sessao.getLogin().equals(carona.getCriador())) {
 			carona.setPontosSugeridos(idSugestao, pontos);
@@ -425,44 +512,66 @@ public class Sistema {
 		return pontos;
 	}
 
-	public String solicitarVagaPontoEncontro(String idSessao, String idCarona,
+	/**
+	 * Método para fazer solicitação de vaga passando ponto de encontro
+	 * @param idSessao
+	 * @param idCarona
+	 * @param ponto
+	 * @return solicitacao
+	 * @throws Exception
+	 */
+	public Solicitacao solicitarVagaPontoEncontro(String idSessao, String idCarona,
 			String ponto) throws Exception {
 
 		if (idSessao == null || idCarona == null || ponto == null) {
-			throw new PontoInvalidoException();
+			throw new AtributoInvalidoException("Ponto Inválido");
 		}
 
-		Carona carona = localizaCarona(idCarona);
+		Carona carona = getCarona(idCarona);
 		Sessao sessao = getSessao(idSessao);
 
-		Usuario usuario = buscaUsuario(sessao.getLogin());
+		Usuario usuario = getUsuario(sessao.getLogin());
 		GeradorDeID gerador = new GeradorDeID();
 		String id = gerador.geraId();
 
-		Solicitacao sol = new Solicitacao(id, usuario.getLogin(), carona.getId(), ponto);
-		carona.addSolicitacao(sol);
-		return id;
+		Solicitacao solicitacao = new Solicitacao(id, usuario.getLogin(), carona.getId(), ponto);
+		carona.addSolicitacao(solicitacao);
+		return solicitacao;
 
 	}
 
-	public String solicitarVaga(String idSessao, String idCarona)
+	/**
+	 * Método para fazer solicitação de vaga sem passar ponto de encontro
+	 * @param idSessao
+	 * @param idCarona
+	 * @return solicitacao
+	 * @throws Exception
+	 */
+	public Solicitacao solicitarVaga(String idSessao, String idCarona)
 			throws Exception {
 
 		return solicitarVagaPontoEncontro(idSessao, idCarona, "Qualquer");
 
 	}
 
+	/**
+	 * Método para retornar atributo de solicitação
+	 * @param idSolicitacao
+	 * @param atributo
+	 * @return atributo
+	 * @throws Exception
+	 */
 	public String getAtributoSolicitacao(String idSolicitacao, String atributo)
 			throws Exception {
 
 		Solicitacao solicitacao = getSolicitacao(idSolicitacao);
 
 		if (atributo.equals("origem")) {
-			return localizaCarona(solicitacao.getCarona()).getOrigem();
+			return getCarona(solicitacao.getCarona()).getOrigem();
 		} else if (atributo.equals("destino")) {
-			return localizaCarona(solicitacao.getCarona()).getDestino();
+			return getCarona(solicitacao.getCarona()).getDestino();
 		} else if (atributo.equals("Dono da carona")) {
-			return getUsuario(localizaCarona(solicitacao.getCarona()).getCriador()).getNome();
+			return getUsuario(getCarona(solicitacao.getCarona()).getCriador()).getNome();
 		} else if (atributo.equals("Dono da solicitacao")) {
 			return getUsuario(solicitacao.getSolicitador()).getNome();
 		} else if (atributo.equals("Ponto de Encontro")) {
@@ -472,26 +581,39 @@ public class Sistema {
 		return solicitacao.toString();
 	}
 
+	/**
+	 * Método que retorna solicitação a partir de sua id
+	 * @param idSolicitacao
+	 * @return solicitacao
+	 * @throws Exception
+	 */
 	private Solicitacao getSolicitacao(String idSolicitacao) throws Exception {
 
 		for (Carona c : caronas) {
 			List<Solicitacao> solicitacoes = c.getSolicitacoes();
-			for (Solicitacao sol : solicitacoes) {
-				if (idSolicitacao.equals(sol.getId())) {
-					return sol;
+			for (Solicitacao solicitacao : solicitacoes) {
+				if (idSolicitacao.equals(solicitacao.getId())) {
+					return solicitacao;
 				}
 			}
 		}
 
-		throw new SolicitacaoInexistenteException();
+		throw new ItemInexistenteException("Solicitação inexistente");
 	}
 
-	public String aceitarSolicitacaoPontoEncontro(String idSessao,
+	/**
+	 * Método para aceitar solicitação dado um ponto de encontro
+	 * @param idSessao
+	 * @param idSolicitacao
+	 * @return solicitacao
+	 * @throws Exception
+	 */
+	public Solicitacao aceitarSolicitacaoPontoEncontro(String idSessao,
 			String idSolicitacao) throws Exception {
 
 		Solicitacao solicitacao = getSolicitacao(idSolicitacao);
 		// Sessao sessao = getSessao(idSessao);
-		Carona carona = localizaCarona(solicitacao.getCarona());
+		Carona carona = getCarona(solicitacao.getCarona());
 
 		// if (sessao.getLogin().equals(
 		// solicitacao.getCarona().getCriador().getLogin())) {
@@ -500,24 +622,39 @@ public class Sistema {
 		carona.setVagas(carona.getVagas() - 1);
 		carona.removeSolicitacao(solicitacao);
 		carona.setPonto(solicitacao.getPonto());
-		buscaUsuario(solicitacao.getSolicitador()).adicionaCaronaComoCaroneiro(carona.getId());
+		getUsuario(solicitacao.getSolicitador()).adicionaCaronaComoCaroneiro(carona.getId());
 		caronas.add(carona);
 
 		// }
 
-		return solicitacao.getId();
+		return solicitacao;
 	}
 
-	public String aceitarSolicitacao(String idSessao, String idSolicitacao)
+	/**
+	 * Método para aceitar solicitação 
+	 * @param idSessao
+	 * @param idSolicitacao
+	 * @return
+	 * @throws Exception
+	 */
+	public Solicitacao aceitarSolicitacao(String idSessao, String idSolicitacao)
 			throws Exception {
 
 		return aceitarSolicitacaoPontoEncontro(idSessao, idSolicitacao);
 	}
 
+	/**
+	 * Método para desistir de sugestão
+	 * @param idSessao
+	 * @param idCarona
+	 * @param idSugestao
+	 * @return idSugestao
+	 * @throws Exception
+	 */
 	public String desistirRequisicao(String idSessao, String idCarona,
 			String idSugestao) throws Exception {
 
-		Carona carona = localizaCarona(idCarona);
+		Carona carona = getCarona(idCarona);
 		Sessao sessao = getSessao(idSessao);
 
 		if (sessao.getLogin().equals(carona.getCriador())) {
@@ -527,12 +664,19 @@ public class Sistema {
 		return idSugestao;
 	}
 
-	public String rejeitarSolicitacao(String idSessao, String idSolicitacao)
+	/**
+	 * Método para rejeitar solicitação
+	 * @param idSessao
+	 * @param idSolicitacao
+	 * @return
+	 * @throws Exception
+	 */
+	public Solicitacao rejeitarSolicitacao(String idSessao, String idSolicitacao)
 			throws Exception {
 
 		Solicitacao solicitacao = getSolicitacao(idSolicitacao);
 		// Sessao sessao = getSessao(idSessao);
-		Carona carona = localizaCarona(solicitacao.getCarona());
+		Carona carona = getCarona(solicitacao.getCarona());
 
 		// if (sessao.getLogin().equals(
 		// solicitacao.getCarona().getCriador().getLogin())) {
@@ -541,39 +685,53 @@ public class Sistema {
 		caronas.add(carona);
 		// }
 
-		return solicitacao.getId();
+		return solicitacao;
 	}
 
-	public String visualizarPerfil(String idSessao, String login)
+	/**
+	 * Método para visualizar perfil de um usuário a partir de seu login
+	 * @param idSessao
+	 * @param login
+	 * @return visualizadorDePerfil
+	 * @throws Exception
+	 */
+	public VisualizadorDePerfil visualizarPerfil(String idSessao, String login)
 			throws Exception {
 
-		VisualizadorDePerfil vp = null;
+		VisualizadorDePerfil visualizadorDePerfil = null;
 
 		if (verificaSessao(idSessao)) {
-			Usuario usuario = buscaUsuario(login);
+			Usuario usuario = getUsuario(login);
 			if (usuario == null) {
-				throw new LoginInvalidoException();
+				throw new AtributoInvalidoException("Login inválido");
 			}
 			List<Carona> caronasLista = new ArrayList<Carona>();
 			for(String idCarona : usuario.getCaronas()){
-				caronasLista.add(localizaCarona(idCarona));
+				caronasLista.add(getCarona(idCarona));
 			}
 			
-			vp = new VisualizadorDePerfil(usuario, caronasLista);
+			visualizadorDePerfil = new VisualizadorDePerfil(usuario, caronasLista);
 		}
-		return vp.getNome();
+		return visualizadorDePerfil;
 	}
 
+	/**
+	 * Método para retornar atributo de perfil de um usuario a partir de seu login
+	 * @param login
+	 * @param atributo
+	 * @return atributo
+	 * @throws Exception
+	 */
 	public String getAtributoPerfil(String login, String atributo)
 			throws Exception {
 
-		Usuario usuario = buscaUsuario(login);
+		Usuario usuario = getUsuario(login);
 
 		VisualizadorDePerfil vp;
 		if (usuario != null) {
 			List<Carona> caronasLista = new ArrayList<Carona>();
 			for(String idCarona : usuario.getCaronas()){
-				caronasLista.add(localizaCarona(idCarona));
+				caronasLista.add(getCarona(idCarona));
 			}
 			
 			vp = new VisualizadorDePerfil(usuario, caronasLista);
@@ -615,12 +773,18 @@ public class Sistema {
 		if (atributo.equals("presenças em vagas de caronas")) {
 			return vp.getPresencasEmVagasDeCaronas();
 		}
-
-		return null;
+		throw new AtributoInvalidoException("Atributo inexistente");
 
 	}
 
-	public String getCaronaUsuario(String idSessao, int indexCarona) throws Exception {
+	/**
+	 * Método que retorna carona de usuário a partir do index
+	 * @param idSessao
+	 * @param indexCarona
+	 * @return carona
+	 * @throws Exception
+	 */
+	public Carona getCaronaUsuario(String idSessao, int indexCarona) throws Exception {
 
 		Usuario u = null;
 		for (Sessao s : sessoes) {
@@ -629,25 +793,25 @@ public class Sistema {
 			}
 		}
 
-		Carona c = null;
+		Carona carona = null;
 
 		if (u != null) {
 
 			int i = indexCarona - 1;
 			if (i >= 0 && i < u.getCaronas().size()) {
-				c = localizaCarona(u.getCaronas().get(i));
+				carona = getCarona(u.getCaronas().get(i));
 			}
 		}
 
-		String saida = null;
-
-		if (c != null) {
-			saida = c.getId();
-		}
-
-		return saida;
+		return carona;
 	}
 
+	/**
+	 * Método que retorna string com todas as caronas de um usuário a partir de sue login
+	 * @param idSessao
+	 * @return todasAsCaronas
+	 * @throws Exception
+	 */
 	public String getTodasCaronasUsuario(String idSessao) throws Exception {
 
 		Usuario u = null;
@@ -661,7 +825,7 @@ public class Sistema {
 		}
 
 		for (String c : u.getCaronas()) {
-			todasAsCaronas.add(localizaCarona(c).getId());
+			todasAsCaronas.add(getCarona(c).getId());
 		}
 
 		String saida = todasAsCaronas.toString().replace("[", "{")
@@ -671,10 +835,17 @@ public class Sistema {
 
 	}
 
+	/**
+	 * Método que retorna ids das solicitações confirmadas
+	 * @param idSessao
+	 * @param idCarona
+	 * @return ids
+	 * @throws Exception
+	 */
 	public String getSolicitacoesConfirmadas(String idSessao, String idCarona)
 			throws Exception {
 
-		Carona carona = localizaCarona(idCarona);
+		Carona carona = getCarona(idCarona);
 		String res = "{";
 		for (Solicitacao sol : carona.getCaroneiros()) {
 			res += sol.getId();
@@ -684,10 +855,15 @@ public class Sistema {
 
 		return res;
 	}
-
+	/**
+	 * Método que retorna as ids das solicitações pendentes
+	 * @param idCarona
+	 * @return ids
+ 	* @throws Exception
+ 	*/
 	public String getSolicitacoesPendentes(String idCarona) throws Exception {
 
-		Carona carona = localizaCarona(idCarona);
+		Carona carona = getCarona(idCarona);
 		String res = "{";
 		for (Solicitacao sol : carona.getSolicitacoes()) {
 			res += sol.getId();
@@ -698,10 +874,17 @@ public class Sistema {
 		return res;
 	}
 
+	/**
+	 * Método que retorna pontos sugeridos
+	 * @param idSessao
+	 * @param idCarona
+	 * @return
+	 * @throws Exception
+	 */
 	public String getPontosSugeridos(String idSessao, String idCarona)
 			throws Exception {
 
-		Carona carona = localizaCarona(idCarona);
+		Carona carona = getCarona(idCarona);
 		String res = "";
 		Collection<String> pontos = carona.getPontosSugeridosValues();
 		for (String ponto : pontos) {
@@ -713,13 +896,21 @@ public class Sistema {
 		return res;
 	}
 
+	/**
+	 * Método que adiciona review a carona
+	 * @param idSessao
+	 * @param idCarona
+	 * @param review
+	 * @return true se foi feita a review corretamente, false se nao
+	 * @throws Exception
+	 */
 	public boolean reviewCarona(String idSessao, String idCarona, String review) throws Exception {
 
 		Usuario u;
 
 		for (Sessao s : sessoes) {
 			if (s.getId().equals(idSessao)) {
-				u = buscaUsuario(s.getLogin());
+				u = getUsuario(s.getLogin());
 				for (Carona c : caronas) {
 					if (c.getId().equals(idCarona)) {
 
@@ -740,30 +931,45 @@ public class Sistema {
 
 	}
 
-	public String reviewVagaEmCarona(String idSessao, String idCarona,
-			String loginCaroneiro, String review) throws Exception {
+	/**
+	 * Método que adiciona review sobre vaga em carona
+	 * @param idSessao
+	 * @param idCarona
+	 * @param loginCaroneiro
+	 * @param review1
+	 * @return
+	 * @throws Exception
+	 */
+	public Review reviewVagaEmCarona(String idSessao, String idCarona,
+			String loginCaroneiro, String review1) throws Exception {
 		
-		if(review.equals("faltou") || review.equals("não faltou")){
+		if(review1.equals("faltou") || review1.equals("não faltou")){
 			Sessao sessao = getSessao(idSessao);
-			Usuario user = buscaUsuario(sessao.getLogin());
+			Usuario user = getUsuario(sessao.getLogin());
 			GeradorDeID gerador = new GeradorDeID();
 			String id = gerador.geraId();
 
-			Usuario caroneiro = buscaUsuario(loginCaroneiro);
+			Usuario caroneiro = getUsuario(loginCaroneiro);
 			for (String c : caroneiro.getCaronasComoCaroneiro()) {
 				if (c.equals(idCarona)) {
-					Carona carona = localizaCarona(c);
+					Carona carona = getCarona(c);
 					caronas.remove(carona);
-					Review rev = new Review(id, user.getLogin(), c, review);
-					carona.addReview(rev);
+					Review review = new Review(id, user.getLogin(), c, review1);
+					carona.addReview(review);
 					caronas.add(carona);
 
-					return rev.getId();
+					return review;
 				}
 			}
 		}
 			throw new OpcaoInvalidaException();
 	}
+	
+	/**
+	 * étodo que fecha o sistema
+	 * @throws IOException
+	 * @throws XMLNaoGeradaException
+	 */
 	public void encerrarSistema() throws IOException, XMLNaoGeradaException{
 		this.xmlCreatorUsuarios = new FactoryXml("Xml Usuarios do sistema");
 		this.xmlCreatorCaronas = new FactoryXml("Xml Caronas do sistema");
@@ -787,6 +993,9 @@ public class Sistema {
 		
 	}
 
+	/**
+	 * Método para apagar informações gravadas do sistema
+	 */
 	public void zerarSistema() {
 		File f = new File("arquivo.xml");
 		if(f.exists()){	
@@ -796,6 +1005,10 @@ public class Sistema {
 		
 	}
 
+	/**
+	 * Método para reiniciar o sistema
+	 * @throws Exception
+	 */
 	public void reiniciarSistema() throws Exception {
 		leXml leitor = new leXml("arquivo.xml");
 		this.usuarios = leitor.getUsuarios();	
