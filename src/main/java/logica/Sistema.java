@@ -35,6 +35,8 @@ public class Sistema {
 	private Xml xmlCreatorUsuarios;
 	private Xml xmlCreatorCaronas;
 	private Xml xmlCreatorSistema;
+	
+	
 
 	/**
 	 * Construtor da classe Sistema
@@ -592,7 +594,7 @@ public class Sistema {
 		for (Carona c : caronas) {
 			List<Solicitacao> solicitacoes = c.getSolicitacoes();
 			for (Solicitacao solicitacao : solicitacoes) {
-				if (idSolicitacao.equals(solicitacao.getId())) {
+				if (idSolicitacao == solicitacao.getId()) {
 					return solicitacao;
 				}
 			}
@@ -1013,5 +1015,82 @@ public class Sistema {
 		leXml leitor = new leXml("arquivo.xml");
 		this.usuarios = leitor.getUsuarios();	
 		this.caronas = leitor.getCaronas();
+	}
+	
+	
+	
+	public static void main(String[] args) throws Exception {
+		//criarUsuario login="mark" senha="m@rk" nome="Mark Zuckerberg" endereco="Palo Alto, California" email="mark@facebook.com"
+		//criarUsuario login="bill" senha="bilz@o" nome="Bill Clinton" endereco="Hollywood, California" email="bill@gmail.com"
+		
+		System.out.println("Cria Sistema");
+		Sistema Si1 = new Sistema();
+		System.out.println("--------------------------------------------");
+		System.out.println("Cria dois Usuarios, mark e bill");
+		System.out.println(Si1.criarUsuario("mark", "m@rk", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com").getNome());
+		System.out.println(Si1.criarUsuario("bill", "bilz@o", "Bill Clinton", "Hollywood, California", "bill@gmail.com").getNome());;
+		
+		System.out.println("--------------------------------------------");
+		System.out.println("Verificar se existe os usuários adicionados.");
+		System.out.println(Si1.getUsuario("mark").getEmail());
+		System.out.println(Si1.getUsuario("bill").getEmail());
+		
+		//#Iniciar sessão.
+		//sessaoMark=abrirSessao login="mark" senha="m@rk"
+		System.out.println("Inicia sessao para mark");
+		
+		Sessao sessaoMark = Si1.abrirSessao("mark", "m@rk");
+		System.out.println(sessaoMark.getId());
+		
+		//#Cadastrar caronas.
+		//carona4ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="02/06/2012" hora="12:00" vagas=1
+		//carona5ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="04/06/2012" hora="16:00" vagas=2
+		System.out.println("---------------------------------------------------------");
+		System.out.println("cadastra duas caronas na sessaoMark");
+		
+		Carona carona4 = Si1.cadastrarCarona(sessaoMark.getId(), "Campina Grande", "João Pessoa", "02/06/2012" ,"12:00", "1");
+		Carona carona5 = Si1.cadastrarCarona(sessaoMark.getId(), "Campina Grande", "João Pessoa", "04/06/2012" ,"16:00", "2");
+		System.out.println(carona4.getCriador() + ", " + carona4.getId());
+		System.out.println(carona5.getCriador() + ", " + carona5.getId());
+		
+		//Verifica se as caronas existem na lista de caronas do Sistema.
+		System.out.println("---------------------------------------------------------");
+		System.out.println("Verifica se as caronas existem na lista de caronas do Sistema");
+		System.out.println(Si1.getCarona(carona4.getId()).getCriador());
+		System.out.println(Si1.getCarona(carona5.getId()).getCriador());
+		
+		
+		
+		//abrir uma sessao para bill
+		System.out.println("---------------------------");
+		System.out.println("Abrir uma sessao para Bill");
+		Sessao sessaoBill = Si1.abrirSessao("bill", "bilz@o");
+		System.out.println(sessaoBill.getId());
+		
+		//#Requisitar vaga na carona.
+		//solicitacao1ID=solicitarVaga idSessao=${sessaoBill} idCarona=${carona4ID}
+		//expect "Campina Grande" getAtributoSolicitacao idSolicitacao={solicitacao1ID} atributo="origem"
+		System.out.println("------------------------");
+		System.out.println("Requisitar vaga em uma carona oferecida por Mark");
+		Solicitacao solicitacao4 = Si1.solicitarVaga(sessaoBill.getId(), carona4.getId());
+		System.out.println("---------------------------------------");
+		System.out.println("Buscar a origem da carona");
+		System.out.println(Si1.getAtributoSolicitacao(solicitacao4.getId(), "origem"));;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }

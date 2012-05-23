@@ -8,7 +8,7 @@ zerarSistema
 
 #Criar usuário.
 criarUsuario login="mark" senha="m@rk" nome="Mark Zuckerberg" endereco="Palo Alto, California" email="mark@facebook.com"
-criarUsuario login="bill" senha="bilz@a" nome="Bill Clinton" endereco="Hollywood, California" email="bill@gmail.com"
+criarUsuario login="bill" senha="bilz@o" nome="Bill Clinton" endereco="Hollywood, California" email="bill@gmail.com"
 #Iniciar sessão.
 sessaoMark=abrirSessao login="mark" senha="m@rk"
 
@@ -55,4 +55,5 @@ expect 0 getAtributoCarona idCarona=${carona5ID} atributo="vagas"
 #Enviar email
 expect true enviarEmail idSessao=${sessaoMark} destino="bill@gmail.com" message="A carona foi rejeitada por falta de vaga"
 
-
+encerrarSistema
+quit
