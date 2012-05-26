@@ -89,7 +89,7 @@ public class VisualizadorDePerfil {
 		for (Carona c : caronas) {
 			for (Review r : c.getReviews()) {
 
-				if (r.getReview() == "faltou") {
+				if (r.getReview().equals("faltou")) {
 
 					faltas++;
 				}
