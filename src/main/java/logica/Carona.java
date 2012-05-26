@@ -360,7 +360,7 @@ public class Carona {
 
 		String stringVagas = "" + vagas;
 
-		if (intVagas <= 0 || stringVagas == null) {
+		if (intVagas < 0 || stringVagas == null) {
 			throw new VagaInvalidaException();
 		}
 		this.vagas = intVagas;
