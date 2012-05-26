@@ -154,5 +154,8 @@ public class Si1ProjectFacade {
 		S1.encerrarSistema();
 
 	}
+	public boolean enviarEmail(String idSessao, String destino, String message){
+		return S1.enviarEmail(idSessao, destino, message);
+	}
 
 }
