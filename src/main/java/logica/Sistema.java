@@ -1018,6 +1018,11 @@ public class Sistema {
 	}
 	
 	
+	public boolean enviarEmail(String idSessao, String destino, String message){
+		
+		return false;
+	}
+	
 	
 	public static void main(String[] args) throws Exception {
 		//criarUsuario login="mark" senha="m@rk" nome="Mark Zuckerberg" endereco="Palo Alto, California" email="mark@facebook.com"
