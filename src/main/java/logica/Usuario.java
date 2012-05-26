@@ -32,6 +32,7 @@ public class Usuario {
 	private List<String> caronas;
 
 	private List<String> amigos;
+	private List<String> mensagens;
 	
 	private Xml xmlCreator;
 
