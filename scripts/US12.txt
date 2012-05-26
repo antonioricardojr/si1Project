@@ -32,7 +32,7 @@ expect true enviarEmail idSessao=${sessaoMark} destino="bill@gmail.com" message=
 
 #Aceitar requisição
 aceitarSolicitacao idSessao=${sessaoMark} idSolicitacao=${solicitacao1ID}
-expect 2 getAtributoCarona idCarona=${carona4ID} atributo="vagas"
+expect 0 getAtributoCarona idCarona=${carona4ID} atributo="vagas"
 
 #Enviar email
 expect true enviarEmail idSessao=${sessaoMark} destino="bill@gmail.com" message="A carona foi confirmada"
