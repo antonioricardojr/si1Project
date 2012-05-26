@@ -1019,11 +1019,20 @@ public class Sistema {
 	
 	
 	public boolean enviarEmail(String idSessao, String destino, String message){
+		Sessao sessao = getSessao(idSessao);
+
 		
-		return false;
+		return enviaEmail(sessao.getLogin(), destino, message);
 	}
 	
 	
+	
+	private boolean enviaEmail(String remetente, String destinatario, String mensagem) {
+		//TODO: fazer a mensagem ser enviada ao destinatário.
+		
+		return false;
+	}
+
 	public static void main(String[] args) throws Exception {
 		//criarUsuario login="mark" senha="m@rk" nome="Mark Zuckerberg" endereco="Palo Alto, California" email="mark@facebook.com"
 		//criarUsuario login="bill" senha="bilz@o" nome="Bill Clinton" endereco="Hollywood, California" email="bill@gmail.com"
