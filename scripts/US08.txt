@@ -75,7 +75,7 @@ expectError "Opção inválida." reviewVagaEmCarona idSessao=${sessaoMark} idCarona
 #Iniciar sessão com outro usuário.
 sessaoVader=abrirSessao login="vader" senha="d4rth"
 
-expectError "Usuário não possui vaga na carona." reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} oginCaroneiro=vader review="não funcionou"
+expectError "Usuário não possui vaga na carona." reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} loginCaroneiro=vader review="não funcionou"
 
 encerrarSistema
 quit

@@ -88,8 +88,9 @@ public class VisualizadorDePerfil {
 		int faltas = 0;
 		for (Carona c : caronas) {
 			for (Review r : c.getReviews()) {
+				System.out.println(r.getReview() + r.getUsuario());
 
-				if (r.getReview().equals("faltou")) {
+				if (r.getReview().equals("faltou") && r.getUsuario().equals(this.usuario.getLogin())) {
 
 					faltas++;
 				}

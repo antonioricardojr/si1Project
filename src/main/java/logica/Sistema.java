@@ -950,16 +950,14 @@ public class Sistema {
 			Usuario user = getUsuario(sessao.getLogin());
 			GeradorDeID gerador = new GeradorDeID();
 			String id = gerador.geraId();
-
 			Usuario caroneiro = getUsuario(loginCaroneiro);
 			for (String c : caroneiro.getCaronasComoCaroneiro()) {
 				if (c.equals(idCarona)) {
-					Carona carona = getCarona(c);
-					caronas.remove(carona);
-					Review review = new Review(id, user.getLogin(), c, review1);
+					Carona carona = this.getCarona(c);
+					this.caronas.remove(carona);
+					Review review = new Review(id, caroneiro.getLogin(), c, review1);
 					carona.addReview(review);
-					caronas.add(carona);
-
+					this.caronas.add(carona);
 					return review;
 				}
 			}

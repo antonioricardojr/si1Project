@@ -395,7 +395,7 @@ public class Carona {
 	}
 
 	public void addReview(Review review) {
-		reviews.add(review);
+		this.reviews.add(review);
 
 	}
 
@@ -426,5 +426,6 @@ public class Carona {
 	public void setCaroneirosConfirmados(List<Solicitacao> lista){
 		this.caroneirosConfirmados = lista;
 	}
+	
 
 }
