@@ -43,7 +43,7 @@ solicitacao2ID=solicitarVaga idSessao=${sessaoBill} idCarona=${carona4ID}
 expect "Campina Grande" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="origem"
 expect "João Pessoa" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="destino"
 expect "Mark Zuckerberg" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="Dono da carona"
-expect "William Henry Gates III" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="Dono da solicitacao"
+expect "Bill Clinton" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="Dono da solicitacao"
 
 #Enviar email
 expect true enviarEmail idSessao=${sessaoMark} destino="bill@gmail.com" message="A solicitação foi recebida"
