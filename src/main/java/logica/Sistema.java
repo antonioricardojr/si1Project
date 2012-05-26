@@ -591,10 +591,10 @@ public class Sistema {
 	 */
 	private Solicitacao getSolicitacao(String idSolicitacao) throws Exception {
 
-		for (Carona c : caronas) {
+		for (Carona c : this.caronas) {
 			List<Solicitacao> solicitacoes = c.getSolicitacoes();
 			for (Solicitacao solicitacao : solicitacoes) {
-				if (idSolicitacao == solicitacao.getId()) {
+				if (idSolicitacao.equals(solicitacao.getId())) {
 					return solicitacao;
 				}
 			}
