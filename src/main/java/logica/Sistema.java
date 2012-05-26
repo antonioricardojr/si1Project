@@ -619,7 +619,7 @@ public class Sistema {
 
 		// if (sessao.getLogin().equals(
 		// solicitacao.getCarona().getCriador().getLogin())) {
-		caronas.remove(carona);
+		//caronas.remove(carona);
 		carona.addCaroneiro(solicitacao);
 		carona.setVagas(carona.getVagas() - 1);
 		carona.removeSolicitacao(solicitacao);
