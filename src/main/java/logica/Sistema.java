@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class Sistema {
 	private Xml xmlCreatorUsuarios;
 	private Xml xmlCreatorCaronas;
 	private Xml xmlCreatorSistema;
+	private List<Interesse> interesses;
 	
 	
 
@@ -45,6 +47,7 @@ public class Sistema {
 		this.usuarios = new ArrayList<Usuario>();
 		this.sessoes = new ArrayList<Sessao>();
 		this.caronas = new ArrayList<Carona>();
+		this.setInteresses(new ArrayList<Interesse>());
 		this.xmlCreatorUsuarios = new FactoryXml("Xml Usuarios do sistema");
 		this.xmlCreatorCaronas = new FactoryXml("Xml Caronas do sistema");
 		this.xmlCreatorSistema = new FactoryXml("Xml Sistema");
@@ -1029,6 +1032,113 @@ public class Sistema {
 		//TODO: fazer a mensagem ser enviada ao destinatário.
 		
 		return false;
+	}
+	
+	/**
+	 * Cadastra interesse em carona
+	 * @param origem
+	 * @param destino
+	 * @param data
+	 * @param horarioInicial
+	 * @param horarioFinal
+	 * @param interessado
+	 * @return
+	 */
+	public String cadastraInteresse(String origem, String destino, String data, String horarioInicial, String horarioFinal, String interessado){
+		Interesse interesse = new Interesse(interessado);
+		interesse.setData(data);
+		interesse.setDestino(destino);
+		interesse.setHorarioFinal(horarioFinal);
+		interesse.setHorarioInicial(horarioInicial);
+		interesse.setOrigem(origem);
+		this.interesses.add(interesse);
+		List<Carona> caronas = this.procuraCaronaInteressada(interesse);
+		if(caronas.size()>0){
+			this.avisaInteressado(caronas, interesse);
+			this.interesses.remove(interesse);
+		}
+		return interesse.getId();
+	}
+	
+	
+	
+	private void avisaInteressado(List<Carona> caronas2, Interesse interesse) {
+		Usuario u = this.getUsuario(interesse.getInteressado());
+		for(Carona c : this.caronas){
+			String mensagem = "Carona cadastrada no dia " +c.getData() +" , às " + c.getHora() + "de acordo com os seus interesses registrados. Entrar em contato com " + u.getEmail();
+			u.adicionaMensagem(mensagem);
+		}
+		
+		
+	}
+
+	/**
+	 * Procura nas caronas alguma que satisfaça os requesitos ditos no interesse
+	 * @param interesse
+	 */
+	public List<Carona> procuraCaronaInteressada(Interesse interesse){
+		
+		List<Carona> caronasCompativeis = new ArrayList<Carona>();
+		
+		for(Carona carona: this.caronas){
+			
+			if(carona.getOrigem().equals(interesse.getOrigem()) && carona.getDestino().equals(interesse.getDestino())){
+				//Se a data do interesse for vazia, pegar a data atual como parametro
+				if(interesse.getData().equals("")){
+					
+					
+				}else if(carona.getData().equals(interesse.getData())){
+					
+					if(estaNoRangeDoTempo(interesse.getHorarioInicial(), interesse.getHorarioFinal(), carona.getHora())){
+						caronasCompativeis.add(carona);
+					}
+					
+				}
+				
+			}
+			
+		}
+		return caronasCompativeis;
+	}
+	
+	private boolean estaNoRangeDoTempo(String tempoInicial, String tempoFinal, String tempoCarona){
+		if(tempoInicial.equals("")){
+			tempoInicial = "00:00";
+		}
+		if(tempoFinal.equals("")){
+			tempoFinal = "00:00";
+		}
+		
+		int horaInicial = Integer.parseInt(tempoInicial.substring(0, 2));
+		int horaFinal = Integer.parseInt(tempoFinal.substring(0, 2));
+		
+		int minutoInicial = Integer.parseInt(tempoInicial.substring(2, 4));
+		int minutoFinal = Integer.parseInt(tempoFinal.substring(2, 4));
+		
+		int horaCarona = Integer.parseInt(tempoInicial.substring(0, 2));
+		int minutoCarona = Integer.parseInt(tempoFinal.substring(2, 4));
+		
+		if(horaInicial < horaCarona && horaFinal > horaCarona){
+			return true;
+			
+		}else if(horaInicial == horaCarona && horaFinal == horaCarona){
+			if(minutoInicial <= minutoCarona && minutoFinal >= minutoCarona){
+				return true;
+			}else{
+				return false;
+			}
+			 
+		}else{
+			return false;
+		}
+	}
+
+	public List<Interesse> getInteresses() {
+		return interesses;
+	}
+
+	public void setInteresses(List<Interesse> interesses) {
+		this.interesses = interesses;
 	}
 
 	public static void main(String[] args) throws Exception {

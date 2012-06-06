@@ -221,4 +221,8 @@ public class Usuario {
 	public void setCaronasOferecidas(List<String> lista){
 		caronasOferecidas = lista;
 	}
+	
+	public void adicionaMensagem(String mensagem){
+		this.mensagens.add(mensagem);
+	}
 }

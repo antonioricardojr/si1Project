@@ -2,7 +2,7 @@
 # em caronas entre uma origem e destino em um determinado período.
 # Caso seja publicada uma carona que satisfaça os requisitos,
 # O usuário é avisado por uma mensagem no seu perfil.
- 
+
 #Limpar os dados do sistema.
 zerarSistema
 
