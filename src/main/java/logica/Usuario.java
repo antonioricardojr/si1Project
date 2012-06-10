@@ -28,13 +28,15 @@ public class Usuario {
 
 	private List<String> caronasOferecidas;
 	private List<String> caronasComoCaroneiro;
-
+	private int faltas;
+	private int presencas;
 	private List<String> caronas;
 
 	private List<String> amigos;
 	private List<String> mensagens;
 	
 	private Xml xmlCreator;
+	
 
 	public Usuario(String login, String senha, String nome, String endereco,
 			String email) throws Exception {
@@ -44,7 +46,7 @@ public class Usuario {
 		setNome(nome);
 		setEndereco(endereco);
 		setEmail(email);
-
+		faltas = 0;
 		caronasOferecidas = new ArrayList<String>();
 		caronasComoCaroneiro = new ArrayList<String>();
 
@@ -127,6 +129,14 @@ public class Usuario {
 		this.endereco = endereco;
 	}
 
+	public int getFaltas() {
+		return faltas;
+	}
+
+	public void addFalta() {
+		this.faltas +=1;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -224,5 +234,14 @@ public class Usuario {
 	
 	public void adicionaMensagem(String mensagem){
 		this.mensagens.add(mensagem);
+	}
+
+	public int getPresencas() {
+
+		return presencas;
+	}
+	
+	public void addPresenca(){
+		this.presencas +=1;
 	}
 }

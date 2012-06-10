@@ -16,8 +16,8 @@ criarUsuario login="vader" senha="d4rth" nome="Anakin Skywalker" endereco="Death
 sessaoMark=abrirSessao login="mark" senha="m@rk"
 
 #Cadastrar caronas.
-carona4ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="02/06/2012" hora="12:00" vagas=3
-carona5ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="04/06/2012" hora="16:00" vagas=2
+carona4ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="02/06/2013" hora="12:00" vagas=3
+carona5ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="04/06/2013" hora="16:00" vagas=2
 
 #Iniciar sessão com outro usuário.
 sessaoBill=abrirSessao login="bill" senha="bilz@o"
@@ -51,7 +51,7 @@ expect "William Henry Gates III" getAtributoPerfil login="bill" atributo="nome"
 expect "Medina, Washington" getAtributoPerfil login="bill" atributo="endereco"
 expect "billzin@gmail.com" getAtributoPerfil login="bill" atributo="email"
 expect [${carona4ID},${carona5ID}] getAtributoPerfil login="bill" atributo="historico de vagas em caronas"
-expect "" getAtributoPerfil login="bill" atributo="historico de caronas"
+expect [] getAtributoPerfil login="bill" atributo="historico de caronas"
 expect "0" getAtributoPerfil login="bill" atributo="caronas seguras e tranquilas"
 expect "0" getAtributoPerfil login="bill" atributo="caronas que não funcionaram"
 expect "1" getAtributoPerfil login="bill" atributo="faltas em vagas de caronas"
@@ -63,14 +63,14 @@ expect "William Henry Gates III" getAtributoPerfil login="bill" atributo="nome"
 expect "Medina, Washington" getAtributoPerfil login="bill" atributo="endereco"
 expect "billzin@gmail.com" getAtributoPerfil login="bill" atributo="email"
 expect [${carona4ID},${carona5ID}] getAtributoPerfil login="bill" atributo="historico de vagas em caronas"
-expect "" getAtributoPerfil login="bill" atributo="historico de caronas"
+expect [] getAtributoPerfil login="bill" atributo="historico de caronas"
 expect "0" getAtributoPerfil login="bill" atributo="caronas seguras e tranquilas"
 expect "0" getAtributoPerfil login="bill" atributo="caronas que não funcionaram"
 expect "1" getAtributoPerfil login="bill" atributo="faltas em vagas de caronas"
 expect "1" getAtributoPerfil login="bill" atributo="presenças em vagas de caronas"
 
 #possiveis erros
-expectError "Opção inválida." reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} oginCaroneiro=bill review="não dou mais carona"
+expectError "Opção inválida." reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} loginCaroneiro=bill review="não dou mais carona"
 
 #Iniciar sessão com outro usuário.
 sessaoVader=abrirSessao login="vader" senha="d4rth"

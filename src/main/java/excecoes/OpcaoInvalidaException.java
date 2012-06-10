@@ -2,8 +2,8 @@ package excecoes;
 
 public class OpcaoInvalidaException extends Exception {
 
-	public OpcaoInvalidaException() {
-		super("Opção inválida.");
+	public OpcaoInvalidaException(String message) {
+		super(message);
 	}
 
 }

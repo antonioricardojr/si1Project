@@ -21,8 +21,6 @@ import xml.Xml;
 /**
  * Classe que representa uma carona no sistema.
  * 
- * @author ANTONIOR
- * 
  */
 
 public class Carona {

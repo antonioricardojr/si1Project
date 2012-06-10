@@ -40,7 +40,7 @@ public class VisualizadorDePerfil {
 	public String getHistoricoDeCaronas() {
 
 		if (usuario.getCaronasOferecidas().size() == 0) {
-			return "";
+			return "[]";
 		}
 
 		String historicoDeCaronas = "[";
@@ -62,7 +62,7 @@ public class VisualizadorDePerfil {
 
 		String saida = "";
 		if (usuario.getCaronasComoCaroneiro().size() == 0) {
-			return "";
+			return "[]";
 		} else {
 			for (String c : usuario.getCaronasComoCaroneiro()) {
 				saida += c + ",";
@@ -85,24 +85,12 @@ public class VisualizadorDePerfil {
 
 	public String getFaltasEmVagasDeCaronas() {
 
-		int faltas = 0;
-		for (Carona c : caronas) {
-			for (Review r : c.getReviews()) {
-				System.out.println(r.getReview() + r.getUsuario());
-
-				if (r.getReview().equals("faltou") && r.getUsuario().equals(this.usuario.getLogin())) {
-
-					faltas++;
-				}
-			}
-		}
-
-		return "" + faltas;
+		return usuario.getFaltas()+"";
 	}
 
 	public String getPresencasEmVagasDeCaronas() {
-		// TODO Auto-generated method stub
-		return "0";
+
+		return usuario.getPresencas()+"";
 	}
 
 	public List<String> getAmigos() {

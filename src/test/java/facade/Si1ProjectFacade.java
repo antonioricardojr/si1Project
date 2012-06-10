@@ -128,16 +128,20 @@ public class Si1ProjectFacade {
 		return S1.getSolicitacoesConfirmadas(idSessao,idCarona);
 	}
 	
-	public String getSolicitacoesPendentes(String idCarona) throws Exception{
-		return S1.getSolicitacoesPendentes(idCarona);
+	public String getSolicitacoesPendentes(String idSessao,String idCarona) throws Exception{
+		return S1.getSolicitacoesPendentes(idSessao,idCarona);
 	}
 	
 	public String getPontosSugeridos(String idSessao, String idCarona) throws Exception{
 		return S1.getPontosSugeridos(idSessao,idCarona);
 	}
 	
+	public String getPontosEncontro(String idSessao, String idCarona) throws Exception{
+		return S1.getPontosEncontro(idSessao,idCarona);
+	}
+	
 	public String reviewVagaEmCarona(String idSessao, String idCarona, String loginCaroneiro, String review) throws Exception{
-		return S1.reviewVagaEmCarona(idSessao,idCarona, loginCaroneiro,review).getId();
+		return S1.reviewVagaEmCarona(idSessao,idCarona, loginCaroneiro,review);
 	}
 	
 	public void reviewCarona(String idSessao, String idCarona, String review) throws Exception{

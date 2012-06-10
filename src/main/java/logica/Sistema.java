@@ -417,7 +417,7 @@ public class Sistema {
 	public String getTrajeto(String idCarona) throws Exception {
 
 		if (idCarona == null) {
-			throw new AtributoInvalidoException("Trajeto Inválido");
+			throw new AtributoInvalidoException("Trajeto Inválida");
 
 		}
 
@@ -483,7 +483,10 @@ public class Sistema {
 	 */
 	public String sugerirPontoEncontro(String idSessao, String idCarona,
 			String pontos) throws Exception {
-
+		
+		if(pontos.equals("")){
+			throw new OpcaoInvalidaException("Ponto Inválido");
+		}
 		Carona carona = getCarona(idCarona);
 		GeradorDeID gerador = new GeradorDeID();
 		String id = gerador.geraId();
@@ -527,14 +530,15 @@ public class Sistema {
 	 */
 	public Solicitacao solicitarVagaPontoEncontro(String idSessao, String idCarona,
 			String ponto) throws Exception {
-
-		if (idSessao == null || idCarona == null || ponto == null) {
-			throw new AtributoInvalidoException("Ponto Inválido");
-		}
-
+		
 		Carona carona = getCarona(idCarona);
 		Sessao sessao = getSessao(idSessao);
 
+		if (idSessao == null || idCarona == null || ponto == null || carona == null || sessao == null) {
+			throw new AtributoInvalidoException("Ponto Inválido");
+		}
+
+		
 		Usuario usuario = getUsuario(sessao.getLogin());
 		GeradorDeID gerador = new GeradorDeID();
 		String id = gerador.geraId();
@@ -866,7 +870,7 @@ public class Sistema {
 	 * @return ids
  	* @throws Exception
  	*/
-	public String getSolicitacoesPendentes(String idCarona) throws Exception {
+	public String getSolicitacoesPendentes(String idSessao,String idCarona) throws Exception {
 
 		Carona carona = getCarona(idCarona);
 		String res = "{";
@@ -890,17 +894,31 @@ public class Sistema {
 			throws Exception {
 
 		Carona carona = getCarona(idCarona);
-		String res = "";
+		String res = "[";
 		Collection<String> pontos = carona.getPontosSugeridosValues();
 		for (String ponto : pontos) {
 			res += ponto;
 
 		}
-		res += "";
+		res += "]";
 
 		return res;
 	}
 
+	/**
+	 * Método que recupera pontos sugeridos
+	 * @param idSessao
+	 * @param idCarona
+	 * @return
+	 * @throws Exception
+	 */
+	public String getPontosEncontro(String idSessao, String idCarona)
+			throws Exception {
+
+		return getPontosSugeridos(idSessao, idCarona);
+	}
+	
+	
 	/**
 	 * Método que adiciona review a carona
 	 * @param idSessao
@@ -945,27 +963,34 @@ public class Sistema {
 	 * @return
 	 * @throws Exception
 	 */
-	public Review reviewVagaEmCarona(String idSessao, String idCarona,
+	public String reviewVagaEmCarona(String idSessao, String idCarona,
 			String loginCaroneiro, String review1) throws Exception {
 		
-		if(review1.equals("faltou") || review1.equals("não faltou")){
-			Sessao sessao = getSessao(idSessao);
-			Usuario user = getUsuario(sessao.getLogin());
-			GeradorDeID gerador = new GeradorDeID();
-			String id = gerador.geraId();
-			Usuario caroneiro = getUsuario(loginCaroneiro);
-			for (String c : caroneiro.getCaronasComoCaroneiro()) {
-				if (c.equals(idCarona)) {
-					Carona carona = this.getCarona(c);
-					this.caronas.remove(carona);
-					Review review = new Review(id, caroneiro.getLogin(), c, review1);
-					carona.addReview(review);
-					this.caronas.add(carona);
-					return review;
-				}
+		Usuario caroneiro = getUsuario(loginCaroneiro);
+		boolean isCaroneiroDaCarona = false;
+		
+		for(String caronaID: caroneiro.getCaronasComoCaroneiro()){
+			if(caronaID.equals(idCarona)){
+				isCaroneiroDaCarona = true;
 			}
 		}
-			throw new OpcaoInvalidaException();
+		
+		if(!isCaroneiroDaCarona){
+			throw new OpcaoInvalidaException("Usuário não possui vaga na carona.");
+		}
+		usuarios.remove(caroneiro);
+		
+		if(review1.equals("faltou")){
+			caroneiro.addFalta();
+			usuarios.add(caroneiro);
+			return caroneiro.getFaltas()+"";
+			
+		}else if(review1.equals("não faltou")){
+			caroneiro.addPresenca();
+			usuarios.add(caroneiro);
+			return caroneiro.getPresencas()+"";
+		}
+		throw new OpcaoInvalidaException("Opção inválida.");
 	}
 	
 	/**

@@ -16,11 +16,11 @@ zerarSistema
 
 #Criar usuário.
 criarUsuario login="mark" senha="m@rk" nome="Mark Zuckerberg" endereco="Palo Alto, California" email="mark@facebook.com"
-criarUsuario login="steve" senha="5t3v3" nome="Steven Paul Jobs" endereco="Palo Alto, California" email="jobs@apple.com"
+criarUsuario login="steve" senha="5t3v3" nome="Steve Paul Jobs" endereco="Palo Alto, California" email="jobs@apple.com"
 
 #Iniciar sessão.
 sessaoSteve=abrirSessao login="steve" senha="5t3v3"
-expect "Steven Paul Jobs" getAtributoUsuario login="steve" atributo="nome"
+expect "Steve Paul Jobs" getAtributoUsuario login="steve" atributo="nome"
 expect "Palo Alto, California" getAtributoUsuario login="steve" atributo="endereco"
 
 sessaoMark=abrirSessao login="mark" senha="m@rk"
@@ -28,11 +28,11 @@ expect "Mark Zuckerberg" getAtributoUsuario login="mark" atributo="nome"
 expect "Palo Alto, California" getAtributoUsuario login="mark" atributo="endereco"
 
 #Cadastrar caronas.
-carona1ID=cadastrarCarona idSessao=${sessaoMark} origem="Cajazeiras" destino="Patos" data="20/07/2012" hora="14:00" vagas=4
-carona2ID=cadastrarCarona idSessao=${sessaoMark} origem="São Francisco" destino="Palo Alto" data="12/09/2012" hora="21:00" vagas=2
-carona3ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="01/06/2012" hora="12:00" vagas=1
-carona4ID=cadastrarCarona idSessao=${sessaoSteve} origem="Campina Grande" destino="João Pessoa" data="02/06/2012" hora="12:00" vagas=3
-carona5ID=cadastrarCarona idSessao=${sessaoSteve} origem="Campina Grande" destino="João Pessoa" data="04/06/2012" hora="16:00" vagas=2
+carona1ID=cadastrarCarona idSessao=${sessaoMark} origem="Cajazeiras" destino="Patos" data="20/07/2013" hora="14:00" vagas=4
+carona2ID=cadastrarCarona idSessao=${sessaoMark} origem="São Francisco" destino="Palo Alto" data="12/09/2013" hora="21:00" vagas=2
+carona3ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="01/06/2013" hora="12:00" vagas=1
+carona4ID=cadastrarCarona idSessao=${sessaoSteve} origem="Campina Grande" destino="João Pessoa" data="02/06/2013" hora="12:00" vagas=3
+carona5ID=cadastrarCarona idSessao=${sessaoSteve} origem="Campina Grande" destino="João Pessoa" data="04/06/2013" hora="16:00" vagas=2
 carona6ID=cadastrarCarona idSessao=${sessaoSteve} origem="Leeds" destino="Londres" data="10/02/2013" hora="10:00" vagas=3
 
 #Encerrar a sessao de mark.
@@ -41,7 +41,7 @@ encerrarSessao login="steve"
 
 #Sugerir ponto de encontro para uma carona
 sessaoSteve=abrirSessao login="steve" senha="5t3v3"
-sugestaoID=sugerirPontoEncontro idSessao=${sessaoSteve} idCarona=${carona2ID} pontos="[Acude Velho;Hiper Bompreco]"
+sugestaoID=sugerirPontoEncontro idSessao=${sessaoSteve} idCarona=${carona2ID} pontos="Acude Velho;Hiper Bompreco"
 
 
 #Requisitar vaga na carona.
@@ -49,13 +49,15 @@ solicitacao1ID=solicitarVaga idSessao=${sessaoSteve} idCarona=${carona2ID}
 expect "São Francisco" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="origem"
 expect "Palo Alto" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="destino"
 expect "Mark Zuckerberg" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="Dono da carona"
-expect "Steven Paul Jobs" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="Dono da solicitacao"
+expect "Steve Paul Jobs" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="Dono da solicitacao"
 
 #Aceitar requisição
+sessaoMark=abrirSessao login="mark" senha="m@rk"
 aceitarSolicitacao idSessao=${sessaoMark} idSolicitacao=${solicitacao1ID}
 expect 3 getAtributoCarona idCarona=${carona4ID} atributo="vagas"
 
 #Encerrar a sessao.
+encerrarSessao login="mark"
 encerrarSessao login="steve"
 
 #Finaliza o sistema
@@ -69,7 +71,7 @@ sessaoMark=abrirSessao login="mark" senha="m@rk"
 sessaoSteve=abrirSessao login="steve" senha="5t3v3"
 
 #Recupera Informacoes Usuario
-expect "Steven Paul Jobs" getAtributoUsuario login="steve" atributo="nome"
+expect "Steve Paul Jobs" getAtributoUsuario login="steve" atributo="nome"
 expect "Palo Alto, California" getAtributoUsuario login="steve" atributo="endereco"
 expect "Mark Zuckerberg" getAtributoUsuario login="mark" atributo="nome" 
 expect "Palo Alto, California" getAtributoUsuario login="mark" atributo="endereco"
@@ -105,12 +107,13 @@ expect {${carona4ID},${carona5ID},${carona6ID}} getTodasCaronasUsuario idSessao=
 
 #Recupera solicitacoes confirmadas
 expect {${solicitacao1ID}} getSolicitacoesConfirmadas idSessao=${sessaoMark} idCarona=${carona2ID}
-expect {} getSolicitacoesPendentes idCarona=${carona2ID}
+expect {} getSolicitacoesPendentes idSessao=${sessaoMark} idCarona=${carona2ID}
 expect "[Acude Velho;Hiper Bompreco]" getPontosSugeridos idSessao=${sessaoMark} idCarona=${carona2ID}
 
 #Recupera pontos sugeridos
-expect "[Acude Velho;Hiper Bompreco]" getPontosSugeridos idSessao=${sessaoMark} idCarona=${carona2ID}
+expect "[Acude Velho;Hiper Bompreco]" getPontosEncontro idSessao=${sessaoMark} idCarona=${carona2ID}
 
 #Finaliza o sistema
 encerrarSistema
 quit
+
