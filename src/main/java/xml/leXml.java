@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import logica.Carona;
 import logica.CaronaAbstrata;
 import logica.Review;
 import logica.Solicitacao;
@@ -63,7 +64,7 @@ public class leXml {
 			String pontoDeEncontro = element.getChildText("pontoDeEncontro");
 			String criador = element.getChildText("criador");
 			String vagasTotal = element.getChildText("vagasTotal");
-			CaronaAbstrata carona = new CaronaAbstrata(origem, destino, data, hora, Integer.parseInt(vagas), criador);
+			Carona carona = new Carona(origem, destino, data, hora, Integer.parseInt(vagas), criador);
 			carona.setVagasTotal(Integer.parseInt(vagasTotal));
 			carona.setPonto(pontoDeEncontro);
 			carona.setId(id);
