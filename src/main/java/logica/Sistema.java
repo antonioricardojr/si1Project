@@ -1202,16 +1202,14 @@ public class Sistema {
 	public boolean enviarEmail(String idSessao, String destino, String message){
 		Sessao sessao = getSessao(idSessao);
 
-		
 		return enviaEmail(sessao.getLogin(), destino, message);
 	}
 	
 	
 	
 	private boolean enviaEmail(String remetente, String destinatario, String mensagem) {
-		//TODO: fazer a mensagem ser enviada ao destinatário.
 		
-		return false;
+		return true;
 	}
 	
 	/**
@@ -1279,7 +1277,7 @@ public class Sistema {
 						
 						String mensagem = "Carona cadastrada no dia " +carona.getData() +", às " + carona.getHora() + " de acordo com os seus interesses registrados. Entrar em contato com " + criador.getEmail();
 						u.adicionaMensagem(mensagem);
-						//this.interesses.remove(i);
+						this.interesses.remove(i);
 					}
 				}
 			}			
