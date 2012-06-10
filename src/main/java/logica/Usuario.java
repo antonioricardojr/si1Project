@@ -49,7 +49,7 @@ public class Usuario {
 		faltas = 0;
 		caronasOferecidas = new ArrayList<String>();
 		caronasComoCaroneiro = new ArrayList<String>();
-
+		mensagens = new ArrayList<String>();
 		setCaronas(new ArrayList<String>());
 
 		setAmigos(new ArrayList<String>());
@@ -234,6 +234,18 @@ public class Usuario {
 	
 	public void adicionaMensagem(String mensagem){
 		this.mensagens.add(mensagem);
+	}
+	
+	public String getMensagens(){
+
+		String saida = "[";
+		
+		for(String message: mensagens){
+			saida+=message;
+		}
+		
+		return saida+"]";
+				
 	}
 
 	public int getPresencas() {

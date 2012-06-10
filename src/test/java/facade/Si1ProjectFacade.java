@@ -1,6 +1,9 @@
 package facade;
 
 
+import excecoes.DataInvalidaException;
+import excecoes.DestinoInvalidoException;
+import excecoes.OrigemInvalidaException;
 import logica.Sistema;
 
 
@@ -165,10 +168,16 @@ public class Si1ProjectFacade {
 		S1.reviewCarona(idSessao, idCarona, review);
 	}
 	
+	public String cadastrarInteresse(String idSessao, String origem, String destino, String data, String horaInicio, String horaFim) throws OrigemInvalidaException, DestinoInvalidoException, DataInvalidaException{
+		return S1.cadastrarInteresse(idSessao, origem, destino, data, horaInicio, horaFim).toString();
+	}
+	
+	public String verificarMensagensPerfil(String idSessao) throws Exception{
+		return S1.verificarMensagensPerfil(idSessao);		
+	}
 	
 	public void reiniciarSistema() throws Exception{
-		S1.zerarSistema();
-		
+		S1.zerarSistema();		
 	}
 	
 	public void encerrarSistema() throws Exception {

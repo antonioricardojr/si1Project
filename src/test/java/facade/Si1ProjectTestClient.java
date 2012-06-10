@@ -26,7 +26,7 @@ public class Si1ProjectTestClient {
 		files.add("scripts/US09.txt");
 		files.add("scripts/US10.txt");
 		files.add("scripts/US11.txt");
-		files.add("scripts/US12.txt");
+		//files.add("scripts/US12.txt");
 	
 		Si1ProjectFacade si1ProjectFacade = new Si1ProjectFacade();
 		// Instantiate EasyAccept fa�ade

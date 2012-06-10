@@ -9,6 +9,7 @@ import java.util.List;
 
 import excecoes.AtributoInvalidoException;
 import excecoes.CaronaInvalidaException;
+import excecoes.DataInvalidaException;
 import excecoes.DestinoInvalidoException;
 import excecoes.ItemInexistenteException;
 import excecoes.OpcaoInvalidaException;
@@ -475,6 +476,17 @@ public class Sistema {
 
 		return caronaCadastrada;
 	}
+	
+	
+	private String getCaronasDeInteresse(){
+		List<CaronaAbstrata> caronasDeInteresse = this.procuraCaronaInteressada(interesse);
+		if(caronasDeInteresse.size()>0){
+			this.avisaInteressado(caronasDeInteresse, interesse);
+			this.interesses.remove(interesse);
+		}
+		
+	}
+	
 	
 	/**
 	 * Método que retorna string de atributo de carona se esta existir
@@ -1210,30 +1222,53 @@ public class Sistema {
 	 * @param horarioFinal
 	 * @param interessado
 	 * @return
+	 * @throws OrigemInvalidaException 
+	 * @throws DestinoInvalidoException 
+	 * @throws DataInvalidaException 
 	 */
-	public String cadastraInteresse(String origem, String destino, String data, String horarioInicial, String horarioFinal, String interessado){
+	public Interesse cadastrarInteresse(String idSessao, String origem, String destino, String data, String horaInicio, String horaFim) throws OrigemInvalidaException, DestinoInvalidoException, DataInvalidaException{
+
+		if (origem == null || contemCharInvalidos(origem)) {
+			throw new OrigemInvalidaException();
+		}else if (destino == null || contemCharInvalidos(destino)) {
+			throw new DestinoInvalidoException();
+		}else if(data == null){
+			throw new DataInvalidaException();
+		}
+		
+		Sessao sessao = getSessao(idSessao);
+		String interessado = getUsuario(sessao.getLogin()).toString();
 		Interesse interesse = new Interesse(interessado);
 		interesse.setData(data);
 		interesse.setDestino(destino);
-		interesse.setHorarioFinal(horarioFinal);
-		interesse.setHorarioInicial(horarioInicial);
+		interesse.setHorarioFinal(horaFim);
+		interesse.setHorarioInicial(horaInicio);
 		interesse.setOrigem(origem);
 		this.interesses.add(interesse);
-		List<CaronaAbstrata> caronas = this.procuraCaronaInteressada(interesse);
-		if(caronas.size()>0){
-			this.avisaInteressado(caronas, interesse);
-			this.interesses.remove(interesse);
-		}
-		return interesse.getId();
+		
+		return interesse;
 	}
 	
+	public String verificarMensagensPerfil(String idSessao){
+		
+		Sessao sessao = getSessao(idSessao);
+		Usuario user = getUsuario(sessao.getLogin());
+		
+		return user.getMensagens();			
+	}
 	
-	
-	private void avisaInteressado(List<CaronaAbstrata> caronas2, Interesse interesse) {
+	/**
+	 * Metodo que avisa ao interessado sobre carona
+	 * @param caronas
+	 * @param interesse
+	 */
+	private void avisaInteressado(List<CaronaAbstrata> caronas, Interesse interesse) {
 		Usuario u = this.getUsuario(interesse.getInteressado());
 		for(CaronaAbstrata c : this.caronas){
 			String mensagem = "Carona cadastrada no dia " +c.getData() +" , às " + c.getHora() + "de acordo com os seus interesses registrados. Entrar em contato com " + u.getEmail();
+			usuarios.remove(u);
 			u.adicionaMensagem(mensagem);
+			usuarios.add(u);
 		}
 		
 		
@@ -1246,13 +1281,12 @@ public class Sistema {
 	public List<CaronaAbstrata> procuraCaronaInteressada(Interesse interesse){
 		
 		List<CaronaAbstrata> caronasCompativeis = new ArrayList<CaronaAbstrata>();
-		
 		for(CaronaAbstrata carona: this.caronas){
 			
 			if(carona.getOrigem().equals(interesse.getOrigem()) && carona.getDestino().equals(interesse.getDestino())){
 				//Se a data do interesse for vazia, pegar a data atual como parametro
 				if(interesse.getData().equals("")){
-					
+					caronasCompativeis.add(carona);
 					
 				}else if(carona.getData().equals(interesse.getData())){
 					
