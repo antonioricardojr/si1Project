@@ -106,7 +106,6 @@ public class Sistema {
 		}
 
 		Usuario novoUsuario = new Usuario(login, senha, nome, endereco, email);
-
 		usuarios.add(novoUsuario);
 
 		return novoUsuario;
@@ -430,7 +429,7 @@ public class Sistema {
 		caronas.add(caronaCadastrada);
 		usuario.adicionaCaronaOferecida(caronaCadastrada.getId());
 		usuario.adicionaCarona(caronaCadastrada.getId());
-
+		this.avisaAosInteressados(caronaCadastrada);
 		return caronaCadastrada;
 	}
 	
@@ -473,16 +472,18 @@ public class Sistema {
 		caronas.add(caronaCadastrada);
 		usuario.adicionaCaronaOferecida(caronaCadastrada.getId());
 		usuario.adicionaCarona(caronaCadastrada.getId());
-
+		this.avisaAosInteressados(caronaCadastrada);
 		return caronaCadastrada;
 	}
 	
-	
-	private String getCaronasDeInteresse(){
-		List<CaronaAbstrata> caronasDeInteresse = this.procuraCaronaInteressada(interesse);
-		if(caronasDeInteresse.size()>0){
-			this.avisaInteressado(caronasDeInteresse, interesse);
-			this.interesses.remove(interesse);
+	/**
+	 * Método que avisa aos usuários sobre caronas de interesse
+	 * @param carona
+	 */
+	private void avisaAosInteressados(CaronaAbstrata carona){
+		
+		for(Usuario u: usuarios){
+			avisaSobreCaronaInteressada(u, carona);
 		}
 		
 	}
@@ -1258,51 +1259,36 @@ public class Sistema {
 	}
 	
 	/**
-	 * Metodo que avisa ao interessado sobre carona
-	 * @param caronas
-	 * @param interesse
-	 */
-	private void avisaInteressado(List<CaronaAbstrata> caronas, Interesse interesse) {
-		Usuario u = this.getUsuario(interesse.getInteressado());
-		for(CaronaAbstrata c : this.caronas){
-			String mensagem = "Carona cadastrada no dia " +c.getData() +" , às " + c.getHora() + "de acordo com os seus interesses registrados. Entrar em contato com " + u.getEmail();
-			usuarios.remove(u);
-			u.adicionaMensagem(mensagem);
-			usuarios.add(u);
-		}
-		
-		
-	}
-
-	/**
 	 * Procura nas caronas alguma que satisfaça os requesitos ditos no interesse
 	 * @param interesse
 	 */
-	public List<CaronaAbstrata> procuraCaronaInteressada(Interesse interesse){
+	public void avisaSobreCaronaInteressada(Usuario u, CaronaAbstrata carona){
 		
-		List<CaronaAbstrata> caronasCompativeis = new ArrayList<CaronaAbstrata>();
-		for(CaronaAbstrata carona: this.caronas){
-			
-			if(carona.getOrigem().equals(interesse.getOrigem()) && carona.getDestino().equals(interesse.getDestino())){
-				//Se a data do interesse for vazia, pegar a data atual como parametro
-				if(interesse.getData().equals("")){
-					caronasCompativeis.add(carona);
-					
-				}else if(carona.getData().equals(interesse.getData())){
-					
-					if(estaNoRangeDoTempo(interesse.getHorarioInicial(), interesse.getHorarioFinal(), carona.getHora())){
-						caronasCompativeis.add(carona);
+		for(Interesse i: interesses){
+			if(i.getInteressado().equals(u.toString())){
+				Usuario criador = getUsuario(carona.criador);
+				if(i.getOrigem().equals(carona.getOrigem()) && i.getDestino().equals(carona.getDestino()) && i.getData().equals(carona.getData())){
+					if(estaNoRangeDoTempo(i.getHorarioInicial(), i.getHorarioFinal(), carona.getHora())){
+						
+						String mensagem = "Carona cadastrada no dia " +carona.getData() +", às " + carona.getHora() + " de acordo com os seus interesses registrados. Entrar em contato com " + criador.getEmail();
+						u.adicionaMensagem(mensagem);
+						this.interesses.remove(i);
 					}
-					
+				}else if(i.getOrigem().equals(carona.getOrigem()) && i.getDestino().equals(carona.getDestino()) && i.getData().equals("") && i.getHorarioInicial().equals("")){
+					if(estaNoRangeDoTempo("00:00", i.getHorarioFinal(), carona.getHora())){
+						
+						String mensagem = "Carona cadastrada no dia " +carona.getData() +", às " + carona.getHora() + " de acordo com os seus interesses registrados. Entrar em contato com " + criador.getEmail();
+						u.adicionaMensagem(mensagem);
+						//this.interesses.remove(i);
+					}
 				}
-				
-			}
-			
-		}
-		return caronasCompativeis;
+			}			
+		}	
+		
 	}
 	
 	private boolean estaNoRangeDoTempo(String tempoInicial, String tempoFinal, String tempoCarona){
+		
 		if(tempoInicial.equals("")){
 			tempoInicial = "00:00";
 		}
@@ -1313,17 +1299,18 @@ public class Sistema {
 		int horaInicial = Integer.parseInt(tempoInicial.substring(0, 2));
 		int horaFinal = Integer.parseInt(tempoFinal.substring(0, 2));
 		
-		int minutoInicial = Integer.parseInt(tempoInicial.substring(2, 4));
-		int minutoFinal = Integer.parseInt(tempoFinal.substring(2, 4));
+		int minutoInicial = Integer.parseInt(tempoInicial.substring(3, 5));
+		int minutoFinal = Integer.parseInt(tempoFinal.substring(3, 5));
 		
 		int horaCarona = Integer.parseInt(tempoInicial.substring(0, 2));
-		int minutoCarona = Integer.parseInt(tempoFinal.substring(2, 4));
-		
-		if(horaInicial < horaCarona && horaFinal > horaCarona){
+		int minutoCarona = Integer.parseInt(tempoFinal.substring(3, 5));
+
+		if((horaInicial <= horaCarona) && (horaFinal >= horaCarona)){
 			return true;
 			
 		}else if(horaInicial == horaCarona && horaFinal == horaCarona){
 			if(minutoInicial <= minutoCarona && minutoFinal >= minutoCarona){
+				
 				return true;
 			}else{
 				return false;
