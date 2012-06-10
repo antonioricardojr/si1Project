@@ -1,6 +1,6 @@
 package xml;
 
-import logica.Carona;
+import logica.CaronaAbstrata;
 import logica.Review;
 import logica.Solicitacao;
 
@@ -22,7 +22,7 @@ public class XmlCarona implements Xml{
 		this.raiz = new Element("carona");
 		
 		//Cast do objeto para carona
-		Carona carona = (Carona) o;
+		CaronaAbstrata carona = (CaronaAbstrata) o;
 		
 		//Adiciona um atributo id a carona no xml
 		this.raiz.setAttribute("id", carona.getId());

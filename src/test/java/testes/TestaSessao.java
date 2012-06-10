@@ -1,7 +1,7 @@
 package testes;
 
 import junit.framework.Assert;
-import logica.Carona;
+import logica.CaronaAbstrata;
 import logica.GeradorDeID;
 import logica.Sessao;
 import logica.Sistema;
@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestaSessao {
-	Carona c1,c2;
+	CaronaAbstrata c1,c2;
 	Usuario usuario,usuario2;
 	String id;
 	GeradorDeID gerador  = new GeradorDeID();

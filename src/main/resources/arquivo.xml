@@ -1,2 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Sistema><usuariosDoSistema><usuario><login>mark</login><senha>m@rk</senha><nome>Mark Zuckerberg</nome><endereco>Palo Alto, California</endereco><email>mark@facebook.com</email><caronasOferecidas><caronaId>729259652973631</caronaId><caronaId>718988088139788</caronaId></caronasOferecidas><caronasComoCaroneiro /><caronas><caronaId>729259652973631</caronaId><caronaId>718988088139788</caronaId></caronas><amigos /></usuario><usuario><login>bill</login><senha>bilz@o</senha><nome>William Henry Gates III</nome><endereco>Medina, Washington</endereco><email>billzin@gmail.com</email><caronasOferecidas /><caronasComoCaroneiro /><caronas /><amigos /></usuario><usuario><login>vader</login><senha>d4rth</senha><nome>Anakin Skywalker</nome><endereco>Death Star I</endereco><email>darthvader@empire.com</email><caronasOferecidas /><caronasComoCaroneiro /><caronas /><amigos /></usuario></usuariosDoSistema><caronasDoSistema><carona id="729259652973631"><origem>Campina Grande</origem><destino>João Pessoa</destino><data>02/06/2012</data><hora>12:00</hora><vagas>2</vagas><vagasTotal>3</vagasTotal><pontosSugeridos /><pontoDeEncontro>Qualquer</pontoDeEncontro><solicitacoes /><caroneirosConfirmados><solicitacao><idSolicitacao>967892727794324</idSolicitacao><loginSolicitador>bill</loginSolicitador><idCarona>729259652973631</idCarona><ponto>Qualquer</ponto><estado>pendente</estado></solicitacao></caroneirosConfirmados><criador>mark</criador><reviews /><isFinalizada>nao finalizada</isFinalizada></carona><carona id="718988088139788"><origem>Campina Grande</origem><destino>João Pessoa</destino><data>04/06/2012</data><hora>16:00</hora><vagas>1</vagas><vagasTotal>2</vagasTotal><pontosSugeridos /><pontoDeEncontro>Qualquer</pontoDeEncontro><solicitacoes /><caroneirosConfirmados><solicitacao><idSolicitacao>113779208845195</idSolicitacao><loginSolicitador>bill</loginSolicitador><idCarona>718988088139788</idCarona><ponto>Qualquer</ponto><estado>pendente</estado></solicitacao></caroneirosConfirmados><criador>mark</criador><reviews /><isFinalizada>nao finalizada</isFinalizada></carona></caronasDoSistema></Sistema>
+<Sistema>
+	<usuariosDoSistema>
+		<usuario>
+			<login>mark</login>
+			<senha>m@rk</senha>
+			<nome>Mark Zuckerberg</nome>
+			<endereco>Palo Alto, California</endereco>
+			<email>mark@facebook.com</email>
+			<caronasOferecidas>
+				<caronaId>729259652973631</caronaId>
+				<caronaId>718988088139788</caronaId>
+			</caronasOferecidas>
+			<caronasComoCaroneiro />
+			<caronas>
+				<caronaId>729259652973631</caronaId>
+				<caronaId>718988088139788</caronaId>
+			</caronas>
+			<amigos />
+		</usuario>
+		<usuario>
+			<login>bill</login>
+			<senha>bilz@o</senha>
+			<nome>William Henry Gates III</nome>
+			<endereco>Medina, Washington</endereco>
+			<email>billzin@gmail.com</email>
+			<caronasOferecidas />
+			<caronasComoCaroneiro />
+			<caronas />
+			<amigos />
+		</usuario>
+		<usuario>
+			<login>vader</login>
+			<senha>d4rth</senha>
+			<nome>Anakin Skywalker</nome>
+			<endereco>Death Star I</endereco>
+			<email>darthvader@empire.com</email>
+			<caronasOferecidas />
+			<caronasComoCaroneiro />
+			<caronas />
+			<amigos />
+		</usuario>
+	</usuariosDoSistema>
+	<caronasDoSistema>
+		<carona id="729259652973631">
+			<origem>Campina Grande</origem>
+			<destino>João Pessoa</destino>
+			<data>02/06/2012</data>
+			<hora>12:00</hora>
+			<vagas>2</vagas>
+			<vagasTotal>3</vagasTotal>
+			<pontosSugeridos />
+			<pontoDeEncontro>Qualquer</pontoDeEncontro>
+			<solicitacoes />
+			<caroneirosConfirmados>
+				<solicitacao>
+					<idSolicitacao>967892727794324</idSolicitacao>
+					<loginSolicitador>bill</loginSolicitador>
+					<idCarona>729259652973631</idCarona>
+					<ponto>Qualquer</ponto>
+					<estado>pendente</estado>
+				</solicitacao>
+			</caroneirosConfirmados>
+			<criador>mark</criador>
+			<reviews />
+			<isFinalizada>nao finalizada</isFinalizada>
+		</carona>
+		<carona id="718988088139788">
+			<origem>Campina Grande</origem>
+			<destino>João Pessoa</destino>
+			<data>04/06/2012</data>
+			<hora>16:00</hora>
+			<vagas>1</vagas>
+			<vagasTotal>2</vagasTotal>
+			<pontosSugeridos />
+			<pontoDeEncontro>Qualquer</pontoDeEncontro>
+			<solicitacoes />
+			<caroneirosConfirmados>
+				<solicitacao>
+					<idSolicitacao>113779208845195</idSolicitacao>
+					<loginSolicitador>bill</loginSolicitador>
+					<idCarona>718988088139788</idCarona>
+					<ponto>Qualquer</ponto>
+					<estado>pendente</estado>
+				</solicitacao>
+			</caroneirosConfirmados>
+			<criador>mark</criador>
+			<reviews />
+			<isFinalizada>nao finalizada</isFinalizada>
+		</carona>
+	</caronasDoSistema>
+</Sistema>

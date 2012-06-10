@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import logica.Carona;
+import logica.CaronaAbstrata;
 import logica.Review;
 import logica.Solicitacao;
 import logica.Usuario;
@@ -45,11 +45,11 @@ public class leXml {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "null", "unchecked"})
-	public List<Carona> getCaronas() throws Exception{
+	public List<CaronaAbstrata> getCaronas() throws Exception{
 		Element caronas = this.elementCaronas();
 		List elements = caronas.getChildren();
 		Iterator i = elements.iterator();
-		List<Carona> caronaList = new ArrayList<Carona>();
+		List<CaronaAbstrata> caronaList = new ArrayList<CaronaAbstrata>();
 		while(i.hasNext()){
 			
 			//Pegando os dados do XML
@@ -63,7 +63,7 @@ public class leXml {
 			String pontoDeEncontro = element.getChildText("pontoDeEncontro");
 			String criador = element.getChildText("criador");
 			String vagasTotal = element.getChildText("vagasTotal");
-			Carona carona = new Carona(origem, destino, data, hora, Integer.parseInt(vagas), criador);
+			CaronaAbstrata carona = new CaronaAbstrata(origem, destino, data, hora, Integer.parseInt(vagas), criador);
 			carona.setVagasTotal(Integer.parseInt(vagasTotal));
 			carona.setPonto(pontoDeEncontro);
 			carona.setId(id);

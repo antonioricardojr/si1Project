@@ -72,12 +72,29 @@ public class Si1ProjectFacade {
 		return S1.localizarCarona(idSessao, origem, destino);
 	}
 
+	public String localizarCaronaMunicipal(String idSessao, String cidade, String origem,
+			String destino) throws Exception {
+
+		return S1.localizarCaronaMunicipal(idSessao,cidade, origem, destino);
+	}
+	
+	public String localizarCaronaMunicipal(String idSessao, String cidade) throws Exception {
+
+		return S1.localizarCaronaMunicipal(idSessao,cidade,"","");
+	}
+	
 	public String cadastrarCarona(String idSessao, String origem,
 			String destino, String data, String hora, String vagas)
 			throws Exception {
 		return S1.cadastrarCarona(idSessao, origem, destino, data, hora, vagas).getId();
 	}
 
+	public String cadastrarCaronaMunicipal(String idSessao, String origem,
+			String destino, String cidade, String data, String hora, String vagas)
+			throws Exception {
+		return S1.cadastrarCaronaMunicipal(idSessao, origem, destino, cidade, data, hora, vagas).getId();
+	}
+	
 	public String getAtributoCarona(String idCarona, String atributo)
 			throws Exception {
 

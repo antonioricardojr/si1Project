@@ -210,7 +210,7 @@ public class Usuario {
 		}
 	}
 
-	public void removeCarona(Carona c) {
+	public void removeCarona(CaronaAbstrata c) {
 		if (c != null) {
 			caronas.remove(c);
 		}
