@@ -1,7 +1,7 @@
 package testes;
 
 import junit.framework.Assert;
-import logica.CaronaAbstrata;
+import logica.Carona;
 import logica.Usuario;
 
 import org.junit.After;
@@ -233,22 +233,22 @@ public class UsuarioTest {
 		u3 = new Usuario("bill", "456789", "William Henry Gates III", "Palo Alto, California", "bill@microsoft.com");
 		
 		
-		CaronaAbstrata c1 = new CaronaAbstrata("Campina Grande", "Joao Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
+		Carona c1 = new Carona("Campina Grande", "Joao Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
 		u1.adicionaCarona(c1.getId());
 		Assert.assertEquals(c1.getId(), u1.getCaronas().get(0));		
 		
-		CaronaAbstrata c2 = new CaronaAbstrata("Campina Grande", "Joao Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
+		Carona c2 = new Carona("Campina Grande", "Joao Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
 		u2.adicionaCarona(c2.getId());
 		Assert.assertEquals(c2.getId(), u2.getCaronas().get(0));
 		
 		
-		CaronaAbstrata c3 = new CaronaAbstrata("Recife", "Joao Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
+		Carona c3 = new Carona("Recife", "Joao Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
 		
 		u3.adicionaCarona(c3.getId());
 		Assert.assertEquals(c3.getId(), u3.getCaronas().get(0));
 		
 		
-		CaronaAbstrata c4 = new CaronaAbstrata("Recife", "Nata", "28/11/2012", "07:20", 1, u1.getLogin());
+		Carona c4 = new Carona("Recife", "Nata", "28/11/2012", "07:20", 1, u1.getLogin());
 		u1.adicionaCarona(c4.getId());
 		Assert.assertEquals(c4.getId(), u1.getCaronas().get(1));
 		
@@ -264,22 +264,22 @@ public class UsuarioTest {
 		u3 = new Usuario("bill", "456789", "William Henry Gates III", "Palo Alto, California", "bill@microsoft.com");
 		
 		
-		CaronaAbstrata c1 = new CaronaAbstrata("Campina Grande", "João Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
+		Carona c1 = new Carona("Campina Grande", "João Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
 		u1.adicionaCaronaOferecida(c1.getId());
 		Assert.assertEquals(c1.getId(), u1.getCaronasOferecidas().get(0));
 		
 		
-		CaronaAbstrata c2 = new CaronaAbstrata("Campina Grande", "João Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
+		Carona c2 = new Carona("Campina Grande", "João Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
 		u2.adicionaCaronaOferecida(c2.getId());
 		Assert.assertEquals(c2.getId(), u2.getCaronasOferecidas().get(0));
 		
 		
-		CaronaAbstrata c3 = new CaronaAbstrata("Recife", "João Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
+		Carona c3 = new Carona("Recife", "João Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
 		u3.adicionaCaronaOferecida(c3.getId());
 		Assert.assertEquals(c3.getId(), u3.getCaronasOferecidas().get(0));
 		
 		
-		CaronaAbstrata c4 = new CaronaAbstrata("Recife", "Nata", "28/11/2012", "07:20", 1, u1.getLogin());
+		Carona c4 = new Carona("Recife", "Nata", "28/11/2012", "07:20", 1, u1.getLogin());
 		u1.adicionaCaronaOferecida(c4.getId());
 		Assert.assertEquals(c4.getId(), u1.getCaronasOferecidas().get(1));
 		
@@ -304,22 +304,22 @@ public class UsuarioTest {
 		u3 = new Usuario("bill", "456789", "William Henry Gates III", "Palo Alto, California", "bill@microsoft.com");
 		
 		
-		CaronaAbstrata c1 = new CaronaAbstrata("Campina Grande", "João Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
+		Carona c1 = new Carona("Campina Grande", "João Pessoa", "01/10/2012", "17:50", 3, u1.getLogin());
 		u1.adicionaCaronaComoCaroneiro(c1.getId());
 		Assert.assertEquals(c1.getId(), u1.getCaronasComoCaroneiro().get(0));
 		
 		
-		CaronaAbstrata c2 = new CaronaAbstrata("Campina Grande", "João Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
+		Carona c2 = new Carona("Campina Grande", "João Pessoa", "07/10/2012", "14:40", 2, u2.getLogin());
 		u2.adicionaCaronaComoCaroneiro(c2.getId());
 		Assert.assertEquals(c2.getId(), u2.getCaronasComoCaroneiro().get(0));
 		
 		
-		CaronaAbstrata c3 = new CaronaAbstrata("Recife", "João Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
+		Carona c3 = new Carona("Recife", "João Pessoa", "16/10/2012", "20:10", 5, u3.getLogin());
 		u3.adicionaCaronaComoCaroneiro(c3.getId());
 		Assert.assertEquals(c3.getId(), u3.getCaronasComoCaroneiro().get(0));
 		
 		
-		CaronaAbstrata c4 = new CaronaAbstrata("Recife", "Nata", "28/11/2012", "07:20", 1, u1.getLogin());
+		Carona c4 = new Carona("Recife", "Nata", "28/11/2012", "07:20", 1, u1.getLogin());
 		u1.adicionaCaronaComoCaroneiro(c4.getId());
 		Assert.assertEquals(c4.getId(), u1.getCaronasComoCaroneiro().get(1));
 		
