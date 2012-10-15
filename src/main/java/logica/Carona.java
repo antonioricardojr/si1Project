@@ -28,6 +28,7 @@ public class Carona extends CaronaAbstrata{
 		super.setFinalizada(false);
 		
 		super.xmlCreator = new FactoryXml("Xml carona");
+		setPreferencial(false);
 	}
 	
 	

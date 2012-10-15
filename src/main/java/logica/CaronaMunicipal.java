@@ -30,6 +30,8 @@ public class CaronaMunicipal extends CaronaAbstrata{
 		super.setFinalizada(false);
 		
 		super.xmlCreator = new FactoryXml("Xml carona");
+		
+		setPreferencial(false);
 	}
 	
 	public String getCidade() {

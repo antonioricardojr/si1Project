@@ -18,6 +18,8 @@ public class Escapada extends Carona {
 			Object vagas, String criador) throws Exception {
 		super(origem, destino, data, hora, vagas, criador);
 		setMinCaroneiros(minCaroneiros);
+		
+		setPreferencial(false);
 	}
 
 	public int getMinCaroneiros() {

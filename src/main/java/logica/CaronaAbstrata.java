@@ -40,6 +40,16 @@ public abstract class CaronaAbstrata {
 	protected List<Review> reviews;	
 	protected boolean isFinalizada;	
 	protected Xml xmlCreator;
+	
+	protected boolean preferencial;
+	
+	public boolean IsPreferencial(){
+		return preferencial;
+	}
+	
+	public void setPreferencial(boolean bool){
+		preferencial = bool;
+	}
 
 	public List<Review> getReviews() {
 		return reviews;
